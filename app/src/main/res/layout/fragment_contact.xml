@@ -1,0 +1,22 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/frg_bg"
+    android:layout_width="fill_parent"
+    android:layout_height="match_parent"
+    android:layout_marginTop="5dp"
+    android:background="@color/fragment_back">
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swipeLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <ExpandableListView
+            android:id="@+id/listView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/listview_bg"
+            android:cacheColorHint="#00000000"
+            android:fadingEdge="none"
+            android:scrollbars="none" />
+    </android.support.v4.widget.SwipeRefreshLayout>
+
+</RelativeLayout>

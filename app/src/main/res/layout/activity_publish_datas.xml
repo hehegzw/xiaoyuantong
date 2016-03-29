@@ -1,0 +1,89 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/fragment_back"
+    android:orientation="vertical">
+    <!--title-->
+    <include layout="@layout/titlbar"></include>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="#ffffff"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/myreceive"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="8"
+                android:gravity="center"
+                android:paddingBottom="5dp"
+                android:paddingTop="5dp"
+                android:text="收件箱"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <ImageView
+                android:id="@+id/fragment_title_image1"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:src="@drawable/fragment_title_image" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/mypublish"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="8"
+                android:gravity="center"
+                android:paddingBottom="5dp"
+                android:paddingTop="5dp"
+                android:text="发件箱"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <ImageView
+                android:id="@+id/fragment_title_image2"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:src="@drawable/fragment_title_image"
+                android:visibility="invisible" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/fragment"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_marginTop="5dp"
+        android:orientation="horizontal">
+
+    </LinearLayout>
+
+    <!--<Button-->
+        <!--android:id="@+id/publish"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="发布通知"-->
+        <!--android:layout_marginRight="5dp"-->
+        <!--android:layout_marginLeft="5dp"-->
+        <!--android:layout_marginBottom="5dp"-->
+        <!--android:background="@drawable/main_item_selector1"-->
+        <!--android:textAppearance="?android:attr/textAppearanceLarge" />-->
+
+</LinearLayout>

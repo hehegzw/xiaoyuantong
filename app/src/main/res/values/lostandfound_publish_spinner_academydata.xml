@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="academy">
+        <item>信息工程系</item>
+        <item>经济管理系</item>
+        <item>机电工程系</item>
+        <item>建筑资源工程系</item>
+    </string-array>
+</resources>

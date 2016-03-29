@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/titlbar"></include>
+
+    <RelativeLayout
+        android:id="@+id/titile_layout_ry"
+        android:layout_width="match_parent"
+        android:layout_height="50dip"
+        android:layout_weight="1">
+
+        <CheckBox
+            android:id="@+id/lost_found_publish_checkbox_found"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/lost_found_publish_checkbox_lost"
+            android:layout_alignBottom="@+id/lost_found_publish_checkbox_lost"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="58dp"
+            android:text="招领" />
+
+        <View
+            android:layout_width="1dip"
+            android:layout_height="25dip"
+            android:layout_centerInParent="true"
+            android:background="#C0C0C0" />
+
+        <CheckBox
+            android:id="@+id/lost_found_publish_checkbox_lost"
+            android:layout_width="76dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="60dp"
+            android:text="失物" />
+
+        <View
+            android:layout_width="270dip"
+            android:layout_height="1dip"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:background="#C0C0C0" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="15dip"></RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dip"
+        android:layout_weight="2"
+        android:gravity="center">
+
+        <TextView
+            android:id="@+id/lost_found_publish_type"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="43dp"
+            android:gravity="center"
+            android:text="类型：" />
+
+        <Spinner
+            android:id="@+id/lost_found_publish_typespinner"
+            android:layout_width="150dip"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/lost_found_publish_type"
+            android:entries="@array/type"
+            android:spinnerMode="dropdown" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dip"
+        android:layout_weight="2"
+        android:gravity="center">
+
+        <TextView
+            android:id="@+id/lost_found_publish_academy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="43dp"
+            android:gravity="center"
+            android:text="系别：" />
+
+        <Spinner
+            android:id="@+id/lost_found_publish_academyspinner"
+            android:layout_width="150dip"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/lost_found_publish_academy"
+            android:entries="@array/academy"
+            android:spinnerMode="dropdown" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/lost_found_xuehao"
+        android:layout_width="fill_parent"
+        android:layout_height="60dip"
+        android:layout_weight="2"
+        android:gravity="center">
+
+        <TextView
+            android:id="@+id/lost_found_publish_tv_xuehao"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="通号：" />
+
+        <EditText
+            android:id="@+id/lost_found_publish_xuehao"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/lost_found_publish_tv_xuehao"
+            android:layout_toRightOf="@id/lost_found_publish_tv_xuehao"
+            android:hint="请输入通号"
+            android:inputType="number"
+            android:maxLength="10"></EditText>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/lost_found_name"
+        android:layout_width="fill_parent"
+        android:layout_height="60dip"
+        android:layout_weight="2"
+        android:gravity="center">
+
+        <TextView
+            android:id="@+id/lost_found_publish_tv_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="姓名：" />
+
+        <EditText
+            android:id="@+id/lost_found_publish_name"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/lost_found_publish_tv_name"
+            android:layout_toRightOf="@id/lost_found_publish_tv_name"
+            android:hint="请填写真实姓名"
+            android:inputType="textPersonName"
+            android:maxLength="10"></EditText>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/lost_found_phone"
+        android:layout_width="fill_parent"
+        android:layout_height="60dip"
+        android:layout_weight="2"
+        android:gravity="center">
+
+        <TextView
+            android:id="@+id/lost_found_publish_tv_phone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="手机：" />
+
+        <EditText
+            android:id="@+id/lost_found_publish_phone"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/lost_found_publish_tv_phone"
+            android:layout_toRightOf="@id/lost_found_publish_tv_phone"
+            android:hint="请输入手机号"
+            android:inputType="phone"
+            android:maxLength="11"></EditText>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/lost_found_publish_diy_title"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="2"
+        android:gravity="center"
+        android:visibility="gone">
+
+        <EditText
+            android:id="@+id/lost_found_publish_title"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/edittext_shape"
+            android:hint="标题部分，尽可能突出关键词"
+            android:maxLength="10" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/lost_found_publish_diy_content"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="4"
+        android:gravity="center"
+        android:visibility="gone">
+
+        <EditText
+            android:id="@+id/lost_found_publish_content"
+            android:layout_width="300dp"
+            android:layout_height="150dp"
+            android:background="@drawable/edittext_shape"
+            android:hint="详细内容部分"
+            android:maxLength="150" />
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="5dp" />
+
+    <ImageView
+        android:id="@+id/lost_found_publish_pic"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginLeft="30dp"
+        android:layout_weight="2"
+        android:src="@drawable/iconfont_shangchuantupian"
+        android:visibility="gone" />
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="5dp" />
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="2"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="20dp"
+            android:layout_height="wrap_content" />
+
+        <Button
+            android:id="@+id/lost_found_publish_submit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/shape"
+            android:gravity="center"
+            android:text="提 交" />
+
+        <TextView
+            android:layout_width="20dp"
+            android:layout_height="wrap_content" />
+
+        <Button
+            android:id="@+id/lost_found_publish_cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/shape"
+            android:gravity="center"
+            android:text="取 消" />
+
+        <TextView
+            android:layout_width="20dp"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+</LinearLayout>

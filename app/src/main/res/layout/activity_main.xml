@@ -1,0 +1,179 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/title">
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="#ffffffff" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/fragment"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@color/fragment_back"
+        android:orientation="horizontal"></LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_gravity="bottom"
+        android:layout_marginBottom="5dp"
+        android:background="#ffffff">
+
+        <!--<LinearLayout-->
+        <!--android:layout_width="0dp"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:layout_weight="1"-->
+        <!--android:gravity="center"-->
+        <!--android:orientation="vertical">-->
+
+        <!--<TextView-->
+        <!--android:id="@+id/schoolmessage"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="0dp"-->
+        <!--android:layout_weight="2"-->
+        <!--android:gravity="center"-->
+        <!--android:scaleX="1.2"-->
+        <!--android:scaleY="1.2"-->
+        <!--android:text="@string/school_message"-->
+        <!--android:textAppearance="?android:attr/textAppearanceLarge" />-->
+
+        <!--<TextView-->
+        <!--android:id="@+id/tschoolmessage"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="0dp"-->
+        <!--android:layout_weight="1"-->
+        <!--android:gravity="center"-->
+        <!--android:text="校信"-->
+        <!--android:textAppearance="?android:attr/textAppearanceSmall"-->
+        <!--android:textSize="10dp" />-->
+
+        <!--</LinearLayout>-->
+
+
+        <LinearLayout
+            android:id="@+id/lcontact"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/contact"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="2"
+                android:gravity="center"
+                android:scaleX="1.2"
+                android:scaleY="1.2"
+                android:text="@string/contact"
+                android:textAppearance="?android:attr/textAppearanceLarge" />
+
+            <TextView
+                android:id="@+id/tcontact"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="通讯录"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textSize="10dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/lmain"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/main"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:gravity="center"
+                android:scaleX="1.7"
+                android:scaleY="1.7"
+                android:text="@string/main"
+                android:textAppearance="?android:attr/textAppearanceLarge" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/lfind"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/find"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="2"
+                android:gravity="center"
+                android:scaleX="1.2"
+                android:scaleY="1.2"
+                android:text="@string/find"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <TextView
+                android:id="@+id/tfind"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="发现"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textSize="10dp" />
+
+        </LinearLayout>
+
+        <!--<LinearLayout-->
+        <!--android:layout_width="0dp"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:layout_weight="1"-->
+        <!--android:gravity="center"-->
+        <!--android:orientation="vertical">-->
+
+        <!--<TextView-->
+        <!--android:id="@+id/person"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="0dp"-->
+        <!--android:layout_weight="2"-->
+        <!--android:gravity="center"-->
+        <!--android:scaleX="1.2"-->
+        <!--android:scaleY="1.2"-->
+        <!--android:text="@string/person"-->
+        <!--android:textAppearance="?android:attr/textAppearanceLarge" />-->
+
+        <!--<TextView-->
+        <!--android:id="@+id/tperson"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="0dp"-->
+        <!--android:layout_weight="1"-->
+        <!--android:gravity="center"-->
+        <!--android:text="我的"-->
+        <!--android:textAppearance="?android:attr/textAppearanceSmall"-->
+        <!--android:textSize="10dp" />-->
+
+        <!--</LinearLayout>-->
+    </LinearLayout>
+
+</LinearLayout>

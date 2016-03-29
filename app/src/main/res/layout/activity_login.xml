@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#48ADFD"
+    android:orientation="vertical">
+    <RelativeLayout
+        android:layout_weight="2"
+        android:layout_width="match_parent"
+        android:layout_height="0dp">
+        <com.jlstudio.main.widget.CircleImageView
+            android:id="@+id/face"
+            android:layout_centerInParent="true"
+            android:src="@drawable/logo"
+            android:layout_width="100dp"
+            android:layout_height="100dp" />
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
+        android:layout_marginTop="-20dp"
+        android:background="@drawable/login_edit_bk">
+        <View
+            android:id="@+id/line"
+            android:background="#cccccc"
+            android:layout_centerVertical="true"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"/>
+        <LinearLayout
+            android:layout_above="@id/line"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="5dp"
+            android:orientation="horizontal">
+            <TextView
+                android:id="@+id/text_user"
+                android:text="@string/user"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:layout_marginRight="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <EditText
+                android:inputType="number"
+                android:id="@+id/username"
+                android:hint="请输入用户名"
+                android:singleLine="true"
+                android:background="#fff"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/edit"
+            android:layout_below="@id/line"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="5dp"
+            android:orientation="horizontal">
+            <TextView
+                android:id="@+id/text_password"
+                android:text="@string/password"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:layout_marginRight="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <EditText
+                android:id="@+id/password"
+                android:hint="请输入密码"
+                android:singleLine="true"
+                android:background="#fff"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_weight="2"
+        android:layout_width="match_parent"
+        android:layout_height="0dp">
+        <Button
+            android:id="@+id/login"
+            android:text="登录"
+            android:gravity="center"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="40dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/login_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="非登录功能》"
+            android:id="@+id/unloginfun"
+            android:layout_marginRight="10dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+</LinearLayout>

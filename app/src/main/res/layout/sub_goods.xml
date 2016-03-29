@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#fff"
+    android:layout_margin="5dp"
+    android:orientation="vertical">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+        <com.jlstudio.main.util.CircleImageView
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:id="@+id/face"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/logo"/>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_toRightOf="@id/face"
+            android:gravity="center_vertical"
+            android:layout_marginLeft="5dp">
+            <TextView
+                android:id="@+id/username"
+                android:text="张飞"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/time"
+                android:text="2016年3月24日 18：20：20"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+        <TextView
+            android:id="@+id/price"
+            android:text="800"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="5dp"
+            android:gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
+    </RelativeLayout>
+    <android.support.v7.widget.RecyclerView
+        android:layout_marginTop="5dp"
+        android:id="@+id/picture"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"/>
+    <TextView
+        android:id="@+id/description"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="5dp"
+        android:text="《错误》是中国台湾当代诗人郑愁予于1954年写作的一首现代诗。全诗以江南小城为中心意象，写出了战争年月闺中思妇等盼归人的情怀，寓意深刻，是现代抒情诗代表作中之一，被海内外多次收入教科书"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <View
+        android:background="#eeeeee"
+        android:layout_marginTop="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+        <TextView
+            android:id="@+id/from"
+            android:text="软开132班"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="5dp"
+            android:gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
+        <TextView
+            android:id="@+id/browse"
+            android:text="50"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="5dp"
+            android:gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
+        <TextView
+            android:text="浏览量:"
+            android:layout_toLeftOf="@id/browse"
+            android:layout_marginRight="5dp"
+            android:gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
+    </RelativeLayout>
+
+</LinearLayout>

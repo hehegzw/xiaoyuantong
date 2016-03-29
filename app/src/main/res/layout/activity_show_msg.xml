@@ -1,0 +1,116 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/white">
+    <!--title-->
+    <include layout="@layout/titlbar"></include>
+    <include layout="@layout/divide_line"/>
+    <RelativeLayout
+        android:padding="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:text="标题"
+            android:layout_marginLeft="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/publish_title"
+            android:layout_marginRight="5dp"
+            android:layout_alignParentRight="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+    <include layout="@layout/divide_line"/>
+    <RelativeLayout
+        android:padding="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:text="时间"
+            android:layout_marginLeft="5dp"
+            android:layout_alignParentLeft="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/publish_time"
+            android:layout_marginRight="5dp"
+            android:layout_alignParentRight="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+    <include layout="@layout/divide_line"/>
+    <RelativeLayout
+        android:padding="5dp"
+        android:id="@+id/timeuser"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:text="发送人"
+            android:layout_marginLeft="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/publish_user"
+            android:layout_marginRight="5dp"
+            android:layout_alignParentRight="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+    <include layout="@layout/divide_line"/>
+
+    <TextView
+        android:text="内容"
+        android:layout_marginLeft="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:gravity="top|left"
+        android:id="@+id/publish_content"
+        android:layout_weight="1"
+        android:layout_marginLeft="5dp"
+        android:background="#ffffffff"
+        android:layout_marginTop="10dp"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="0dp" />
+
+    <include layout="@layout/divide_line"/>
+    <!--附件-->
+    <LinearLayout
+        android:id="@+id/showfile"
+        android:padding="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:text="附件:"
+            android:gravity="center"
+            android:layout_marginLeft="5dp"
+            android:layout_alignParentLeft="true"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
+        <TextView
+            android:text="sdfsdfds"
+            android:layout_weight="1"
+            android:gravity="left"
+            android:textColor="#00f"
+            android:id="@+id/filename"
+            android:layout_marginLeft="5dp"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+    <include layout="@layout/divide_line"/>
+    <Button
+        android:id="@+id/delete"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:background="@drawable/main_item_selector4"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+</LinearLayout>

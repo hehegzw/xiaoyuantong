@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="#fff">
+    <TextView
+        android:paddingLeft="8dp"
+        android:id="@+id/clicktext"
+        android:text="点击加载所有评论..."
+        android:textColor="#00f"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+</LinearLayout>

@@ -1,0 +1,79 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="300dp"
+    android:layout_height="wrap_content"
+    android:background="#cccccc"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="#000000">
+
+        <TextView
+            android:id="@+id/title_name"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="10dp"
+            android:gravity="center"
+            android:text="修改信息"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="#ffffffff" />
+
+    </RelativeLayout>
+    <EditText
+        android:id="@+id/edit_all"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:background="@drawable/dialog_edit_shape"
+        android:gravity="center_vertical"
+        android:paddingBottom="10dp"
+        android:paddingTop="10dp"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+    <EditText
+        android:id="@+id/edit_number"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:background="@drawable/dialog_edit_shape"
+        android:gravity="center_vertical"
+        android:inputType="number"
+        android:paddingBottom="10dp"
+        android:paddingTop="10dp"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+    <RadioGroup
+        android:id="@+id/group"
+        android:gravity="center"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+            <RadioButton
+                android:id="@+id/man"
+                android:checked="true"
+                android:text="男"
+                android:layout_marginRight="30dp"
+                android:layout_alignParentLeft="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <RadioButton
+                android:id="@+id/weman"
+                android:text="女"
+                android:layout_alignParentLeft="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+    </RadioGroup>
+    <Button
+        android:id="@+id/submit"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:background="@drawable/main_item_selector1"
+        android:text="确定"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+</LinearLayout>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="#aaaaaa"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="来自:" />
+        <TextView
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="#aaaaaa"
+            android:id="@+id/fromusername"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="刘备" />
+    </LinearLayout>
+    <TextView
+        android:id="@+id/msg_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:maxEms="15"
+        android:singleLine="false"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="周末，我在街上看见一个男人在和我心爱的女神吵架，吵着吵着男人居然动起了手，身为一个爷们我怎么能眼睁睁的看着心爱的女神受欺负，于是我用手捂住了双眼..." />
+
+    <TextView
+        android:textColor="#aaaaaa"
+        android:id="@+id/msg_time"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="2015-10-12 12:12:12"
+        android:layout_marginBottom="10dp"/>
+    <ListView
+        android:id="@+id/list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"></ListView>
+</LinearLayout>

@@ -1,0 +1,55 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/fragment_back">
+
+    <include layout="@layout/titlbar"></include>
+    <EditText
+        android:layout_weight="2"
+        android:id="@+id/title"
+        android:gravity="top|left"
+        android:background="#ffffff"
+        android:layout_margin="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="0dp" />
+
+    <EditText
+        android:layout_weight="6"
+        android:id="@+id/content"
+        android:gravity="top|left"
+        android:background="#ffffff"
+        android:layout_margin="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="0dp" />
+    <LinearLayout
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_margin="5dp"
+        android:orientation="horizontal">
+        <TextView
+            android:gravity="center"
+            android:text="悬赏"
+            android:layout_marginRight="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
+        <EditText
+            android:id="@+id/score"
+            android:gravity="center"
+            android:layout_marginRight="5dp"
+            android:background="#ffffff"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+    <Button
+        android:id="@+id/publish"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:background="@drawable/main_item_selector1"
+        android:text="发布"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+</LinearLayout>

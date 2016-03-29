@@ -1,0 +1,27 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/fragment_back">
+
+    <include layout="@layout/titlbar"></include>
+    <EditText
+        android:id="@+id/write"
+        android:layout_weight="1"
+        android:gravity="top|left"
+        android:layout_margin="5dp"
+        android:background="#ffffff"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="@string/hello_world" />
+    <Button
+        android:id="@+id/submit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:background="@drawable/main_item_selector1"
+        android:text="下一步"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+</LinearLayout>

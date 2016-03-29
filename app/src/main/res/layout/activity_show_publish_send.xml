@@ -1,0 +1,177 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+    <!--title-->
+    <include layout="@layout/titlbar"></include>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="5dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:text="标题" />
+
+        <TextView
+            android:id="@+id/publish_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="5dp" />
+    </RelativeLayout>
+
+    <include layout="@layout/divide_line" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="5dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="5dp"
+            android:text="时间" />
+
+        <TextView
+            android:id="@+id/publish_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="5dp" />
+    </RelativeLayout>
+
+    <include layout="@layout/divide_line" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="5dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:text="发送人" />
+
+        <TextView
+            android:id="@+id/publish_user"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="5dp"
+            android:gravity="right" />
+    </RelativeLayout>
+
+    <include layout="@layout/divide_line" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:text="内容" />
+
+    <TextView
+        android:id="@+id/publish_content"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="10dp"
+        android:layout_weight="1"
+        android:background="#ffffffff"
+        android:gravity="top|left"
+        android:paddingBottom="5dp"
+        android:paddingTop="5dp" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:padding="5dp">
+
+        <TextView
+            android:id="@+id/text1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_marginRight="10dp"
+            android:text="已回执人数:" />
+
+        <TextView
+            android:id="@+id/replyedCount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/text1"
+            android:text="0" />
+
+        <LinearLayout
+            android:id="@+id/unReply"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="10dp"
+            android:clickable="true"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/text2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:text="未回执人数"
+                android:textColor="#ff1d2e" />
+
+            <TextView
+                android:id="@+id/unreplyCount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:textColor="#ff1d2e" />
+        </LinearLayout>
+    </RelativeLayout>
+
+    <include layout="@layout/divide_line" />
+    <!--附件-->
+    <LinearLayout
+        android:id="@+id/showfile"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="5dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="5dp"
+            android:gravity="center"
+            android:text="附件：" />
+
+        <TextView
+            android:id="@+id/filename"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_weight="1"
+            android:gravity="left"
+            android:textColor="#00f" />
+    </LinearLayout>
+
+    <include layout="@layout/divide_line" />
+
+    <Button
+        android:id="@+id/delete"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:background="@drawable/main_item_selector4"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+</LinearLayout>

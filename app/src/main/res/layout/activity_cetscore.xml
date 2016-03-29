@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/fragment_back"
+    android:orientation="vertical" >
+
+    <include layout="@layout/titlbar"></include>
+    <LinearLayout
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:background="#ffffff"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:layout_height="0dp">
+        <TextView
+            android:text="姓名:"
+            android:layout_marginLeft="10dp"
+            android:gravity="center_vertical"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
+        <TextView
+            android:id="@+id/name"
+            android:layout_marginLeft="10dp"
+            android:gravity="center_vertical"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:background="#ffffff"
+        android:layout_marginBottom="5dp"
+        android:layout_height="0dp">
+        <TextView
+            android:text="学校:"
+            android:layout_marginLeft="10dp"
+            android:gravity="center_vertical"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
+        <TextView
+            android:id="@+id/school"
+            android:layout_marginLeft="10dp"
+            android:gravity="center_vertical"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:background="#ffffff"
+        android:layout_marginBottom="5dp"
+        android:layout_height="0dp">
+        <TextView
+            android:text="考试类别:"
+            android:layout_marginLeft="10dp"
+            android:gravity="center_vertical"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
+        <TextView
+            android:id="@+id/test_type"
+            android:layout_marginLeft="10dp"
+            android:gravity="center_vertical"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:background="#ffffff"
+        android:layout_marginBottom="5dp"
+        android:layout_height="0dp">
+        <TextView
+            android:text="准考证号:"
+            android:layout_marginLeft="10dp"
+            android:gravity="center_vertical"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
+        <TextView
+            android:id="@+id/id"
+            android:layout_marginLeft="10dp"
+            android:gravity="center_vertical"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:background="#ffffff"
+        android:layout_marginBottom="5dp"
+        android:layout_height="0dp">
+        <TextView
+            android:text="考试时间:"
+            android:layout_marginLeft="10dp"
+            android:gravity="center_vertical"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
+        <TextView
+            android:id="@+id/time"
+            android:layout_marginLeft="10dp"
+            android:gravity="center_vertical"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:background="#ffffff"
+        android:layout_marginBottom="5dp"
+        android:layout_height="0dp">
+        <TextView
+            android:text="总分:"
+            android:layout_marginLeft="10dp"
+            android:gravity="center_vertical"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
+        <TextView
+            android:id="@+id/totle_score"
+            android:layout_marginLeft="10dp"
+            android:gravity="center_vertical"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:background="#ffffff"
+        android:layout_marginBottom="5dp"
+        android:layout_height="0dp">
+        <TextView
+            android:text="听力:"
+            android:layout_marginLeft="10dp"
+            android:gravity="center_vertical"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
+        <TextView
+            android:id="@+id/listen"
+            android:layout_marginLeft="10dp"
+            android:gravity="center_vertical"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:background="#ffffff"
+        android:layout_marginBottom="5dp"
+        android:layout_height="0dp">
+        <TextView
+            android:text="阅读:"
+            android:layout_marginLeft="10dp"
+            android:gravity="center_vertical"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
+        <TextView
+            android:id="@+id/read"
+            android:layout_marginLeft="10dp"
+            android:gravity="center_vertical"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:background="#ffffff"
+        android:layout_marginBottom="5dp"
+        android:layout_height="0dp">
+        <TextView
+            android:text="写作与翻译:"
+            android:layout_marginLeft="10dp"
+            android:gravity="center_vertical"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
+        <TextView
+            android:id="@+id/write"
+            android:layout_marginLeft="10dp"
+            android:gravity="center_vertical"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+
+</LinearLayout>

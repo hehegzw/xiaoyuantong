@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@android:color/white"
+    android:padding="10dp">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="8dp"
+        android:background="@android:color/darker_gray" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp">
+
+        <ImageView
+            android:id="@+id/img_head"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_alignParentLeft="true"
+            android:src="@drawable/logo" />
+
+        <TextView
+            android:id="@+id/tv_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="20dp"
+            android:layout_toEndOf="@+id/img_head"
+            android:layout_toRightOf="@+id/img_head"
+            android:text="NewOrin"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tv_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_name"
+            android:layout_toRightOf="@+id/img_head"
+            android:maxEms="15"
+            android:singleLine="false"
+            android:text="周末，我在街上看见一个男人在和我心爱的女神吵架，吵着吵着男人居然动起了手，身为一个爷们我怎么能眼睁睁的看着心爱的女神受欺负，于是我用手捂住了双眼..." />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp">
+
+        <TextView
+            android:id="@+id/tv_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="60dp"
+            android:text="时间" />
+
+        <ImageButton
+            android:id="@+id/imb_comment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="20dp"
+            android:layout_toLeftOf="@+id/imagebutton_favour"
+            android:background="@drawable/icon_comment" />
+
+        <ImageButton
+
+            android:id="@+id/imagebutton_favour"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="5dp"
+            android:layout_toLeftOf="@+id/text_favour"
+            android:background="@drawable/icon_favour_normal" />
+
+        <TextView
+            android:id="@+id/text_favour"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="20dp"
+            android:text="0"
+            android:textColor="@android:color/holo_red_dark" />
+
+    </RelativeLayout>
+    <ListView
+        android:id="@+id/comment_listview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+    </ListView>
+</LinearLayout>

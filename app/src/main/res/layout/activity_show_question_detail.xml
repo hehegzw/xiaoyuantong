@@ -1,0 +1,75 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/fragment_back">
+
+    <include layout="@layout/titlbar"></include>
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_margin="5dp"
+        android:background="#ffffff"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/hello_world" />
+    <TextView
+        android:id="@+id/content"
+        android:layout_margin="5dp"
+        android:background="#ffffff"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/hello_world" />
+    <RelativeLayout
+        android:background="#ffffff"
+        android:layout_margin="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/text1"
+            android:text="提问者:"
+            android:layout_alignParentLeft="true"
+            android:layout_marginRight="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/user"
+            android:layout_toRightOf="@id/text1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/score"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:text="悬赏积分:"
+            android:layout_toLeftOf="@id/score"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+    <TextView
+        android:text="回答"
+        android:layout_margin="5dp"
+        android:padding="5dp"
+        android:layout_toLeftOf="@id/score"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <ListView
+        android:layout_weight="1"
+        android:id="@+id/answer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"></ListView>
+    <Button
+        android:id="@+id/pushanswer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:background="@drawable/main_item_selector1"
+        android:text="我来回答"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+</LinearLayout>

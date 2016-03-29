@@ -1,0 +1,106 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+    <include layout="@layout/titlbar"></include>
+    <!-- 总成绩，学分，绩点 -->
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="@color/fragment_back">
+
+        <TextView
+            android:id="@+id/text1"
+            android:layout_marginRight="5dp"
+            android:layout_marginLeft="10dp"
+            android:layout_alignParentLeft="true"
+            android:layout_width="wrap_content"
+            android:gravity="center"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:layout_height="match_parent"
+            android:text="获得学分:" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:id="@+id/get_score"
+            android:gravity="center"
+            android:layout_toRightOf="@id/text1"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:layout_height="match_parent"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:id="@+id/point"
+            android:gravity="center"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="10dp"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:layout_height="match_parent" />
+        <TextView
+            android:layout_toLeftOf="@id/point"
+            android:layout_width="wrap_content"
+            android:gravity="center"
+            android:layout_marginRight="5dp"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:layout_height="match_parent"
+            android:text="绩点分:" />
+
+
+    </RelativeLayout>
+    <!-- 表头:课程名称，学分，绩点，成绩 -->
+
+    <LinearLayout
+        android:background="#500000ff"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:text="课程名称"
+            android:layout_width="0dp"
+            android:layout_marginLeft="5dp"
+            android:gravity="center_vertical"
+            android:layout_height="match_parent"
+            android:layout_weight="5" />
+
+        <TextView
+            android:text="学分"
+            android:layout_marginRight="10dp"
+            android:layout_width="0dp"
+            android:gravity="center"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+
+        <TextView
+            android:text="绩点"
+            android:layout_width="0dp"
+            android:layout_marginRight="10dp"
+            android:gravity="center_vertical"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+
+        <TextView
+            android:text="成绩"
+            android:layout_width="0dp"
+            android:layout_marginRight="10dp"
+            android:gravity="center_vertical"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="horizontal" >
+
+        <ListView
+            android:id="@+id/list"
+            android:layout_marginLeft="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+        </ListView>
+    </LinearLayout>
+
+</LinearLayout>

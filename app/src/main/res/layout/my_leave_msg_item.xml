@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/white"
+    android:orientation="vertical"
+    android:padding="10dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="#aaaaaa"
+            android:layout_marginLeft="40dp"
+            android:id="@+id/fromusername"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="刘备" />
+        <TextView
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="#aaaaaa"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="来自:" />
+        <TextView
+            android:textColor="#aaaaaa"
+            android:id="@+id/msg_time"
+            android:layout_alignParentRight="true"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="2015-10-12 12:12:12" />
+    </RelativeLayout>
+    <TextView
+        android:id="@+id/msg_content"
+        android:textColor="#000"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:maxEms="15"
+        android:singleLine="false"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="周末，我在街上看见一个男人在和我心爱的女神吵架，吵着吵着男人居然动起了手，身为一个爷们我怎么能眼睁睁的看着心爱的女神受欺负，于是我用手捂住了双眼..." />
+    <View
+        android:layout_marginTop="3dp"
+        android:layout_marginBottom="3dp"
+        android:background="#dddddd"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"/>
+    <ListView
+        android:id="@+id/list"
+        android:divider="@null"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+    <LinearLayout
+        android:layout_marginTop="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <EditText
+            android:id="@+id/reply"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:padding="3dp"
+            android:textSize="15sp"
+            android:background="@drawable/leavemsg_editbk"
+            android:hint="我来说一句..."
+            android:layout_height="wrap_content"
+            android:layout_marginRight="3dp"/>
+        <TextView
+            android:id="@+id/submit"
+            android:text="回复"
+            android:textColor="#00f"
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+</LinearLayout>

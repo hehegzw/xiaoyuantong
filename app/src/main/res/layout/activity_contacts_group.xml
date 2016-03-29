@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.jlstudio.group.activity.ContactsGroupActivity">
+
+    <include layout="@layout/contacts_title_bar" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/title" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/title" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <ListView
+            android:id="@+id/contacts_listview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <LinearLayout
+            android:id="@+id/layout_show_no_group"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:src="@drawable/icon_no_contacts_group" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="5dp"
+                android:text="没有分组"
+                android:textSize="20sp" />
+
+        </LinearLayout>
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="10dp"
+        android:background="@android:color/holo_blue_light"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:id="@+id/layout_add_group"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_icon_add"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="@string/add"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textColor="#ffffffff" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:clickable="false"
+                android:text="新建"
+                android:textSize="10sp" />
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="0.1dp"
+            android:layout_height="match_parent"
+            android:background="@color/title" />
+
+
+        <LinearLayout
+            android:id="@+id/layout_delete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_icon_delete"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="@string/delete"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textColor="#ffffffff" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:clickable="false"
+                android:text="删除"
+                android:textSize="10sp" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+</LinearLayout>

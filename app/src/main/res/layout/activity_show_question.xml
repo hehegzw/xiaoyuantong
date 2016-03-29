@@ -1,0 +1,44 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/fragment_back"
+    android:orientation="vertical">
+
+    <include layout="@layout/titlbar"></include>
+
+    <LinearLayout
+        android:id="@+id/search"
+        android:clickable="true"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_margin="5dp"
+        android:background="@color/school_message_item_back"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/text_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginRight="10dp"
+            android:gravity="center"
+            android:text="@string/searchicon"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="搜索" />
+    </LinearLayout>
+
+    <ListView
+        android:id="@+id/show_question"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </ListView>
+</LinearLayout>

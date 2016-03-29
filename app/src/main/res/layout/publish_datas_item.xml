@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:paddingTop="10dp"
+    android:paddingBottom="10dp"
+    android:background="@drawable/school_message_item_selector">
+
+    <TextView
+        android:id="@+id/title"
+        android:text="sdlfdslkjfds"
+        android:textColor="#000"
+        android:layout_marginBottom="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+    <TextView
+        android:id="@+id/time"
+        android:text="sdfsdf"
+        android:layout_below="@id/title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+    <TextView
+        android:id="@+id/iscallback"
+        android:text="未回执"
+        android:textColor="#bbb"
+        android:layout_centerVertical="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="10dp"
+        android:layout_alignParentRight="true"
+        android:textAppearance="?android:attr/textAppearanceSmall"/>
+</RelativeLayout>

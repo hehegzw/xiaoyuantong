@@ -1,0 +1,66 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+    </style>
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+    <style name="Activity.Theme" parent="@style/AppTheme">
+        <item name="android:windowAnimationStyle">@style/anim_activity</item>
+    </style>
+    <!--动画-->
+    <style name="anim_activity" parent="@android:style/Animation.Activity">
+        <item name="android:activityOpenEnterAnimation">@anim/activity_in</item>
+        <item name="android:activityOpenExitAnimation">@anim/activity_out</item>
+        <item name="android:activityCloseEnterAnimation">@anim/activity_in</item>
+        <item name="android:activityCloseExitAnimation">@anim/activity_out</item>
+    </style>
+    <!--动画左右-->
+    <style name="anim_left_right" parent="@android:style/Animation.Activity">
+        <item name="android:activityOpenEnterAnimation">@anim/activity_left_in</item>
+        <item name="android:activityOpenExitAnimation">@anim/activity_left_out</item>
+        <item name="android:activityCloseEnterAnimation">@anim/activity_right_in</item>
+        <item name="android:activityCloseExitAnimation">@anim/activity_right_out</item>
+    </style>
+    <!--透明对话框-->
+    <style name="dialog" parent="@android:style/Theme.Dialog">
+        <item name="android:windowFrame">@null</item><!--边框-->
+        <item name="android:windowIsFloating">true</item><!--是否浮现在activity之上-->
+        <item name="android:windowIsTranslucent">false</item><!--半透明-->
+        <item name="android:windowNoTitle">true</item><!--无标题-->
+        <item name="android:windowBackground">@color/transparent</item><!--背景透明-->
+        <item name="android:backgroundDimEnabled">true</item><!--模糊-->
+    </style>
+    <!--”我的“条目-->
+    <style name="MyItem">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">10dp</item>
+        <item name="android:clickable">true</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:background">@drawable/school_message_item_selector</item>
+    </style>
+    <!--”我的“左侧文字-->
+    <style name="MyItem_left_text">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:padding">10dp</item>
+        <item name="android:layout_centerVertical">true</item>
+    </style>
+    <!--”我的“右侧侧文字-->
+    <style name="MyItem_right_text">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:padding">10dp</item>
+        <item name="android:layout_alignParentRight">true</item>
+        <item name="android:layout_centerVertical">true</item>
+    </style>
+    <!--progressbar-->
+    <style name="CustomProgressStyle" parent="@android:style/Widget.ProgressBar.Large">
+        <item name="android:minWidth">25dip</item>
+        <item name="android:maxWidth">25dip</item>
+        <item name="android:minHeight">25dip</item>
+        <item name="android:maxHeight">25dip</item>
+    </style>
+</resources>

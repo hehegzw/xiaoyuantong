@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="5dp"
+    android:gravity="center_vertical"
+    android:background="@drawable/mycontact_item_child_selector"  >
+
+    <com.jlstudio.main.widget.CircleImageView
+        android:id="@+id/face"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:src="@drawable/logo"/>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginLeft="5dp"
+        android:paddingBottom="5dp"
+        android:paddingTop="5dp">
+        <TextView
+            android:id="@+id/name"
+            android:text="张三"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/sign"
+            android:text="张三"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+</LinearLayout>

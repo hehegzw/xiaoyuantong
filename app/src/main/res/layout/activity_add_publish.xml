@@ -1,0 +1,96 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/fragment_back"
+    android:orientation="vertical">
+    <!--title-->
+    <include layout="@layout/titlbar"></include>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/titlname"
+            android:layout_alignParentLeft="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="10dp"
+            android:text="标题" />
+        <TextView
+            android:textColor="#b6b6b6"
+            android:id="@+id/title_count"
+            android:layout_marginRight="10dp"
+            android:layout_alignParentRight="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="您还剩下20个汉字可以输入" />
+    </RelativeLayout>
+
+    <EditText
+        android:id="@+id/publish_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="10dp"
+        android:background="#ffffffff"
+        android:paddingBottom="5dp"
+        android:paddingTop="5dp" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="10dp"
+            android:text="内容" />
+        <TextView
+            android:textColor="#b6b6b6"
+            android:id="@+id/content_count"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_alignParentRight="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="您还剩下210个汉字可以输入" />
+    </RelativeLayout>
+    <EditText
+        android:id="@+id/publish_content"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="10dp"
+        android:layout_weight="1"
+        android:background="#ffffffff"
+        android:gravity="top|left"
+        android:paddingBottom="5dp"
+        android:paddingTop="5dp" />
+    <LinearLayout
+        android:layout_marginTop="5dp"
+        android:id="@+id/upLoadArea"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+        <TextView
+            android:id="@+id/filePath"
+            android:layout_weight="1"
+            android:background="#fff"
+            android:padding="10dp"
+            android:layout_width="0dp"
+            android:layout_margin="5dp"
+            android:layout_height="match_parent" />
+        <TextView
+            android:id="@+id/upLoad"
+            android:textSize="30dp"
+            android:gravity="top"
+            android:text="@string/add_file"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_margin="5dp"/>
+    </LinearLayout>
+</LinearLayout>

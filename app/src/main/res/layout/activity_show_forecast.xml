@@ -1,0 +1,105 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="#500f">
+
+        <TextView
+            android:id="@+id/select_area"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:gravity="center"
+            android:background="@drawable/weather_item_selector"
+            android:layout_height="match_parent"
+            android:paddingLeft="10dp"
+            android:paddingTop="10dp"
+            android:text="选择地区" />
+
+        <TextView
+            android:id="@+id/area"
+            android:layout_weight="3"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:layout_width="0dp"
+        android:gravity="center"
+        android:layout_height="match_parent"
+        android:paddingTop="10dp" />
+
+        <TextView
+            android:id="@+id/refresh"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:background="@drawable/weather_item_selector"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:paddingRight="10dp"
+            android:paddingTop="10dp"
+            android:text="刷新" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:orientation="horizontal"
+            android:layout_weight="1">
+            <TextView
+                android:id="@+id/show_ganmao"
+                android:layout_weight="5"
+                android:layout_width="0dp"
+                android:layout_height="match_parent" />
+            <TextView
+                android:id="@+id/show_data"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="5"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/show_wendu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textSize="80sp" />
+            <TextView
+                android:id="@+id/show_type"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="晴"
+                android:textSize="40sp" />
+
+            <TextView
+                android:id="@+id/show_wind"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="hehe"
+                android:textSize="40sp" />
+
+            <TextView
+                android:id="@+id/show_temp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="hehe"
+                android:textSize="40sp" />
+        </LinearLayout>
+    </LinearLayout>
+
+
+</LinearLayout>

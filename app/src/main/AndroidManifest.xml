@@ -1,0 +1,283 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.jlstudio">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.SEND_SMS" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+
+    <permission
+        android:name="com.jlstudio.permission.JPUSH_MESSAGE"
+        android:protectionLevel="signature" />
+
+    <!-- Required  一些系统要求的权限，如访问网络等 -->
+    <uses-permission android:name="com.jlstudio.permission.JPUSH_MESSAGE" />
+    <uses-permission android:name="android.permission.RECEIVE_USER_PRESENT" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+
+    <!-- Optional for location -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
+
+    <application
+        android:name=".main.application.MyApplication"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/Activity.Theme">
+        <activity
+            android:name=".main.activity.MainActivity"
+            android:label="@string/app_name" />
+        <activity
+            android:name=".main.activity.BaseActivity"
+            android:label="@string/title_activity_base" />
+        <activity
+            android:name=".publish.activity.AddPublishAty"
+            android:label="@string/title_activity_add_publish_aty" />
+        <activity
+            android:name=".publish.activity.ShowSendPublishAty"
+            android:label="@string/title_activity_show_publish_aty" />
+        <activity
+            android:name=".iknow.activity.ScheduleAty"
+            android:label="ScheduleAty" />
+
+        <!-- Required SDK核心功能 -->
+        <activity
+            android:name="cn.jpush.android.ui.PushActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="cn.jpush.android.ui.PushActivity" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="com.jlstudio" />
+            </intent-filter>
+        </activity>
+        <!-- Required  SDK核心功能 -->
+        <service
+            android:name="cn.jpush.android.service.DownloadService"
+            android:enabled="true"
+            android:exported="false" />
+
+        <!-- Required SDK 核心功能 -->
+        <service
+            android:name="cn.jpush.android.service.PushService"
+            android:enabled="true"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="cn.jpush.android.intent.REGISTER" />
+                <action android:name="cn.jpush.android.intent.REPORT" />
+                <action android:name="cn.jpush.android.intent.PushService" />
+                <action android:name="cn.jpush.android.intent.PUSH_TIME" />
+            </intent-filter>
+        </service>
+
+        <!-- Required SDK核心功能 -->
+        <receiver
+            android:name="cn.jpush.android.service.PushReceiver"
+            android:enabled="true"
+            android:exported="false">
+            <intent-filter android:priority="1000">
+                <action android:name="cn.jpush.android.intent.NOTIFICATION_RECEIVED_PROXY" />
+                <!-- Required  显示通知栏 -->
+                <category android:name="com.jlstudio" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.USER_PRESENT" />
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+            </intent-filter>
+            <!-- Optional -->
+            <intent-filter>
+                <action android:name="android.intent.action.PACKAGE_ADDED" />
+                <action android:name="android.intent.action.PACKAGE_REMOVED" />
+
+                <data android:scheme="package" />
+            </intent-filter>
+        </receiver>
+
+        <!-- Required SDK核心功能 -->
+        <receiver android:name="cn.jpush.android.service.AlarmReceiver" />
+
+        <!-- User defined.    用户自定义的广播接收器 -->
+        <receiver
+            android:name=".publish.receiver.PublishReceiver"
+            android:enabled="true"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="cn.jpush.android.intent.REGISTRATION" />
+                <!-- Required  用户注册SDK的intent -->
+                <action android:name="cn.jpush.android.intent.UNREGISTRATION" />
+                <action android:name="cn.jpush.android.intent.MESSAGE_RECEIVED" />
+                <!-- Required  用户接收SDK消息的intent -->
+                <action android:name="cn.jpush.android.intent.NOTIFICATION_RECEIVED" />
+                <!-- Required  用户接收SDK通知栏信息的intent -->
+                <action android:name="cn.jpush.android.intent.NOTIFICATION_OPENED" />
+                <!-- Required  用户打开自定义通知栏的intent -->
+                <action android:name="cn.jpush.android.intent.ACTION_RICHPUSH_CALLBACK" />
+                <!-- Optional 用户接受Rich Push Javascript 回调函数的intent -->
+                <action android:name="cn.jpush.android.intent.CONNECTION" />
+                <!-- 接收网络变化 连接/断开 since 1.6.3 -->
+                <category android:name="com.jlstudio" />
+            </intent-filter>
+        </receiver>
+
+        <!-- Required  . Enable it you can get statistics data with channel -->
+        <meta-data
+            android:name="JPUSH_CHANNEL"
+            android:value="developer-default" />
+        <meta-data
+            android:name="JPUSH_APPKEY"
+            android:value="1beaf3cfd45575fa04a060a0" />
+        <!-- </>值来自开发者平台取得的AppKey -->
+        <service
+            android:name=".publish.server.SendSMSService"
+            android:exported="false" />
+        <service
+            android:name=".publish.server.MyService"
+            android:exported="false" />
+
+        <activity
+            android:name=".main.activity.LoginAty"
+            android:label="@string/title_activity_login" />
+        <activity
+            android:name=".main.dialog.UploadFaceDialog"
+            android:theme="@style/dialog" />
+        <activity
+            android:name=".main.dialog.UpdateUserDatasDialog"
+            android:theme="@style/dialog" />
+
+        <!-- 配置安卓自带的搜索框 -->
+        <intent-filter>
+            <action android:name="android.intent.action.SEARCH" />
+        </intent-filter>
+        <!-- 指定搜索searchable.xml文件 -->
+        <meta-data
+            android:name="android.app.searchable"
+            android:resource="@xml/searchable" />
+
+        <activity
+            android:name=".publish.activity.ShowReceivePublishAty"
+            android:label="@string/title_activity_show_msg" />
+        <activity
+            android:name=".iknow.activity.ScoreAty"
+            android:label="score" />
+        <activity
+            android:name=".iknow.activity.CETScoreAty"
+            android:label="CETScoreAty" />
+        <!-- 声名在本应用程序中都可以调用onSearchRequested()进行搜索 -->
+        <meta-data
+            android:name="android.app.default_searchable"
+            android:value=".MainActivity" />
+
+        <activity android:name=".weather.activity.InitDataActivity" />
+        <activity
+            android:name=".weather.activity.ShowArea"
+            android:label="title_activity_show_area" />
+        <activity
+            android:name=".weather.activity.ShowForecast"
+            android:label="title_activity_show_forecast" />
+
+        <service
+            android:name=".weather.service.MyService"
+            android:enabled="true"
+            android:exported="true" />
+
+        <receiver
+            android:name=".weather.receiver.MyReceiver"
+            android:enabled="true"
+            android:exported="true" />
+
+        <activity
+            android:name=".main.activity.WelcomeAty"
+            android:label="@string/title_activity_welcome_aty" />
+        <activity
+            android:name=".swzl.activity.LostAndFound"
+            android:label="title_activity_lost_and_found" />
+        <activity android:name=".swzl.activity.LostPublishActivity" />
+        <activity android:name=".swzl.activity.LostAndFoundDetail" />
+        <activity android:name=".main.activity.MoreFunAty" />
+        <activity android:name=".publish.activity.PublishDatasAty" />
+        <activity android:name=".publish.activity.ShowPersonDetailAty" />
+        <activity android:name=".publish.activity.ShowPersonAty" />
+        <activity
+            android:name=".publish.dialog.UNRegisterQueryDialog"
+            android:theme="@android:style/Theme.Dialog" />
+        <activity
+            android:name=".publish.activity.AddPublishBySMSAty"
+            android:label="@string/title_activity_add_publish_by_sms" />
+        <activity
+            android:name=".group.activity.ContactsActivity"
+            android:label="@string/title_activity_welcome_aty" />
+        <activity
+            android:name=".group.activity.ContactsDataActivity"
+            android:label="@string/title_activity_welcome_aty" />
+        <activity
+            android:name=".group.activity.ContactsGroupActivity"
+            android:label="@string/title_activity_welcome_aty" />
+        <activity
+            android:name=".group.activity.DeleteGroupActivity"
+            android:label="@string/title_activity_welcome_aty" />
+        <activity
+            android:name=".group.activity.FriendCircleActivity"
+            android:label="@string/title_activity_welcome_aty" />
+        <activity android:name=".group.activity.LeaveMsgActivity" />
+        <activity android:name=".group.activity.MyDataAty" />
+        <activity
+            android:name=".group.activity.ShowContactsActivity"
+            android:launchMode="singleTask">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".group.activity.MyLeaveMsgActivity"
+            android:configChanges="keyboard|screenSize"
+            android:label="@string/title_activity_welcome_aty" />
+        <activity
+            android:name=".group.activity.SearchActivity"
+            android:label="@string/title_activity_welcome_aty" />
+        <activity
+            android:name=".group.activity.AddFriend"
+            android:label="@string/title_activity_add_friend"></activity>
+        <activity
+            android:name=".group.activity.NewFriendData"
+            android:label="@string/title_activity_new_friend_data"></activity>
+        <activity
+            android:name=".group.activity.GroupManager"
+            android:label="@string/title_activity_group_manager"></activity>
+        <activity android:name=".group.activity.LeaveMsgDetailAty"></activity>
+        <activity
+            android:name=".iknow.activity.FeedBack"
+            android:label="@string/title_activity_feed_back"></activity>
+        <activity
+            android:name=".market.activity.ChatActivity"
+            android:windowSoftInputMode="adjustResize|stateHidden"></activity>
+        <activity android:name=".market.activity.PublishGoodAty" />
+        <activity android:name=".market.activity.ShowGoodsAty" />
+        <activity
+            android:name=".market.activity.MyGoodsActivity"
+            android:label="@string/title_activity_my_goods"></activity>
+        <activity
+            android:name=".market.activity.MyGoodDetail"
+            android:label="@string/title_activity_my_good_detail"></activity>
+        <activity android:name=".market.activity.GoodsDetailActivity"></activity>
+    </application>
+
+</manifest>

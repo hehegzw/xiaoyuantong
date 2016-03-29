@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="fragment_back">#eeeeee</color>
+    <color name="school_message_item_back">#ffffffff</color>
+    <color name="green">#0f0</color>
+    <color name="main_item_pressed_1">#7426c277</color>
+    <color name="main_item_unpress_1">#26c277</color>
+    <color name="main_item_pressed_2">#74bec23b</color>
+    <color name="main_item_unpress_2">#fce0df3d</color>
+    <color name="main_item_pressed_3">#745e69c2</color>
+    <color name="main_item_unpress_3">#8e99fb</color>
+    <color name="main_item_pressed_4">#74c27586</color>
+    <color name="main_item_unpress_4">#dd585c</color>
+    <color name="title">#e7545454</color>
+    <color name="title_text">#ffffff</color>
+    <color name="textview_boder">#cae1ff</color>
+    <color name="schedule_shape_1">#e0ffd39b</color>
+    <color name="schedule_shape_2">#e0ff6eb4</color>
+    <color name="schedule_shape_3">#e0cdb5cd</color>
+    <color name="schedule_shape_4">#e0bcee68</color>
+    <color name="schedule_shape_5">#e0b0e2ff</color>
+    <color name="btn_send_message">#FF0000</color>
+    <color name="white">#ffffff</color>
+    <color name="transparent">#00000000</color>
+    <color name="black">#000000</color>
+    <color name="weather_item_selected">#0000ff</color>
+    <color name="login_edit_shape">#775c94f0</color>
+    <color name="welcome_button_shape">#eedfe0ed</color>
+    <color name="blue">#4848FF</color>
+    <color name="listview_pressed">#FFCEFF</color>
+    <color name="listview_normal">#ffffff</color>
+    <color name="mycontact_item_child_unpress">#f5f5f5</color>
+    <color name="mycontact_item_child_press">#ffffff</color>
+    <color name="title_bar_blue">#ff00ddff</color>
+    <color name="title_bar_gray">#a1d4d4d4</color>
+
+    <color name="holo_blue_bright">#ff00ddff</color>
+    <color name="darker_gray">#aaa</color>
+    <!--成绩条色-->
+    <color name="td_one">#cae1ff</color>
+    <color name="td_two">#eee0e5</color>
+    <color name="td_three">#cdc1c5</color>
+    <color name="td_four">#cccccc</color>
+    <!--刷新条色-->
+    <color name="fresh_one">#ff0000</color>
+    <color name="fresh_two">#00ff00</color>
+    <color name="fresh_three">#0000ff</color>
+    <color name="fresh_four">#000000</color>
+    <color name="read_bgcolor">#ffeeeeee</color>
+    <color name="leavemsg_bkf">#FF8C00</color>
+    <color name="leavemsg_bkt">#FFB6C1</color>
+</resources>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    >
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="2dp"
+        android:background="@drawable/leavemsg_editbk"
+        android:padding="8dp">
+        <TextView
+            android:id="@+id/reply"
+            android:layout_width="wrap_content"
+            android:padding="3dp"
+            android:textSize="10dp"
+            android:hint="我来说一句..."
+            android:layout_height="wrap_content"
+            android:layout_marginRight="3dp"/>
+        <TextView
+            android:id="@+id/submit"
+            android:text="回复"
+            android:padding="3dp"
+            android:textSize="10dp"
+            android:layout_alignParentRight="true"
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <View
+            android:background="#aaaaaa"
+            android:layout_width="1dp"
+            android:padding="3dp"
+            android:layout_marginRight="10dp"
+            android:layout_toLeftOf="@id/submit"
+            android:layout_height="20dp"></View>
+    </RelativeLayout>
+
+    <View
+        android:background="#aaaaaa"
+        android:layout_width="match_parent"
+        android:layout_height="8dp"/>
+</LinearLayout>
