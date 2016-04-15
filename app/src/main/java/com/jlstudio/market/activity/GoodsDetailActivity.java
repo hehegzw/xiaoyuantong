@@ -44,6 +44,7 @@ public class GoodsDetailActivity extends Activity implements View.OnClickListene
     private TextView goodName;
     private TextView goodPrice;
     private TextView goodDescription;
+    private TextView viewCount;
     private TextView chat;
     private TextView collect;
     private TextView moneyIcon;
@@ -75,6 +76,7 @@ public class GoodsDetailActivity extends Activity implements View.OnClickListene
         addViewCount(good.getId() + "");
         goodName.setText(good.getDescription().split(":")[0]);
         goodPrice.setText(good.getPrice() + "");
+        viewCount.setText(good.getViews()+"");
         goodDescription.setText(good.getDescription().split(":")[1]);
         List<String> imagePath = good.getImages();
         adapter = new GoodDetailAdapter(imagePath,this,screenWidth);
@@ -103,6 +105,7 @@ public class GoodsDetailActivity extends Activity implements View.OnClickListene
         goodDescription = (TextView) findViewById(R.id.description);
         chat = (TextView) findViewById(R.id.chat);
         collect = (TextView) findViewById(R.id.collection);
+        viewCount = (TextView) findViewById(R.id.viewCount);
         goodPic = (LinearLayout) findViewById(R.id.goodPic);
         showPic = (RecyclerView) findViewById(R.id.showPic);
         moneyIcon = (TextView) findViewById(R.id.moneyicon);
