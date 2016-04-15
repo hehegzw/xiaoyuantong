@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,12 +12,14 @@ import android.widget.BaseExpandableListAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.jlstudio.R;
 import com.jlstudio.group.bean.Contacts;
 import com.jlstudio.group.bean.Groups;
 import com.jlstudio.main.application.Config;
 import com.jlstudio.main.net.DownFace;
 import com.jlstudio.main.net.Downloadimgs;
+import com.jlstudio.publish.bean.MyContact;
 
 import java.io.File;
 import java.util.List;
@@ -26,11 +29,11 @@ import java.util.List;
  */
 public class FMyContactSubAdapter extends BaseExpandableListAdapter {
     private List<Groups> listParent;
-    private List<List<Contacts>> listChild;
+    private List<List<MyContact>> listChild;
     private Context context;
     private DownFace df;
 
-    public FMyContactSubAdapter(Context context, List<Groups> listParent, List<List<Contacts>> listChild) {
+    public FMyContactSubAdapter(Context context, List<Groups> listParent, List<List<MyContact>> listChild) {
         this.listParent = listParent;
         this.listChild = listChild;
         this.context = context;
@@ -41,7 +44,7 @@ public class FMyContactSubAdapter extends BaseExpandableListAdapter {
         return listParent;
     }
 
-    public void setList(List<Groups> listParent,List<List<Contacts>> listChild) {
+    public void setList(List<Groups> listParent,List<List<MyContact>> listChild) {
         this.listParent = listParent;
         this.listChild = listChild;
         notifyDataSetChanged();
@@ -107,17 +110,19 @@ public class FMyContactSubAdapter extends BaseExpandableListAdapter {
             convertView = LayoutInflater.from(context).inflate(R.layout.sub_fmycontact_child1, null);
             TextView name = (TextView) convertView.findViewById(R.id.name);
             TextView sign = (TextView) convertView.findViewById(R.id.sign);
-            ImageView image = (ImageView) convertView.findViewById(R.id.image);
+            SimpleDraweeView image = (SimpleDraweeView) convertView.findViewById(R.id.image);
             viewHolder = new ViewHolder(name,sign,image);
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
-        Contacts contact = listChild.get(groupPosition).get(childPosition);
-        viewHolder.name.setText(contact.getRealname());
+        MyContact contact = listChild.get(groupPosition).get(childPosition);
+        viewHolder.name.setText(contact.getName());
         viewHolder.sign.setText(contact.getSign());
-        String url = Config.URL+"faces/" + contact.getUsername() + ".jpg";
-        Downloadimgs.initImageLoader(context).displayImage(url, viewHolder.image, Downloadimgs.getOption());
+        String url = Config.URL+"faces/" + contact.getUid() + ".jpg";
+        Uri uri = Uri.parse(url);
+        viewHolder.image.setImageURI(uri);
+        //Downloadimgs.initImageLoader(context).displayImage(url, viewHolder.image, Downloadimgs.getOption());
         return convertView;
     }
 
@@ -137,9 +142,9 @@ public class FMyContactSubAdapter extends BaseExpandableListAdapter {
     private class ViewHolder {
         public TextView name;
         public TextView sign;
-        public ImageView image;
+        public SimpleDraweeView image;
 
-        public ViewHolder(TextView name, TextView sign, ImageView image) {
+        public ViewHolder(TextView name, TextView sign, SimpleDraweeView image) {
             this.name = name;
             this.sign = sign;
             this.image = image;

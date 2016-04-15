@@ -14,13 +14,14 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.jlstudio.R;
 import com.jlstudio.group.activity.ContactsActivity;
+import com.jlstudio.group.adapter.FMyContactGroupAdapter;
 import com.jlstudio.group.bean.Groups;
 import com.jlstudio.main.application.Config;
 import com.jlstudio.main.bean.CatchData;
 import com.jlstudio.main.db.DBOption;
 import com.jlstudio.main.net.GetDataNet;
 import com.jlstudio.main.util.ProgressUtil;
-import com.jlstudio.publish.adapter.FMyContactAdapter;
+import com.jlstudio.group.adapter.FMyContactAdapter;
 import com.jlstudio.publish.util.JsonToPubhlishData;
 
 import org.json.JSONException;
@@ -39,7 +40,7 @@ public class ContactsGroupFragment extends Fragment implements ExpandableListVie
     private ExpandableListView listView;//显示分组
     private List<Groups> listParent;//年级，自定义分组
     private List<List<Groups>> listChild;//班级，自定义分组
-    private FMyContactAdapter adapter;
+    private FMyContactGroupAdapter adapter;
     private GetDataNet gn;//网络连接
     private DBOption db;//数据库连接
     private CatchData data;//数据库缓存数据
@@ -80,14 +81,14 @@ public class ContactsGroupFragment extends Fragment implements ExpandableListVie
         listParent = new ArrayList<>();
         listChild = new ArrayList<>();
         getDataFromNet();
-        adapter = new FMyContactAdapter(getActivity(),listParent,listChild);
-//        data = db.getCatch(Config.URL + Config.GETCONTACTGROUP + Config.loadUser(getActivity()).getUsername());
-//        if (data == null) {
-//            getDataFromNet();
-//        } else {
-//            refreshList(data.getContent());
-//            ProgressUtil.closeProgressDialog();
-//        }
+        adapter = new FMyContactGroupAdapter(getActivity(),listParent,listChild);
+        data = db.getCatch(Config.URL + Config.GROUPS + Config.loadUser(getActivity()).getUsername());
+        if (data == null) {
+            getDataFromNet();
+        } else {
+            refreshList(data.getContent());
+            ProgressUtil.closeProgressDialog();
+        }
     }
     /**
      * 从网络上获取数据
@@ -104,11 +105,11 @@ public class ContactsGroupFragment extends Fragment implements ExpandableListVie
             @Override
             public void onResponse(String s) {
                 refreshList(s);
-//                if (data == null) {
-//                    db.insertCatch(Config.URL + Config.GETCONTACTGROUP + Config.loadUser(getActivity()).getUsername(), s, System.currentTimeMillis() + "");
-//                } else {
-//                    db.updateCatch(Config.URL + Config.GETCONTACTGROUP + Config.loadUser(getActivity()).getUsername(), s, System.currentTimeMillis() + "");
-//                }
+                if (data == null) {
+                    db.insertCatch(Config.URL + Config.GROUPS + Config.loadUser(getActivity()).getUsername(), s, System.currentTimeMillis() + "");
+                } else {
+                    db.updateCatch(Config.URL + Config.GROUPS + Config.loadUser(getActivity()).getUsername(), s, System.currentTimeMillis() + "");
+                }
                 refresh.setRefreshing(false);
             }
         }, new Response.ErrorListener() {

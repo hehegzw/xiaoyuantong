@@ -1,18 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
     android:layout_width="200dp"
     android:layout_height="match_parent"
     android:layout_gravity="left"
     android:background="@android:color/holo_blue_light"
     android:orientation="vertical">
-
-    <com.jlstudio.main.widget.CircleImageView
+    <com.facebook.drawee.view.SimpleDraweeView
         android:id="@+id/bigface"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:layout_gravity="center_horizontal"
         android:layout_margin="20dp"
-        android:src="@drawable/logo" />
+        fresco:fadeDuration="300"
+        fresco:roundAsCircle="true"
+        android:layout_gravity="center_horizontal"
+        fresco:placeholderImage="@drawable/logo"/>
 
     <ListView
         android:id="@+id/slidlist"

@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.jlstudio.R;
 import com.jlstudio.group.bean.Contacts;
+import com.jlstudio.publish.bean.MyContact;
 
 import java.util.List;
 
@@ -18,15 +19,15 @@ import java.util.List;
  */
 public class RecentFriendListViewAdapter extends BaseAdapter {
     private Context context;
-    private List<Contacts> contacst_list;
+    private List<MyContact> contacst_list;
 
-    public RecentFriendListViewAdapter(Context context, List<Contacts> contacst_list) {
+    public RecentFriendListViewAdapter(Context context, List<MyContact> contacst_list) {
         this.context = context;
         this.contacst_list = contacst_list;
     }
 
 
-    public void setContacst_list(List<Contacts> contacst_list) {
+    public void setContacst_list(List<MyContact> contacst_list) {
         this.contacst_list = contacst_list;
         notifyDataSetChanged();
     }
@@ -60,8 +61,8 @@ public class RecentFriendListViewAdapter extends BaseAdapter {
         }else{
             view = (ViewHolder) convertView.getTag();
         }
-        Contacts contact = contacst_list.get(position);
-        view.itemTv.setText(contact.getUsername());
+        MyContact contact = contacst_list.get(position);
+        view.itemTv.setText(contact.getName());
         if(contact.isSelected()){
             view.select.setTextColor(context.getResources().getColor(R.color.blue));
         }else{

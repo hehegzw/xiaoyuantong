@@ -38,12 +38,13 @@ import java.util.List;
 public class QueryDownLoadDialog extends Dialog implements View.OnClickListener{
     private Context context;
     private Button btn_submit,btn_cancle;
-    private String fileName,filePath;
-    public QueryDownLoadDialog(Context context,String fileName,String filePath) {
+    private String downloadFileName;
+    private String saveFileName;
+    public QueryDownLoadDialog(Context context,String downloadFileName,String saveFileName) {
         super(context);
         this.context = context;
-        this.fileName = fileName;
-        this.filePath = filePath;
+        this.downloadFileName = downloadFileName;
+        this.saveFileName = saveFileName;
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.dialog_query_download);
         initView();
@@ -59,7 +60,7 @@ public class QueryDownLoadDialog extends Dialog implements View.OnClickListener{
         switch (v.getId()){
             case R.id.btn_submit:
                 ProgressUtil.showProgressDialog(context, "下载中");
-                DownLoadFile.getFile(Config.URL + "download",filePath, fileName, new DownLoadFile.Success() {
+                DownLoadFile.getFile(downloadFileName,saveFileName, new DownLoadFile.Success() {
                     @Override
                     public void onSuccess() {
                         ShowToast.show(context,"下载成功,文件保存在/storage/sdcard0/xiaoyuantongdownload");

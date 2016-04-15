@@ -7,11 +7,17 @@ import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.facebook.drawee.backends.pipeline.Fresco;
 import com.jlstudio.R;
+import com.jlstudio.main.activity.LoginAty;
 import com.jlstudio.main.application.Config;
+import com.jlstudio.main.net.GetDataNet;
 import com.jlstudio.main.net.UplaodFace;
 import com.jlstudio.main.util.ProgressUtil;
 import com.jlstudio.market.adapter.GoodsDisplayAdapter;
@@ -33,6 +39,7 @@ public class ShowGoodsAty extends Activity implements View.OnClickListener {
     private TextView back;
     private TextView publishGood;
     private int currentPage = 0;
+    private GetDataNet gn;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,7 +83,7 @@ public class ShowGoodsAty extends Activity implements View.OnClickListener {
         adapter.setClick(new GoodsDisplayAdapter.ClickListener() {
             @Override
             public void click(View v,View v2,int position) {
-                if(position == goods.size()-1){
+                if(position == goods.size()-1&&goods.size()>=20){
                     initData(false);
                     v.setVisibility(View.GONE);
                     v2.setVisibility(View.VISIBLE);
@@ -85,6 +92,14 @@ public class ShowGoodsAty extends Activity implements View.OnClickListener {
                     intent.putExtra("good",goods.get(position));
                     startActivity(intent);
                 }
+            }
+        });
+        adapter.setImageClick(new GoodsDisplayAdapter.ImageClickListener() {
+            @Override
+            public void click(View v1, int position) {
+                Intent intent = new Intent(ShowGoodsAty.this,GoodsDetailActivity.class);
+                intent.putExtra("good",goods.get(position));
+                startActivity(intent);
             }
         });
     }
@@ -147,7 +162,8 @@ public class ShowGoodsAty extends Activity implements View.OnClickListener {
                 e.printStackTrace();
             }
         }
-        goods.add(new GoodsDetail());
+        if(goods.size()>=20)
+            goods.add(new GoodsDetail());//加载更多
         adapter.notifyDataSetChanged();
     }
 
@@ -155,7 +171,12 @@ public class ShowGoodsAty extends Activity implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.publishGood:
-                startActivity(new Intent(this,MyGoodsActivity.class));
+                if(!Config.isLogin(this)){
+                    startActivity(new Intent(this,LoginAty.class));
+                    finish();
+                }else{
+                    startActivity(new Intent(this,MyInfoActivity.class));
+                }
                 break;
             case R.id.back:
                finish();

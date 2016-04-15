@@ -5,15 +5,11 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.jlstudio.R;
-import com.jlstudio.publish.bean.PublishData;
 import com.jlstudio.publish.bean.PublishListData;
 
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -93,5 +89,10 @@ public class PublishDatasAdapter extends RecyclerView.Adapter {
     public static interface OnRecyclerViewListener{
         void onItemClick(int position);
         boolean onItemLongClick(View view,int position);
+    }
+
+    @Override
+    public void onAttachedToRecyclerView(RecyclerView recyclerView) {
+        super.onAttachedToRecyclerView(recyclerView);
     }
 }

@@ -43,8 +43,16 @@
     <string name="addgroup">&#xe60f;</string>
     <string name="face">&#xe63f;</string>
     <string name="key_bord">&#xe609;</string>
-    <string name="chat">&#xe6cc;</string>
+    <string name="chat">&#xe672;</string>
     <string name="person_goods">&#xe6a4;</string>
+    <string name="collect">&#xe623;</string>
+    <string name="msg">&#xe61f;</string>
+    <string name="good">&#xe6ce;</string>
+    <string name="shake">&#xe603;</string>
+    <string name="arrright">&#xe607;</string>
+    <string name="arrbottom">&#xe62c;</string>
+    <string name="money">&#xe664;</string>
+    <string name="eye">&#xe60d;</string>
     <string name="title_activity_main2">Main2Activity</string>
     <string name="title_activity_publish_datas_aty">PublishDatasAty</string>
     <string name="title_activity_add_publish_aty">AddPublishAty</string>
@@ -60,7 +68,7 @@
     <string name="title_activity_show_msg">ShowMsg</string>
     <string name="searLabel">搜索</string>
     <string name="searHint">搜索联系人</string>
-    <string name="title_activity_welcome_aty">WelcomeAty</string>
+    <string name="title_activity_welcome_aty">校园通</string>
     <string name="title_activity_update_person_datas">UpdatePersonDatas</string>
     <string name="title_activity_update_user_datas_dialog">UpdateUserDatasDialog</string>
     <string name="title_activity_add_publish_by_sms">AddPublishBySMS</string>

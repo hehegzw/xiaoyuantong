@@ -23,13 +23,11 @@ public class ContactsActivityAdapter extends BaseAdapter {
     private Context context;
     private List<Contacts> list;
     private LayoutInflater inflater;
-    private boolean isIndex;//是否是索引
 
     public ContactsActivityAdapter(Context context, List<Contacts> list) {
         this.context = context;
         this.list = list;
         inflater = LayoutInflater.from(context);
-        isIndex = false;
     }
 
     public void onDataChanged(List<Contacts> list) {
@@ -52,44 +50,24 @@ public class ContactsActivityAdapter extends BaseAdapter {
         return position;
     }
 
-    @Override
-    public boolean isEnabled(int position) {
-        // TODO Auto-generated method stub
-        if (list.get(position).getRealname().length() == 1)// 如果是字母索引
-            return false;// 表示不能点击
-        return super.isEnabled(position);
-    }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        String item = list.get(position).getRealname();
         ViewHolder viewHolder;
-        if (item.length() == 1 && !isIndex) {
-            convertView = LayoutInflater.from(context).inflate(R.layout.contacts_index,null);
-            TextView name = (TextView) convertView.findViewById(R.id.indexTv);
-            viewHolder = new ViewHolder(name);
-            convertView.setTag(viewHolder);
-            isIndex = true;
-        }else if(item.length() != 1 && isIndex){
-            convertView = LayoutInflater.from(context).inflate(R.layout.contacts_item,null);
+        if (convertView ==null) {
+            convertView = inflater.inflate(R.layout.contacts_item, null);
             TextView name = (TextView) convertView.findViewById(R.id.name);
             TextView sign = (TextView) convertView.findViewById(R.id.sign);
             ImageView face = (ImageView) convertView.findViewById(R.id.face);
-            viewHolder = new ViewHolder(name,sign,face);
+            viewHolder = new ViewHolder(name, sign, face);
             convertView.setTag(viewHolder);
-            isIndex = false;
-        }else{
+        }else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
-        if (isIndex){
-            viewHolder.name.setText(list.get(position).getRealname());
-        }else{
-            String[] showName = list.get(position).getRealname().split(",");
-            viewHolder.name.setText(showName[0]);
-            viewHolder.sign.setText(list.get(position).getSign());
-            String url = Config.URL+"faces/" + showName[1] + ".jpg";
-            Downloadimgs.initImageLoader(context).displayImage(url, viewHolder.face, Downloadimgs.getOption());
-        }
+        viewHolder.name.setText(list.get(position).getRealname());
+        viewHolder.sign.setText(list.get(position).getSign());
+        String url = Config.URL + "faces/" + list.get(position).getUsername() + ".jpg";
+        Downloadimgs.initImageLoader(context).displayImage(url, viewHolder.face, Downloadimgs.getOption());
         return convertView;
     }
 
@@ -108,4 +86,7 @@ public class ContactsActivityAdapter extends BaseAdapter {
             this.name = name;
         }
     }
+
 }
+
+

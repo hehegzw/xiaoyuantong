@@ -31,8 +31,10 @@ import cn.jpush.android.api.TagAliasCallback;
 public class Config {
     //网络相关4
     //public static final String URL = "http://192.168.0.100:8080/xyt/";//台式
-    public static final String URL = "http://192.168.0.120:8080/xyt/";//chengzi
+      public static final String URL = "http://192.168.0.120:8080/xyt/";//chengzi
     //public static final String URL = "http://121.42.12.12:8080/xyt/";//ali
+    public static final String QINIUURL = "http://7xslom.com2.z0.glb.clouddn.com/";
+    public static final String QINIFILE = "http://7xslom.com2.z0.glb.clouddn.com/";
     public static final String RECMSG = "recmsgs";//我收到的通知列表
     public static final String GETSENDMESSAGEBYID = "sendmsg";//我发送的通知具体内容
     public static final String GETRECEIVEMESSAGEBYID = "recmsg";//我收到的通知具体内容
@@ -67,6 +69,7 @@ public class Config {
     //文件相关
     public static final String FILENAME = "share";//主要存放app内部各activity之间需要传送的数据
     public static final String USERFILE = "user";//存放登录用户的信息
+    public static final String FILETOKEN = "U-xnzz4CMEqM8lSW1HisWIDflYDvIHlyWTCIigAm:0WxAWGK2dZ5FSqJ-67gIH21V6Is=:eyJzY29wZSI6ImNvbS1qbHN0dWRpby1maWxlIiwiZGVhZGxpbmUiOjMyMzgyMzQyMDB9";
     //缓存时间
     public static final int CATCHTIME = 1000*60 ;
     //意图返回码
@@ -76,10 +79,13 @@ public class Config {
     public static final int DELETE_SEND_MSG =1;//删除发送的通知
 
     //通知
-    public static List<Contacts> persons = new ArrayList<>();//通知选择的个人对象
+    public static List<MyContact> persons = new ArrayList<>();//通知选择的个人对象
     public static List<Groups> groups = new ArrayList<>();//通知选择的组对象
-    public static List<Groups> grades = new ArrayList<>();//通知选择的年级对象
     public static WritePublish WP = new WritePublish();//通知内容
+    //是否支持webp
+    public static int NOT_INIT = 0;//未初始化
+    public static int SUPPORT = 1;//支持
+    public static int NOT_SUPPORT = 2;//不支持
 
 
     /**
@@ -207,21 +213,11 @@ public class Config {
             }
         });
     }
-    //选人时对已注册和未注册的分离
-    public static RegisterAndUnRegister separateRegUnReg(){
-        List<Contacts> reg = new ArrayList<>();
-        List<Contacts> unreg = new ArrayList<>();
-        int UnregCount = 0;
-        for(int i=0;i<persons.size();i++){
-            if(persons.get(i).isRegister()){
-                reg.add(persons.get(i));
-            }else{
-                unreg.add(persons.get(i));
-            }
-        }
-        for(int i=0;i<groups.size();i++){
-            UnregCount+=(groups.get(i).getSubCounts()-groups.get(i).getRegisterCount());
-        }
-        return new RegisterAndUnRegister(reg,unreg,UnregCount+unreg.size());
+    public static void clearWP(){
+        WP.setFileName("");
+        WP.setFilePath("");
+        WP.setContent("");
+        WP.setTitle("");
+        WP.setType("");
     }
 }

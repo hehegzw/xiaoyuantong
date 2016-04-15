@@ -6,9 +6,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
-import android.widget.Adapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -17,6 +15,8 @@ import android.widget.Toast;
 import com.jlstudio.R;
 import com.jlstudio.main.application.Config;
 import com.jlstudio.main.net.UplaodFace;
+import com.jlstudio.main.net.Uptoqiniu;
+import com.jlstudio.main.util.ProgressUtil;
 import com.jlstudio.market.adapter.PublishGoodAdapter;
 import com.jlstudio.market.bean.GoodsDetail;
 import com.jlstudio.market.dialog.DeleteDialog;
@@ -27,6 +27,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -37,9 +38,8 @@ import cn.finalteam.galleryfinal.model.PhotoInfo;
 
 public class PublishGoodAty extends Activity implements View.OnClickListener {
     public static final int REQUEST_CODE_GALLERY = 1;
-    public static final int PUBLISH = 1;
+    public static final int PUBLISH = 0;
     public static final int MODIFY = 2;
-    public static final String URL = "http://192.168.0.120:8080/xyt/uploadgoods";
     private EditText price;
     private EditText description;
     private EditText name;
@@ -54,11 +54,14 @@ public class PublishGoodAty extends Activity implements View.OnClickListener {
     private TextView back;
     private int type;
     private int goodId;
+    private Uptoqiniu uptoqiniu;
+    private String action;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_publish_good_aty);
-        type = Integer.valueOf(getIntent().getAction());
+        if(getIntent().getAction()!=null)
+            type = Integer.valueOf(getIntent().getAction());
         initView();
         initData();
     }
@@ -122,6 +125,7 @@ public class PublishGoodAty extends Activity implements View.OnClickListener {
         });
     }
     private void initData(){
+        uptoqiniu = new Uptoqiniu();
         servicePics = new HashSet<>();
         oriServicePics = new ArrayList<>();
         localPics = new ArrayList<>();
@@ -142,6 +146,7 @@ public class PublishGoodAty extends Activity implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.submit:
+                ProgressUtil.showProgressDialog(this,"发布中...");
                 publishGood();
                 break;
             case R.id.modify:
@@ -156,8 +161,7 @@ public class PublishGoodAty extends Activity implements View.OnClickListener {
     private void deleteGood() {
         JSONObject json = new JSONObject();
         try {
-            json.put("goodId",goodId);
-
+            json.put("goodsId",goodId);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -192,8 +196,7 @@ public class PublishGoodAty extends Activity implements View.OnClickListener {
             Toast.makeText(this, "你的宝贝叫什么名字", Toast.LENGTH_SHORT).show();
             return;
         }
-        JSONObject json = new JSONObject();
-        String action = null;
+        final JSONObject json = new JSONObject();
         try {
             if(type == MODIFY){
                 json.put("goodsId",goodId);
@@ -214,25 +217,31 @@ public class PublishGoodAty extends Activity implements View.OnClickListener {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        Log.d("jsontostring",json.toString());
-        UplaodFace.uploadPic(Config.URL+action, goodPics, json.toString(), new UplaodFace.Success() {
+        List<File> files = new ArrayList<>();
+        for(int i=0;i<localPics.size();i++){
+            files.add(new File(localPics.get(i)));
+        }
+        uptoqiniu.UploadImages(files, new Uptoqiniu.SuccessListener() {
             @Override
-            public void onSuccess(String s) {
-                if(type == MODIFY){
-                    Toast.makeText(PublishGoodAty.this, "宝贝修改成功", Toast.LENGTH_SHORT).show();
+            public void success(List<String> list) {
+                JSONArray jsonArray = new JSONArray(list);
+                try {
+                    json.put("images",jsonArray);
+                    Uptoserver(action,json);
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
-                Toast.makeText(PublishGoodAty.this, "宝贝发布成功", Toast.LENGTH_SHORT).show();
-                finish();
             }
-        }, new UplaodFace.Failure() {
+        }, new Uptoqiniu.FaulerListener() {
             @Override
-            public void onFailure() {
+            public void fauler() {
                 if(type == MODIFY){
                     Toast.makeText(PublishGoodAty.this, "宝贝修改失败", Toast.LENGTH_SHORT).show();
                 }
                 Toast.makeText(PublishGoodAty.this, "宝贝发布失败", Toast.LENGTH_SHORT).show();
             }
         });
+
     }
 
     private void openPic() {
@@ -256,7 +265,6 @@ public class PublishGoodAty extends Activity implements View.OnClickListener {
                         break;
                     }
                 }
-                Log.d("pathPic",localPics.get(0));
                 adapter.notifyDataSetChanged();
             }
 
@@ -274,5 +282,27 @@ public class PublishGoodAty extends Activity implements View.OnClickListener {
     private String getFileType(String fileName) {
         // TODO Auto-generated method stub
         return fileName.substring(fileName.lastIndexOf("."), fileName.length());
+    }
+    private void Uptoserver(String action,JSONObject json){
+        UplaodFace.uploadPic(Config.URL+action, null, json.toString(), new UplaodFace.Success() {
+            @Override
+            public void onSuccess(String s) {
+                if(type == MODIFY){
+                    Toast.makeText(PublishGoodAty.this, "宝贝修改成功", Toast.LENGTH_SHORT).show();
+                }
+                Toast.makeText(PublishGoodAty.this, "宝贝发布成功", Toast.LENGTH_SHORT).show();
+                ProgressUtil.closeProgressDialog();
+                finish();
+            }
+        }, new UplaodFace.Failure() {
+            @Override
+            public void onFailure() {
+                if(type == MODIFY){
+                    Toast.makeText(PublishGoodAty.this, "宝贝修改失败", Toast.LENGTH_SHORT).show();
+                }
+                Toast.makeText(PublishGoodAty.this, "宝贝发布失败", Toast.LENGTH_SHORT).show();
+                ProgressUtil.closeProgressDialog();
+            }
+        });
     }
 }

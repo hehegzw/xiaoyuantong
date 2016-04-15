@@ -1,61 +1,23 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#ffffff"
-    android:gravity="center"
-    android:orientation="vertical">
-
-    <android.support.v4.view.ViewPager
-        android:layout_weight="8"
-        android:id="@+id/viewpager"
+    android:layout_height="match_parent">
+    <ImageView
+        android:id="@+id/image"
+        android:src="@drawable/welcome"
+        android:scaleType="fitXY"
         android:layout_width="match_parent"
-        android:layout_height="0dp">
-    </android.support.v4.view.ViewPager>
-    <LinearLayout
-        android:layout_weight="2"
+        android:layout_height="match_parent" />
+    <TextView
+        android:id="@+id/time"
+        android:text="3s"
+        android:layout_gravity="right"
         android:layout_marginTop="10dp"
-        android:gravity="center"
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="0dp">
-        <TextView
-            android:id="@+id/dot1"
-            android:text="@string/dot"
-            android:textSize="20sp"
-            android:layout_marginRight="20dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-        <TextView
-            android:id="@+id/dot2"
-            android:text="@string/dot"
-            android:textSize="20sp"
-            android:layout_marginRight="20dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-        <TextView
-            android:id="@+id/dot3"
-            android:text="@string/dot"
-            android:textSize="20sp"
-            android:layout_marginRight="20dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-        <TextView
-            android:id="@+id/dot4"
-            android:text="@string/dot"
-            android:textSize="20sp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-    </LinearLayout>
-    <Button
-        android:id="@+id/start"
-        android:text="开始体验"
-        android:textColor="#c9b5cd"
-        android:gravity="center"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        android:background="@drawable/welcome_button_shape"
-        android:layout_marginBottom="10dp"
+        android:layout_marginRight="10dp"
+        android:padding="5dp"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:background="@drawable/timebk"
+        android:textColor="#000"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
-</LinearLayout>
+
+</FrameLayout>

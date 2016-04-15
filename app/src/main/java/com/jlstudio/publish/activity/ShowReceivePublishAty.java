@@ -48,7 +48,6 @@ public class ShowReceivePublishAty extends BaseActivity implements View.OnClickL
     private DBOption db;
     private GetDataNet gn;
     private String noticeid;//本条消息id
-    private String filePath;//附件地址
     private String fileName;//附件名称
 
     @Override
@@ -69,12 +68,12 @@ public class ShowReceivePublishAty extends BaseActivity implements View.OnClickL
         PublishData datas = JsonToPubhlishData.getPublishDataItem(string, "receive");
         title.setText(datas.getTitle());
         time.setText(datas.getTime());
-        publish_user.setText(datas.getNoticefromname());
-        filename.setText(datas.getFilename());
+        publish_user.setText(datas.getUserFrom());
+        fileName = datas.getFilePath();
+        if(!StringUtil.isEmpty(fileName)){
+            filename.setText(fileName.split("\\$")[1]);
+        }
         content_name.setText(datas.getContent());
-        filePath = Config.URL+"download?data="+datas.getFilePath();
-        Log.d("filepath",filePath);
-        fileName = datas.getFilename();
         if(!StringUtil.isEmpty(fileName))
             filename.setOnClickListener(this);
         if (datas.getFlag().equals("0")) {
@@ -125,11 +124,10 @@ public class ShowReceivePublishAty extends BaseActivity implements View.OnClickL
                     public void onResponse(String s) {
                         if(s.equals("0")){
                             ShowToast.show(ShowReceivePublishAty.this, "回执成功");
-                            refreshListView("refresh");
+                            //refreshListView("refresh");
                         }else{
                             ShowToast.show(ShowReceivePublishAty.this, "回执失败");
                         }
-
                         finish();
                     }
                 }, new Response.ErrorListener() {
@@ -145,11 +143,10 @@ public class ShowReceivePublishAty extends BaseActivity implements View.OnClickL
             }
             //下载附件
         }else{
-            String fileName = filename.getText().toString();
-            String paths = Environment.getExternalStorageDirectory()+"/xiaoyuantongdownload/"+fileName;
+            String paths = Environment.getExternalStorageDirectory()+"/xiaoyuantongdownload/"+fileName.split("\\$")[1];
             File file = new File(paths);
             if(!file.exists()){
-                new QueryDownLoadDialog(this,fileName,filePath).show();
+                new QueryDownLoadDialog(this,fileName.split("\\$")[0],fileName.split("\\$")[1]).show();
             }else{
                 OpenFileUtil.openFile(this,file);
             }
@@ -173,7 +170,7 @@ public class ShowReceivePublishAty extends BaseActivity implements View.OnClickL
             @Override
             public void onResponse(String s) {
                 ShowToast.show(ShowReceivePublishAty.this, "删除成功");
-                refreshListView("delete");
+                //refreshListView("delete");
                 finish();
             }
         }, new Response.ErrorListener() {
@@ -201,7 +198,6 @@ public class ShowReceivePublishAty extends BaseActivity implements View.OnClickL
                 }else{
                     list.get(i).setFlag("1");
                 }
-
                 break;
             }
         }

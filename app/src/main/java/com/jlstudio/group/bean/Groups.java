@@ -8,6 +8,7 @@ public class Groups {
     private int subCounts;//组中包含人数
     private int registerCount;//注册人数
     private boolean isSelected;//是否被选中(选人时候用)
+    private boolean isChange;//主要用于点击进入班级之前判断状态有没有改变
 
     public Groups() {
     }
@@ -42,5 +43,13 @@ public class Groups {
 
     public void setIsSelected(boolean isSelected) {
         this.isSelected = isSelected;
+    }
+
+    public boolean isChange() {
+        return isChange;
+    }
+
+    public void setChange(boolean change) {
+        isChange = change;
     }
 }

@@ -7,6 +7,10 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.MANAGE_DOCUMENTS" />
+    <uses-permission android:name="android.permission.READ_CONTACTS"/>
+    <uses-permission android:name="android.permission.READ_USER_DICTIONARY"/>
+    <uses-permission android:name="android.permission.WRITE_USER_DICTIONARY"/>
 
     <permission
         android:name="com.jlstudio.permission.JPUSH_MESSAGE"
@@ -37,7 +41,7 @@
     <application
         android:name=".main.application.MyApplication"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/appicon"
         android:label="@string/app_name"
         android:theme="@style/Activity.Theme">
         <activity
@@ -204,7 +208,13 @@
 
         <activity
             android:name=".main.activity.WelcomeAty"
-            android:label="@string/title_activity_welcome_aty" />
+            android:label="@string/title_activity_welcome_aty">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".swzl.activity.LostAndFound"
             android:label="title_activity_lost_and_found" />
@@ -222,7 +232,11 @@
             android:label="@string/title_activity_add_publish_by_sms" />
         <activity
             android:name=".group.activity.ContactsActivity"
-            android:label="@string/title_activity_welcome_aty" />
+            android:label="@string/title_activity_welcome_aty">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".group.activity.ContactsDataActivity"
             android:label="@string/title_activity_welcome_aty" />
@@ -239,45 +253,35 @@
         <activity android:name=".group.activity.MyDataAty" />
         <activity
             android:name=".group.activity.ShowContactsActivity"
-            android:launchMode="singleTask">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:launchMode="singleTask"></activity>
         <activity
             android:name=".group.activity.MyLeaveMsgActivity"
             android:configChanges="keyboard|screenSize"
-            android:label="@string/title_activity_welcome_aty" />
+            android:label="@string/title_activity_welcome_aty"></activity>
         <activity
             android:name=".group.activity.SearchActivity"
-            android:label="@string/title_activity_welcome_aty" />
+            android:label="@string/title_activity_welcome_aty"></activity>
         <activity
             android:name=".group.activity.AddFriend"
-            android:label="@string/title_activity_add_friend"></activity>
+            android:label="@string/title_activity_add_friend" />
         <activity
             android:name=".group.activity.NewFriendData"
-            android:label="@string/title_activity_new_friend_data"></activity>
+            android:label="@string/title_activity_new_friend_data" />
         <activity
             android:name=".group.activity.GroupManager"
-            android:label="@string/title_activity_group_manager"></activity>
-        <activity android:name=".group.activity.LeaveMsgDetailAty"></activity>
+            android:label="@string/title_activity_group_manager" />
+        <activity android:name=".group.activity.LeaveMsgDetailAty" />
         <activity
             android:name=".iknow.activity.FeedBack"
-            android:label="@string/title_activity_feed_back"></activity>
+            android:label="@string/title_activity_feed_back" />
         <activity
             android:name=".market.activity.ChatActivity"
-            android:windowSoftInputMode="adjustResize|stateHidden"></activity>
+            android:windowSoftInputMode="adjustResize|stateHidden" />
         <activity android:name=".market.activity.PublishGoodAty" />
         <activity android:name=".market.activity.ShowGoodsAty" />
-        <activity
-            android:name=".market.activity.MyGoodsActivity"
-            android:label="@string/title_activity_my_goods"></activity>
-        <activity
-            android:name=".market.activity.MyGoodDetail"
-            android:label="@string/title_activity_my_good_detail"></activity>
-        <activity android:name=".market.activity.GoodsDetailActivity"></activity>
+        <activity android:name=".market.activity.GoodsDetailActivity" />
+        <activity android:name=".market.activity.MyInfoActivity" />
+        <activity android:name=".market.activity.ShowBigPicAty"></activity>
     </application>
 
 </manifest>

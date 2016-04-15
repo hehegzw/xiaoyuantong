@@ -11,12 +11,8 @@ import android.os.Bundle;
 
 import com.jlstudio.R;
 import com.jlstudio.group.activity.ShowContactsActivity;
-import com.jlstudio.main.activity.MainActivity;
-import com.jlstudio.main.application.Config;
+import com.jlstudio.market.activity.ChatActivity;
 import com.jlstudio.publish.activity.PublishDatasAty;
-import com.jlstudio.publish.activity.ShowReceivePublishAty;
-import com.jlstudio.publish.server.MyService;
-import com.jlstudio.publish.util.ShowToast;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -38,10 +34,14 @@ public class PublishReceiver extends BroadcastReceiver {
                 if(json.has("noticetype") && json.getString("noticetype").equals("好友请求")){
                     intenttar = new Intent(context, ShowContactsActivity.class);
                     createNotification(context,string,intenttar,0);
+                }else if(json.has("noticetype") && json.getString("noticetype").equals("chat")){
+                    intenttar = new Intent(context, ChatActivity.class);
+                    createNotification(context,string,intenttar,2);
                 }else{
                     intenttar = new Intent(context, PublishDatasAty.class);
                     createNotification(context,string,intenttar,1);
                 }
+
 
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -58,14 +58,18 @@ public class PublishReceiver extends BroadcastReceiver {
             if(flag == 0){
                 title = json.getString("noticetitile");
                 from = json.getString("noticefromname");
+            }else if(flag ==2){
+                from = json.getString("noticefrom");
+                title = json.getString("text");
             }else{
                 title = json.getString("title");
                 from = json.getString("noticefrom");
             }
+
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        intent.setAction(noticeid);
+        intent.setAction(content);
         PendingIntent pendingIntent = PendingIntent.getActivity(context,0,intent,0);
         NotificationManager nm = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         Notification.Builder builder = new Notification.Builder(context);

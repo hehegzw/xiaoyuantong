@@ -143,7 +143,11 @@ public class MyLeaveMsgActivity extends Activity implements View.OnClickListener
                             recyclerView.setVisibility(View.GONE);
                         }
                         list.get(msg.getSquence()).add(msg);
-                        tempList = getTempListOpen(msg.getSquence());
+                        if(list.get(msg.getSquence()).size()>6){
+                            tempList = getTempListOpen(msg.getSquence());
+                        }else{
+                            tempList = getTempLIst();
+                        }
                         adapter.setTempList(tempList);
                     }
                 }, new Response.ErrorListener() {
@@ -378,7 +382,7 @@ public class MyLeaveMsgActivity extends Activity implements View.OnClickListener
         try {
             JSONObject jsonObject = new JSONObject(s);
             JSONArray array = jsonObject.getJSONArray("datas");
-            for (int i = 0; i < array.length(); i++) {
+            for (int i = 0; i <array.length(); i++) {
                 List<LeaveMsg> lists = new ArrayList<>();
                 String from = null;//本条评论人
                 String fromname = null;//本条评论人姓名
@@ -415,6 +419,7 @@ public class MyLeaveMsgActivity extends Activity implements View.OnClickListener
                 }
                 list.add(lists);
             }
+            Log.d("listContent",list.toString()+"\n"+list.size());
         } catch (JSONException e) {
             e.printStackTrace();
         }

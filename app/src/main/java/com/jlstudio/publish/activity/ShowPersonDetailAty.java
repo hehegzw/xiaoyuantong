@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -29,31 +30,28 @@ import com.jlstudio.publish.util.JsonToPubhlishData;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 public class ShowPersonDetailAty extends Activity implements View.OnClickListener, AdapterView.OnItemClickListener {
     private Button sure;
     private ListView showperson;
-    private List<Contacts> persons;
+    private List<MyContact> persons;
     private ShowPersonAdapter adapter;
     private TextView back, title_name;
     private boolean isSelect;//是否选择了整个班级
     private String titlename;//传进来的班级名称
     private GetDataNet gn;//网络连接
-    private DBOption db;//数据库连接
-    private CatchData data;//获取数据库缓存数据
-    private int index;//当前点击的人的位置
-    private boolean isSaveMyMean;//是否记住询问用户对于没有注册的处理的对话框
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_persondetail);
         gn = GetDataNet.getInstence(this);
-        db = new DBOption(this);
         isSelect = getIntent().getBooleanExtra("isSelect",false);
-        initDatas();
         inintView();
+        initDatas();
+
 
     }
 
@@ -62,27 +60,30 @@ public class ShowPersonDetailAty extends Activity implements View.OnClickListene
         titlename = getIntent().getAction();
         back = (TextView) findViewById(R.id.back);
         title_name = (TextView) findViewById(R.id.title_name);
+        title_name.setText(titlename);
         sure = (Button) findViewById(R.id.publish);
+        showperson = (ListView) findViewById(R.id.showperson);
+        persons = new ArrayList<>();
+        adapter = new ShowPersonAdapter(this,persons);
+        showperson.setAdapter(adapter);
         Typeface iconfont = Typeface.createFromAsset(getAssets(), "fonts/iconfont.ttf");
         back.setTypeface(iconfont);
         back.setOnClickListener(this);
         sure.setOnClickListener(this);
-        title_name.setText(titlename);
+        showperson.setOnItemClickListener(this);
+
 
     }
 
     private void initDatas() {
-        ProgressUtil.showProgressDialog(this,"数据加载中...");
-        titlename = getIntent().getAction();
-        getDataFromNet();
-//        data = db.getCatch(Config.URL + Config.GETCLASSCONTACT+titlename + Config.loadUser(this).getUsername());
-//        if(data == null){
-//            getDataFromNet();
-//        }else{
-//            persons = JsonToPubhlishData.getPersonFromJson(data.getContent());
-//            initListView();
-//            ProgressUtil.closeProgressDialog();
-//        }
+        persons = (List<MyContact>) getIntent().getSerializableExtra("persons");
+        if(persons!=null){
+            adapter.setList(persons);
+        }else{
+            ProgressUtil.showProgressDialog(this,"数据加载中...");
+            getDataFromNet();
+        }
+
     }
 
     @Override
@@ -99,12 +100,6 @@ public class ShowPersonDetailAty extends Activity implements View.OnClickListene
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        //对于没有注册的，询问用户是否以短信形式发送
-//        if(!persons.get(position).isRegister()&&!persons.get(position).isSelected()){
-//            index = position;
-//            startActivityForResult(new Intent(this, UNRegisterQueryDialog.class), 1);
-//            return;
-//        }
         if(persons.get(position).isSelected()){
             persons.get(position).setIsSelected(false);
         }else if(!persons.get(position).isSelected()){
@@ -117,19 +112,19 @@ public class ShowPersonDetailAty extends Activity implements View.OnClickListene
      * 把已选中的信息放入全局变量
      */
     private void analysis(){
+        boolean isHasPersonAllSelect = false;
         for(int i=0;i<persons.size();i++){
-            if(persons.get(i).isSelected()){
-                //是否已经被加入了
-                if(!Config.persons.contains(persons.get(i))){
-                    Config.persons.add(persons.get(i));
-                }
+            if(!persons.get(i).isSelected()){
+                isHasPersonAllSelect = false;
+                break;
+            }else{
+                isHasPersonAllSelect = true;
             }
         }
-        for (int i=0;i<Config.groups.size();i++){
-            if(Config.groups.get(i).getGroup_name().equals(titlename)){
-                Config.groups.remove(i);
-            }
-        }
+        Intent intent =getIntent();
+        intent.putExtra("persons", (Serializable) persons);
+        intent.putExtra("isGroupSelect",isHasPersonAllSelect);
+        setResult(1,intent);
         finish();
     }
     private void getDataFromNet(){
@@ -143,12 +138,8 @@ public class ShowPersonDetailAty extends Activity implements View.OnClickListene
             @Override
             public void onResponse(String s) {
                 persons = JsonToPubhlishData.getPersonFromJson(s);
-                initListView();
-//                if(data == null){
-//                    db.insertCatch(Config.URL + Config.GETCLASSCONTACT+titlename,s,System.currentTimeMillis()+"");
-//                }else{
-//                    db.updateCatch(Config.URL + Config.GETCLASSCONTACT+titlename,s,System.currentTimeMillis()+"");
-//                }
+                refreshListView();
+
             }
         }, new Response.ErrorListener() {
             @Override
@@ -158,24 +149,20 @@ public class ShowPersonDetailAty extends Activity implements View.OnClickListene
         }, json.toString());
         ProgressUtil.closeProgressDialog();
     }
-    private void initListView() {
+    private void refreshListView() {
         //是否选中了整个班级
         if(isSelect) {
             for (int i = 0; i < persons.size(); i++) {
                     persons.get(i).setIsSelected(true);
             }
         }
-        showperson = (ListView) findViewById(R.id.showperson);
-        adapter = new ShowPersonAdapter(this,persons);
-        showperson.setAdapter(adapter);
-        showperson.setOnItemClickListener(this);
+        adapter.setList(persons);
     }
     //resultCode 1为确定 0为取消
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if(resultCode == 1){
-            persons.get(index).setIsSelected(true);
             adapter.notifyDataSetChanged();
         }
     }

@@ -51,6 +51,11 @@ public class LoginAty extends BaseActivity implements View.OnClickListener {
         text_user.setTypeface(icon);
         text_password.setTypeface(icon);
         login = (Button) findViewById(R.id.login);
+        initEvent();
+
+    }
+
+    private void initEvent() {
         login.setOnClickListener(this);
         unloginfun.setOnClickListener(this);
         password.setOnFocusChangeListener(new View.OnFocusChangeListener() {
@@ -115,5 +120,4 @@ public class LoginAty extends BaseActivity implements View.OnClickListener {
             }
         }, json.toString());
     }
-
 }

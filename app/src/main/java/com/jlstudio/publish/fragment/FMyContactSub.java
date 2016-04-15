@@ -2,6 +2,8 @@ package com.jlstudio.publish.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -33,11 +35,18 @@ import com.jlstudio.publish.server.SendSMSService;
 import com.jlstudio.publish.util.JsonToPubhlishData;
 import com.jlstudio.publish.util.ShowToast;
 import com.jlstudio.publish.util.StringUtil;
+import com.qiniu.android.http.ResponseInfo;
+import com.qiniu.android.storage.UpCompletionHandler;
+import com.qiniu.android.storage.UpProgressHandler;
+import com.qiniu.android.storage.UploadManager;
+import com.qiniu.android.storage.UploadOptions;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
+import java.io.IOException;
 import java.security.Policy;
 import java.util.ArrayList;
 import java.util.List;
@@ -50,7 +59,7 @@ public class FMyContactSub extends Fragment implements ExpandableListView.OnChil
     private Button publish;
     private ExpandableListView listView;
     private List<Groups> listParent;
-    private List<List<Contacts>> listChild;
+    private List<List<MyContact>> listChild;
     private FMyContactSubAdapter adapter;
     private GetDataNet gn;
     private DBOption db;//数据库连接
@@ -59,6 +68,68 @@ public class FMyContactSub extends Fragment implements ExpandableListView.OnChil
     private int index;//当前点击的人的位置
     private RegisterAndUnRegister ru;//获取已注册和未注册分离后的内容，和未注册的人数
     private boolean isSendAllSelect;//是否发送所有人
+    private Handler handler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            final JSONObject json = (JSONObject) msg.obj;
+            boolean ishasperson = false;
+            int unregisterCount = 0;
+            try {
+                ishasperson = json.getBoolean("ishasperson");
+                unregisterCount = json.getInt("unregister");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            if(!ishasperson){
+                ShowToast.show(getContext(),"请选择发送对象");
+                publish.setClickable(true);
+                return;
+            }
+            if (Config.WP.getType().equals("短信")) {
+                isSendAllSelect = true;
+                try {
+                    json.put("status", "sms");
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                sendPublish(json);
+            } else if (unregisterCount!=0) {
+                //弹出对话框，询问未注册人的处理
+                new UnRegisterQueryDialog2(getActivity(), new UnRegisterQueryDialog2.DialogListener() {
+                    @Override
+                    public void onResult(int resultCode) {
+                        if (resultCode == 1) {
+                            isSendAllSelect = true;
+                            try {
+                                json.put("status", "all");
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                            sendPublish(json);//全部发送，未注册的用短信
+
+                        } else {
+                            isSendAllSelect = false;
+                            try {
+                                json.put("status", "all");
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                            sendPublish(json);//只给注册的人发送，未注册的忽略
+                        }
+                    }
+                }, unregisterCount).show();
+            }else{
+                try {
+                    json.put("status", "all");
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                sendPublish(json);
+            }
+
+        }
+    };
 
     @Nullable
     @Override
@@ -79,7 +150,7 @@ public class FMyContactSub extends Fragment implements ExpandableListView.OnChil
     }
 
     private void initData() {
-        ProgressUtil.showProgressDialog(getContext(),"数据加载中...");
+        ProgressUtil.showProgressDialog(getContext(), "数据加载中...");
         CatchData data = db.getCatch(Config.URL + Config.GROUPS + Config.loadUser(getActivity()).getUsername());
         if (data == null) {
             getDataFromNet();
@@ -147,77 +218,66 @@ public class FMyContactSub extends Fragment implements ExpandableListView.OnChil
 
     @Override
     public void onClick(View v) {
+        ProgressUtil.showProgressDialog(getContext(),"发送中...");
         publish.setClickable(false);
-        anaysis();
+        new Thread(){
+            @Override
+            public void run() {
+                super.run();
+                JSONObject json = getJson();
+                Message msg = new Message();
+                msg.obj = json;
+                handler.sendMessage(msg);
+            }
+        }.start();
     }
 
-    private void anaysis() {
-
-        for (int i = 0; i < listParent.size(); i++) {
-            for (int j = 0; j < listChild.get(i).size(); j++) {
-                if (listChild.get(i).get(j).isSelected() && !Config.persons.contains(listChild.get(i).get(j))) {
-                    Config.persons.add(listChild.get(i).get(j));
-                }
-            }
-        }
-        if(Config.persons.size() == 0 && Config.groups.size() == 0){
-            ShowToast.show(getContext(),"请选择发送对象");
-            publish.setClickable(true);
-            return;
-        }
-        //分离注册和未注册的人
-        ru = Config.separateRegUnReg();
-        if(ru.UnRegCount!=0) {
-            //弹出对话框，询问未注册人的处理
-            new UnRegisterQueryDialog2(getActivity(), new UnRegisterQueryDialog2.DialogListener() {
-                @Override
-                public void onResult(int resultCode) {
-                    ProgressUtil.showProgressDialog(getContext(),"发送中...");
-                    if(resultCode == 1){
-                        isSendAllSelect = true;
-                        if(StringUtil.isEmpty(Config.WP.getFilePath())){
-                            sendPublish("all");
-                        }else{
-                            sendPublishWithFile("all");
-                        }
-
-                    }else{
-                        isSendAllSelect = false;
-                        if(StringUtil.isEmpty(Config.WP.getFilePath())){
-                            sendPublish("reg");
-                        }else{
-                            sendPublishWithFile("reg");
-                        }
-                    }
-                }
-            }, ru.UnRegCount).show();
-        }else{
-            ProgressUtil.showProgressDialog(getContext(),"发送中...");
-            if(StringUtil.isEmpty(Config.WP.getFilePath())){
-                sendPublish("all");
-            }else{
-                sendPublishWithFile("all");
-            }
-        }
-
-//        for (int i = 0; i < Config.persons.size(); i++) {
-//            Log.d("haha", Config.persons.get(i).getUsername());//存放个人信息的全局变量
-//        }
-//        for (int i = 0; i < Config.groups.size(); i++) {
-//            Log.d("haha", Config.groups.get(i).getGroup_name());//存放个人信息的全局变量
-//        }
-    }
 
     private void refreshList(String content) {
-        listParent = JsonToPubhlishData.getGroup(content,"普通");
+        listParent = JsonToPubhlishData.getGroup(content, "普通");
         listChild = JsonToPubhlishData.getContacts(content, listParent);
         //adapter.setList(listParent, listChild);
     }
+
     /**
      * 发送通知
-     * @param string 类型，全部还是忽略没有注册的
+     *
      */
-    private void sendPublish(String string){
+    private void sendPublish(final JSONObject json) {
+        String filePath = Config.WP.getFilePath();
+        String fileName = Config.WP.getFileName();
+        if(!StringUtil.isEmpty(filePath)){
+            UploadManager uploadManager = new UploadManager();
+            final UploadOptions options = new UploadOptions(null, null, false, new UpProgressHandler() {
+                @Override
+                public void progress(String key, double percent) {
+                    Log.d("qiniuinfo",percent+"");
+                }
+            },null);
+            File file = new File(Config.WP.getFilePath());
+            if(!file.exists()) try {
+                file.createNewFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            uploadManager.put(file, null, Config.FILETOKEN, new UpCompletionHandler() {
+                @Override
+                public void complete(String key, ResponseInfo info, JSONObject response) {
+                    String infos = key+"\n"+info+"\n"+response;
+                    try {
+                        json.getJSONObject("publish").put("filePath",response.get("key")+"$"+Config.WP.getFileName());
+                        sendToServer(json);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    Log.d("qiniuinfo",infos);
+                }
+            },options);
+        }else{
+            sendToServer(json);
+        }
+    }
+    private void sendToServer(JSONObject json) {
         gn.getData(Config.URL, "publish", new Response.Listener<String>() {
             @Override
             public void onResponse(String s) {
@@ -232,9 +292,8 @@ public class FMyContactSub extends Fragment implements ExpandableListView.OnChil
                     getActivity().startService(intent);
                     ShowToast.show(getContext(), "发送成功");
                 }
-                Config.groups.clear();
-                Config.persons.clear();
                 ProgressUtil.closeProgressDialog();
+                Config.clearWP();
                 getActivity().finish();
             }
         }, new Response.ErrorListener() {
@@ -243,86 +302,50 @@ public class FMyContactSub extends Fragment implements ExpandableListView.OnChil
                 ShowToast.show(getContext(), "发送失败");
                 ProgressUtil.closeProgressDialog();
             }
-        }, getJson(string));
+        }, json.toString());
     }
-    private void sendPublishWithFile(String string){
-        UplaodFace.sendPhoto(Config.URL, "publish", new UplaodFace.Success() {
-            @Override
-            public void onSuccess(String s) {
-                JSONObject json;
-                String[] phones;
-                try {
-                    json = new JSONObject(s);
-                    if (json.getString("status").equals("1")) {
-                        phones = json.getString("phoneList").split(",");
-                        for (String phone : phones) {
-                            Log.d("hehe", phone + "\n");
-                        }
-                    }
-                    ShowToast.show(getContext(), "发送成功");
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-                if (isSendAllSelect) {
-//                    if(ru.unRegister.size()>0){
-//                        for(int i=0;i<ru.unRegister.size();i++){
-//                            s+=","+ru.unRegister.get(i).getPhone();
-//                        }
-//                    }
-                    Intent intent = new Intent(getActivity(), SendSMSService.class);
-                    intent.setAction(s);
-                    getActivity().startService(intent);
-                }
-                Config.groups.clear();
-                Config.persons.clear();
-                Config.WP.setFilePath("");
-                ProgressUtil.closeProgressDialog();
-                getActivity().finish();
-            }
-        }, new UplaodFace.Failure() {
-            @Override
-            public void onFailure() {
-                ProgressUtil.closeProgressDialog();
-                ShowToast.show(getContext(), "发送失败");
-            }
-        }, getJson(string), Config.WP.getFilePath());
-    }
-    private String getJson(String status){
+
+    private JSONObject getJson() {
         JSONObject jsonObject = new JSONObject();
+        JSONArray persons = new JSONArray();
+        int unRegisterCount = 0;
+        for(int i=0;i<listChild.size();i++){
+            for(int j=0;j<listChild.get(i).size();j++){
+                MyContact mc = listChild.get(i).get(j);
+                if(mc.isSelected()){
+                    if(!mc.isRegister()){
+                        unRegisterCount++;
+                    }
+                    persons.put(mc.getUid());
+                }
+            }
+        }
         try {
-            jsonObject.put("status",status);
-            jsonObject.put("username",Config.loadUser(getContext()).getUsername());
+            if(persons.length()==0){
+                jsonObject.put("ishasperson",false);
+            }else{
+                jsonObject.put("ishasperson",true);
+            }
+            jsonObject.put("persons",persons);
+            jsonObject.put("unregister",unRegisterCount);
+            //jsonObject.put("status", status);
+            jsonObject.put("username", Config.loadUser(getContext()).getUsername());
             //打包发送的内容
             JSONObject jsonPublish = new JSONObject();
-            if(!StringUtil.isEmpty(Config.WP.getTitle())){
-                jsonPublish.put("title",Config.WP.getTitle());
+            if (!StringUtil.isEmpty(Config.WP.getTitle())) {
+                jsonPublish.put("title", Config.WP.getTitle());
             }
-            if(!StringUtil.isEmpty(Config.WP.getContent())){
-                jsonPublish.put("content",Config.WP.getContent());
+            if (!StringUtil.isEmpty(Config.WP.getContent())) {
+                jsonPublish.put("content", Config.WP.getContent());
             }
-            jsonObject.put("publish",jsonPublish);
-            JSONArray array1 = new JSONArray();
-            //对选择的组信息打包json
-            for(int i=0;i<Config.groups.size();i++){
-                JSONObject o = new JSONObject();
-                o.put("groupName",Config.groups.get(i).getGroup_name());
-                array1.put(o);
-            }
-            //对选择的具体人信息打包json
-            JSONArray array2 = new JSONArray();
-            for(int i=0;i<ru.register.size();i++){
-                JSONObject o = new JSONObject();
-                o.put("username",ru.register.get(i).getUsername());
-                array2.put(o);
-            }
-            jsonObject.put("group",array1);
-            jsonObject.put("person",array2);
+            jsonObject.put("publish", jsonPublish);
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        return jsonObject.toString();
+        return jsonObject;
     }
-    private void sendByMsg(String string){
+
+    private void sendByMsg(String string) {
 
     }
 }

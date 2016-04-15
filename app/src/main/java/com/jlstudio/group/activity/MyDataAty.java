@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -14,6 +15,7 @@ import android.widget.TextView;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.jlstudio.R;
 import com.jlstudio.iknow.dialog.UpdatePwdDialog;
 import com.jlstudio.main.activity.BaseActivity;
@@ -40,7 +42,7 @@ public class MyDataAty extends BaseActivity implements View.OnClickListener {
     private Button  updatapwd,exit;//修改密码
     //显示详细信息的横条
     private RelativeLayout face,sign, name, phone, qqNumber, weixin, sex, school, department;
-    private ImageView iface;//头像
+    private SimpleDraweeView iface;//头像
     //横条信息的文本
     private TextView tsign;//签名
     private TextView tname;//姓名
@@ -111,7 +113,9 @@ public class MyDataAty extends BaseActivity implements View.OnClickListener {
         }else{
         }
         String url = Config.URL+"faces/" + Config.loadUser(this).getUsername() + ".jpg";
-        Downloadimgs.initImageLoader(this).displayImage(url,iface,Downloadimgs.getOption());
+        Uri uri = Uri.parse(url);
+        iface.setImageURI(uri);
+        //Downloadimgs.initImageLoader(this).displayImage(url,iface,Downloadimgs.getOption());
     }
     private void initView(){
 
@@ -121,7 +125,7 @@ public class MyDataAty extends BaseActivity implements View.OnClickListener {
         update_datas.setOnClickListener(this);
         Typeface iconfont = Typeface.createFromAsset(getAssets(), "fonts/iconfont.ttf");
         back.setTypeface(iconfont);
-        iface = (ImageView) findViewById(R.id.iface);
+        iface = (SimpleDraweeView) findViewById(R.id.iface);
         face = (RelativeLayout) findViewById(R.id.face);
         sign = (RelativeLayout) findViewById(R.id.sign);
         name = (RelativeLayout) findViewById(R.id.name);

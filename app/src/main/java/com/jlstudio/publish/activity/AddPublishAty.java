@@ -1,11 +1,18 @@
 package com.jlstudio.publish.activity;
 
+import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
+import android.content.ContentUris;
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -21,6 +28,7 @@ import android.widget.Toast;
 import com.jlstudio.R;
 import com.jlstudio.main.activity.BaseActivity;
 import com.jlstudio.main.application.Config;
+import com.jlstudio.publish.util.FilePathUtil;
 import com.jlstudio.publish.util.ShowToast;
 import com.jlstudio.publish.util.StringUtil;
 
@@ -28,6 +36,9 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 
 public class AddPublishAty extends BaseActivity implements View.OnClickListener {
+    private static final String TAG="MainActivity1";
+    private static final int SELECT_PIC_KITKAT = 1;
+    private static final int SELECT_PIC = 2;
     private static final int TITLE_COUNT = 20;
     private static final int CONTENT_COUNT = 210;//通知内容字数限制
     private static final int FILE_CODE = 1;//通知内容字数限制
@@ -35,7 +46,7 @@ public class AddPublishAty extends BaseActivity implements View.OnClickListener 
     private String publishType;
     private LinearLayout upLoadArea;
     private String path = null;//文件路径
-    private TextView back, title_name, title_count, content_count, titlename, filePath,publish,upload;
+    private TextView back, title_name, title_count, content_count, titlename, filePath, publish, upload;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,8 +109,9 @@ public class AddPublishAty extends BaseActivity implements View.OnClickListener 
                 Config.WP.setType("通知");
                 Config.WP.setTitle(str);
                 Config.WP.setContent(strcontent);
-                if(path!=null){
-                    Config.WP.setFilePath(path);
+                String fileName = filePath.getText().toString();
+                if (!StringUtil.isEmpty(fileName)) {
+                    Config.WP.setFileName(fileName);
                 }
                 Intent intent = new Intent(this, ShowPersonAty.class);
                 startActivity(intent);
@@ -157,46 +169,46 @@ public class AddPublishAty extends BaseActivity implements View.OnClickListener 
             }
         }
     }
+
     //打开文件管理器
     private void showFileChooser() {
-        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-        intent.setType("*/*");
+        Intent intent=new Intent(Intent.ACTION_GET_CONTENT);//ACTION_OPEN_DOCUMENT
         intent.addCategory(Intent.CATEGORY_OPENABLE);
-        try {
-            startActivityForResult(Intent.createChooser(intent, "请选择一个要上传的文件"),
-                    FILE_CODE);
-        } catch (android.content.ActivityNotFoundException ex) {
-            // Potentially direct the user to the Market with a Dialog
-            Toast.makeText(this, "请安装文件管理器", Toast.LENGTH_SHORT)
-                    .show();
+        intent.setType("image/jpeg");
+        if(android.os.Build.VERSION.SDK_INT>=android.os.Build.VERSION_CODES.KITKAT){
+            startActivityForResult(intent, SELECT_PIC_KITKAT);
+        }else{
+            startActivityForResult(intent, SELECT_PIC);
         }
     }
+
+    @SuppressLint("NewApi")
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         // TODO Auto-generated method stub
-        if(data == null) return;
-        if (requestCode == FILE_CODE) {
-            // Get the Uri of the selected file
+        if (data == null) return;
+        String path;
+        if (data == null) return;
+        if(requestCode == SELECT_PIC_KITKAT){
+            Uri uri = data.getData();
+            path = FilePathUtil.getPath(this, uri);
+            Log.d(TAG,path);
+        }else{
+            Uri uri = data.getData();
             path = Uri.decode(data.getDataString());
             if(!path.toString().startsWith("file")){
-                Uri url = Uri.parse(path);
-                path = getAbsoluteFilePath(url);
+                path = FilePathUtil.getDataColumn(this,uri,null,null);
             }else{
                 path = path.toString().substring(7);
             }
-            //截取文件名
-            String[] filenames = path.split("/");
-            String filename = filenames[filenames.length-1];
-            filePath.setText(filename);
-            Log.d("hehe", path);
         }
+        //截取文件名
+        Config.WP.setFilePath(path);
+        String[] filenames = path.split("/");
+        String filename = filenames[filenames.length - 1];
+        //Config.WP.setFileName(filename);
+        filePath.setText(filename);
+        Log.d("hehe", path);
         super.onActivityResult(requestCode, resultCode, data);
-    }
-    private String getAbsoluteFilePath(Uri uri){
-        String[] proj = {MediaStore.Images.Media.DATA};
-        Cursor cursor = getContentResolver().query(uri, proj, null, null, null);
-        int index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-        cursor.moveToFirst();
-        return cursor.getString(index);
     }
 }

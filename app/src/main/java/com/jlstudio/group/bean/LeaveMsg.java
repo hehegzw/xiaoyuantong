@@ -159,8 +159,16 @@ public class LeaveMsg {
                 "time='" + time + '\'' +
                 ", content='" + content + '\'' +
                 ", from='" + from + '\'' +
+                ", fromname='" + fromname + '\'' +
                 ", to='" + to + '\'' +
+                ", toname='" + toname + '\'' +
                 ", id='" + id + '\'' +
-                '}';
+                ", type=" + type +
+                ", squence=" + squence +
+                ", oriFrom='" + oriFrom + '\'' +
+                ", oriFromname='" + oriFromname + '\'' +
+                ", oriId='" + oriId + '\'' +
+                ", oriToname='" + oriToname + '\'' +
+                '}'+"\n";
     }
 }

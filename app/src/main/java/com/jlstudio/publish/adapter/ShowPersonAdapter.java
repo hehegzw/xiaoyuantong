@@ -20,15 +20,15 @@ import java.util.List;
  * Created by gzw on 2015/10/20.
  */
 public class ShowPersonAdapter extends BaseAdapter {
-    private List<Contacts> list;
+    private List<MyContact> list;
     private Context context;
 
-    public ShowPersonAdapter(Context context, List<Contacts> list) {
+    public ShowPersonAdapter(Context context, List<MyContact> list) {
         this.list = list;
         this.context = context;
     }
 
-    public void setList(List<Contacts> list) {
+    public void setList(List<MyContact> list) {
         this.list = list;
         notifyDataSetChanged();
     }
@@ -63,8 +63,8 @@ public class ShowPersonAdapter extends BaseAdapter {
         } else {
             view = (ViewHolder) convertView.getTag();
         }
-        Contacts contact = list.get(position);
-        view.itemTv.setText(contact.getUsername());
+        MyContact contact = list.get(position);
+        view.itemTv.setText(contact.getName());
         //判断是否被选中，改变小圆点的颜色
         if (contact.isSelected()) {
             view.select.setTextColor(context.getResources().getColor(R.color.blue));

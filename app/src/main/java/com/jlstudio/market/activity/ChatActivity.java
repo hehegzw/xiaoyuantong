@@ -1,6 +1,7 @@
 package com.jlstudio.market.activity;
 
 import android.app.Activity;
+import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -24,6 +25,7 @@ import com.jlstudio.market.bean.Chat;
 import com.jlstudio.market.bean.GoodsDetail;
 import com.jlstudio.publish.util.ShowToast;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -99,20 +101,20 @@ public class ChatActivity extends Activity implements View.OnClickListener {
     }
 
     private void initData() {
-        GoodsDetail good = (GoodsDetail) getIntent().getSerializableExtra("good");
-        userId = good.getUserid();
-        name.setText(good.getUsername());
+        String string = getIntent().getAction();
+        if(string!=null){
+            try {
+                JSONObject json = new JSONObject(string);
+                userId = json.getString("noticefromuserid");
+                name.setText(json.getString("noticefrom"));
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }else{
+            userId = getIntent().getStringExtra("userId");
+            name.setText(getIntent().getStringExtra("name"));
+        }
         getDataFromNet();
-        for (int i = 0; i < 20; i++) {
-            if (i % 2 == 0)
-                chats.add(new Chat(0 + "", "hehehedfsdfsd"));
-            else
-                chats.add(new Chat(1 + "", "hehehe"));
-        }
-        for (int i = 0; i < 20; i++) {
-            Log.d("Chat", chats.get(i).getUserid());
-        }
-        adapter.notifyDataSetChanged();
     }
 
     @Override
@@ -121,9 +123,32 @@ public class ChatActivity extends Activity implements View.OnClickListener {
             case R.id.back:
                 finish();
                 break;
+            case R.id.submit:
+                sendData();
+                break;
         }
     }
     private void getDataFromNet(){
+        JSONObject json = new JSONObject();
+        try {
+            json.put("userfrom",Config.loadUser(this).getUsername());
+            json.put("userto",userId);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        gn.getData(Config.URL, "getchathistorys", new Response.Listener<String>() {
+            @Override
+            public void onResponse(String s) {
+                getChats(s);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                ShowToast.show(ChatActivity.this,"获取聊天内容失败");
+            }
+        },json.toString());
+    }
+    private void sendData(){
         JSONObject json = new JSONObject();
         String string = text.getText().toString();
         if(TextUtils.isEmpty(string)){
@@ -131,22 +156,55 @@ public class ChatActivity extends Activity implements View.OnClickListener {
             return ;
         }
         try {
-            json.put("text",text);
-            json.put("fromUser",Config.loadUser(this).getUsername());
-            json.put("toUser",userId);
+            json.put("text",string);
+            json.put("userfrom",Config.loadUser(this).getUsername());
+            json.put("userto",userId);
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        gn.getData(Config.URL, "chatData", new Response.Listener<String>() {
+        gn.getData(Config.URL, "chat", new Response.Listener<String>() {
             @Override
             public void onResponse(String s) {
-
+               ShowToast.show(ChatActivity.this,"发送成功");
+                refershChats();
+                text.setText("");
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-
+                ShowToast.show(ChatActivity.this,"发送失败");
             }
         },json.toString());
+    }
+
+    private void refershChats() {
+        Chat chat = new Chat();
+        chat.setText(text.getText().toString());
+        chat.setUserfrom(Config.loadUser(this).getUsername());
+        chat.setUserto(userId);
+        chats.add(chat);
+        adapter.notifyDataSetChanged();
+    }
+
+    private void getChats(String string){
+        chats.clear();
+        try {
+            JSONArray array = new JSONArray(string);
+
+            JSONObject json ;
+            for(int i=0;i<array.length();i++){
+                Chat chat = new Chat();
+                json = (JSONObject) array.get(i);
+                chat.setUserfrom(json.getString("userfrom"));
+                chat.setUserto(json.getString("userto"));
+                chat.setText(json.getString("text"));
+                chats.add(chat);
+            }
+            adapter.notifyDataSetChanged();
+            recyclerView.scrollToPosition(chats.size()-1);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
     }
 }

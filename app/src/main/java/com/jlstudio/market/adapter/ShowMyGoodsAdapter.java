@@ -50,7 +50,7 @@ public class ShowMyGoodsAdapter extends RecyclerView.Adapter {
         goodViewHolder.goodPrice.setText(good.getPrice()+"");
         goodViewHolder.viewCounts.setText(good.getViews()+"");
         Date date = new Date(good.getDatetime());
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy/mm/dd HH:MM:SS");
+        SimpleDateFormat sdf = new SimpleDateFormat("yy/MM/dd HH:mm");
         String string = sdf.format(date);
         goodViewHolder.time.setText(string);
     }

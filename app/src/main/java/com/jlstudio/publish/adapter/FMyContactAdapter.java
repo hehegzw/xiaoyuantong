@@ -27,11 +27,16 @@ public class FMyContactAdapter extends BaseExpandableListAdapter {
     private List<Groups> listParent;
     private List<List<Groups>> listChild;
     private Context context;
+    private ChildListener listener;
 
     public FMyContactAdapter(Context context, List<Groups> listParent, List<List<Groups>> listChild) {
         this.listParent = listParent;
         this.listChild = listChild;
         this.context = context;
+    }
+
+    public void setListener(ChildListener listener) {
+        this.listener = listener;
     }
 
     public List<Groups> getListParent() {
@@ -86,15 +91,17 @@ public class FMyContactAdapter extends BaseExpandableListAdapter {
             convertView = LayoutInflater.from(context).inflate(R.layout.sub_fmycontact_parent1, null);
             TextView tv = (TextView) convertView.findViewById(R.id.name);
             TextView select = (TextView) convertView.findViewById(R.id.select);
+            TextView count = (TextView) convertView.findViewById(R.id.count);
             Typeface iconfont = Typeface.createFromAsset(context.getAssets(), "fonts/dot.ttf");
             select.setTypeface(iconfont);
-            view = new ViewHolder(tv,select);
+            view = new ViewHolder(tv,select,count);
             convertView.setTag(view);
         } else {
             view = (ViewHolder) convertView.getTag();
         }
         Groups contact = listParent.get(groupPosition);
         view.itemTv.setText(contact.getGroup_name());
+        view.count.setText(contact.getRegisterCount()+"/"+contact.getSubCounts());
         view.select.setOnClickListener(new ParentClickListener(groupPosition));
         if (contact.isSelected()) {
             view.select.setTextColor(context.getResources().getColor(R.color.blue));
@@ -112,23 +119,30 @@ public class FMyContactAdapter extends BaseExpandableListAdapter {
             convertView = LayoutInflater.from(context).inflate(R.layout.sub_fmycontact_parent1, null);
             TextView tv = (TextView) convertView.findViewById(R.id.name);
             TextView select = (TextView) convertView.findViewById(R.id.select);
+            TextView count = (TextView) convertView.findViewById(R.id.count);
             Typeface iconfont = Typeface.createFromAsset(context.getAssets(), "fonts/dot.ttf");
             select.setTypeface(iconfont);
-            view = new ViewHolder(tv,select);
+            view = new ViewHolder(tv,select,count);
             convertView.setTag(view);
         } else {
             view = (ViewHolder) convertView.getTag();
         }
         Groups contact = listChild.get(groupPosition).get(childPosition);
+        view.count.setText(contact.getRegisterCount()+"/"+contact.getSubCounts());
         view.itemTv.setText(contact.getGroup_name());
         view.select.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (listChild.get(groupPosition).get(childPosition).isSelected())
+                if (listChild.get(groupPosition).get(childPosition).isSelected()){
+                    listParent.get(groupPosition).setIsSelected(false);
                     listChild.get(groupPosition).get(childPosition).setIsSelected(false);
-                else
+                }else
                     listChild.get(groupPosition).get(childPosition).setIsSelected(true);
+
                 notifyDataSetChanged();
+                if(listener!=null){
+                    listener.click(groupPosition,childPosition);
+                }
             }
         });
         if (contact.isSelected()) {
@@ -147,10 +161,12 @@ public class FMyContactAdapter extends BaseExpandableListAdapter {
     private class ViewHolder {
         public TextView itemTv;
         public TextView select;
+        public TextView count;
 
-        public ViewHolder(TextView itemTv,TextView select) {
+        public ViewHolder(TextView itemTv,TextView select,TextView count) {
             this.itemTv = itemTv;
             this.select = select;
+            this.count = count;
         }
     }
     private class ParentClickListener implements View.OnClickListener{
@@ -175,5 +191,8 @@ public class FMyContactAdapter extends BaseExpandableListAdapter {
             }
             notifyDataSetChanged();
         }
+    }
+    public interface ChildListener{
+        void click(int groupIndex,int childIndex);
     }
 }

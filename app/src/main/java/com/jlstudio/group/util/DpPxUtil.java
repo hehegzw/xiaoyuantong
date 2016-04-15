@@ -9,10 +9,10 @@ public class DpPxUtil {
     public static int getPx(Context context,int dp){
         float density = context.getResources().getDisplayMetrics().density;
         int temp = (int) (dp/density);
-        return temp;
+        return (int) (dp * density + 0.5f);
     }
     public static int getDp(Context context,int px){
-        float density = context.getResources().getDisplayMetrics().density*3;
+        float density = context.getResources().getDisplayMetrics().density;
         int temp = (int) (px/density);
         return temp;
     }

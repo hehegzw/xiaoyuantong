@@ -30,76 +30,70 @@ import java.net.URLEncoder;
  */
 public class DownLoadFile {
     static String paths = Environment.getExternalStorageDirectory() + "/xiaoyuantongdownload";
-    public static void getFile(String path, String filename, Success success, Filure filure) {
-        if (ChineseUtil.isChinese(path)) {
-            String[] string = path.split("=");
-            try {
-                path = string[0] + "=" + URLEncoder.encode(string[1], "utf-8");
-            } catch (UnsupportedEncodingException e) {
-                e.printStackTrace();
-            }
-        }
-        File file = new File(paths + "/" + filename);
-        Log.d("DownLoadFile", file.getPath());
-        if (!file.exists()) {
-            try {
-                file.createNewFile();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-        FileOutputStream out = null;
-        InputStream in = null;
-        try {
-            out = new FileOutputStream(file);
-            URL url = new URL(path);
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-            conn.setDoInput(true);
-            conn.setDoOutput(true);
-            conn.setUseCaches(false);
-            conn.setReadTimeout(5000);
-            conn.setRequestMethod("GET");
-            Log.d("code", conn.getResponseCode() + "return");
-            if (conn.getResponseCode() == 200 || conn.getResponseCode() == 201) {
-                in = conn.getInputStream();
-                byte[] bytes = new byte[1024];
-                while (in.read(bytes) != -1) {
-                    out.write(bytes);
-                }
-                out.flush();
-                success.onSuccess();
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            filure.onFilure();
-        } finally {
-            try {
-                if (out != null)
-                    out.close();
-                if (in != null)
-                    in.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-    }
+    static String url = "http://7xss18.com2.z0.glb.clouddn.com/";
+//    public static void getFile(String path, String filename, Success success, Filure filure) {
+//        if (ChineseUtil.isChinese(path)) {
+//            String[] string = path.split("=");
+//            try {
+//                path = string[0] + "=" + URLEncoder.encode(string[1], "utf-8");
+//            } catch (UnsupportedEncodingException e) {
+//                e.printStackTrace();
+//            }
+//        }
+//        File file = new File(paths + "/" + filename);
+//        Log.d("DownLoadFile", file.getPath());
+//        if (!file.exists()) {
+//            try {
+//                file.createNewFile();
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//        }
+//        FileOutputStream out = null;
+//        InputStream in = null;
+//        try {
+//            out = new FileOutputStream(file);
+//            URL url = new URL(path);
+//            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+//            conn.setDoInput(true);
+//            conn.setDoOutput(true);
+//            conn.setUseCaches(false);
+//            conn.setReadTimeout(5000);
+//            conn.setRequestMethod("GET");
+//            Log.d("code", conn.getResponseCode() + "return");
+//            if (conn.getResponseCode() == 200 || conn.getResponseCode() == 201) {
+//                in = conn.getInputStream();
+//                byte[] bytes = new byte[1024];
+//                while (in.read(bytes) != -1) {
+//                    out.write(bytes);
+//                }
+//                out.flush();
+//                success.onSuccess();
+//            }
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            filure.onFilure();
+//        } finally {
+//            try {
+//                if (out != null)
+//                    out.close();
+//                if (in != null)
+//                    in.close();
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//        }
+//    }
 
-    public static void getFile(String url, String path, final String filename, final Success success, final Filure failure) {
+    public static void getFile(final String downloadFilename,final String saveFilename, final Success success, final Filure failure) {
         RequestParams params = new RequestParams();
-        try {
-            path = path.split("=")[1];
-            JSONObject json = new JSONObject(path);
-            params.put("data", json.get("filePath"));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
+        url+=downloadFilename;
         AsyncHttpClient client = new AsyncHttpClient();
         String[] allowedContentTypes = new String[] { ".*" };
         client.post(url, params, new BinaryHttpResponseHandler(allowedContentTypes) {
             @Override
             public void onSuccess(int i, Header[] headers, byte[] bytes) {
-                createFile(filename,bytes,success,failure);
+                createFile(saveFilename,bytes,success,failure);
             }
             @Override
             public void onFailure(int i, Header[] headers, byte[] bytes, Throwable throwable) {

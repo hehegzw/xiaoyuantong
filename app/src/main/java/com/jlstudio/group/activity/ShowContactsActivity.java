@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.text.Editable;
@@ -26,6 +27,7 @@ import android.widget.Toast;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.jlstudio.R;
 import com.jlstudio.group.fragment.ContactsGroupFragment;
 import com.jlstudio.group.fragment.FContact;
@@ -44,6 +46,7 @@ import com.jlstudio.main.util.JsonToBean;
 import com.jlstudio.publish.activity.PublishDatasAty;
 import com.jlstudio.publish.util.ShowToast;
 import com.jlstudio.publish.util.StringUtil;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,8 +57,8 @@ import cn.jpush.android.api.JPushInterface;
  * 显示联系人
  */
 public class ShowContactsActivity extends Activity implements View.OnClickListener, AdapterView.OnItemClickListener {
-    private ImageView face;//头像
-    private ImageView bigface;//头像
+    private SimpleDraweeView face;//头像
+    private SimpleDraweeView bigface;//头像
     private TextView tv_recent;//最近联系人按钮
     private TextView tv_friend;//好友按钮
     private Fragment currentFragment;//当前fragment
@@ -70,9 +73,9 @@ public class ShowContactsActivity extends Activity implements View.OnClickListen
     private TextView more;//更多
     private DrawerLayout drawerLayout;
     private long exitTime = 0;
-
     private ListView slidlist;
     private List<String> slidlistdata;
+    private ImageLoader imageLoader;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,6 +86,7 @@ public class ShowContactsActivity extends Activity implements View.OnClickListen
             finish();
         }
         personalUrl = Config.URL + Config.loadUser(this).getUsername();
+        imageLoader = Downloadimgs.initImageLoader(this);
         initView();
         initEvent();
         initFragment();
@@ -95,8 +99,9 @@ public class ShowContactsActivity extends Activity implements View.OnClickListen
         if (!StringUtil.isEmpty(user.getUsername())) {
             face.setVisibility(View.VISIBLE);
             String url = Config.URL + "faces/" + Config.loadUser(this).getUsername() + ".jpg";
-            Downloadimgs.initImageLoader(this).displayImage(url, face, Downloadimgs.getOption());
-            Downloadimgs.initImageLoader(this).displayImage(url, bigface, Downloadimgs.getOption());
+            Uri uri = Uri.parse(url);
+            face.setImageURI(uri);
+            bigface.setImageURI(uri);
         }
         JPushInterface.onResume(this);
     }
@@ -138,7 +143,7 @@ public class ShowContactsActivity extends Activity implements View.OnClickListen
     /*********************************************************/
 
     private void initView() {
-        face = (ImageView) findViewById(R.id.face);
+        face = (SimpleDraweeView) findViewById(R.id.face);
         face.setOnClickListener(this);
         tv_recent = (TextView) findViewById(R.id.tv_recent);
         tv_friend = (TextView) findViewById(R.id.tv_friend);
@@ -160,7 +165,7 @@ public class ShowContactsActivity extends Activity implements View.OnClickListen
         more.setTypeface(iconfont);
 
         drawerLayout = (DrawerLayout) findViewById(R.id.drawlayout);
-        bigface = (ImageView) findViewById(R.id.bigface);
+        bigface = (SimpleDraweeView) findViewById(R.id.bigface);
         slidlist = (ListView) findViewById(R.id.slidlist);
         slidlist.setOnItemClickListener(this);
         slidlistdata = new ArrayList<>();
@@ -279,10 +284,17 @@ public class ShowContactsActivity extends Activity implements View.OnClickListen
             } else {
                 Config.registerJPUSH(this, Config.loadBaseUser(this).getUsername());
                 finish();
-                System.exit(0);
             }
             return true;
         }
         return super.onKeyDown(keyCode, event);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        imageLoader.clearMemoryCache();
+        imageLoader.clearDiskCache();
+        System.exit(0);
     }
 }

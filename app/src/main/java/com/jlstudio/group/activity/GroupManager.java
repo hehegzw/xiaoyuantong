@@ -65,6 +65,10 @@ public class GroupManager extends BaseActivity implements AdapterView.OnItemClic
         adapter.setCallBack(new EditGroup.CallBack() {
             @Override
             public void callback(int index, String name) {
+                if(groups.get(index).endsWith("我的班级")||groups.get(index).endsWith("我的好友")){
+                    ShowToast.show(GroupManager.this,"这个组还是别动的好");
+                    return;
+                }
                 groups.remove(index);
                 editgroups.add(name + ",delete$");
                 adapter.notifyDataSetChanged();
@@ -85,11 +89,8 @@ public class GroupManager extends BaseActivity implements AdapterView.OnItemClic
         right_icon = (TextView) findViewById(R.id.right_icon);
         grouplist = (ListView) findViewById(R.id.grouplist);
         addgroup = (LinearLayout) findViewById(R.id.addgroup);
-        TextView addPic = (TextView) findViewById(R.id.addpic);
         Typeface icon = Typeface.createFromAsset(getAssets(),"fonts/iconfont.ttf");
         back.setTypeface(icon);
-        icon = Typeface.createFromAsset(getAssets(),"fonts/addgroup.ttf");
-        addPic.setTypeface(icon);
         right_icon.setText("完成");
         title_name.setText("分组管理");
         grouplist.setAdapter(adapter);
@@ -145,6 +146,10 @@ public class GroupManager extends BaseActivity implements AdapterView.OnItemClic
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        if(groups.get(position).endsWith("我的班级")||groups.get(position).endsWith("我的好友")){
+            ShowToast.show(this,"这个组还是别动的好");
+            return;
+        }
         new EditGroup(this, position, groups,"edit" ,new EditGroup.CallBack() {
             @Override
             public void callback(int index, String name) {

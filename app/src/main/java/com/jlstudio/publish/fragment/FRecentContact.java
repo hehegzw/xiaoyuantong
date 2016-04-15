@@ -29,7 +29,7 @@ public class FRecentContact extends Fragment implements AdapterView.OnItemClickL
     private ListView recent_listview;
     private View view;
     private Button publish;
-    private List<Contacts> contacts_list;
+    private List<MyContact> contacts_list;
     private DBOption db;//数据库连接
     private RecentFriendListViewAdapter recentFriendListViewAdapter;
 
@@ -100,7 +100,7 @@ public class FRecentContact extends Fragment implements AdapterView.OnItemClickL
             }
         }
         for (int i=0;i<Config.persons.size();i++){
-            Log.d("haha",Config.persons.get(i).getUsername());
+            Log.d("haha",Config.persons.get(i).getName());
         }
     }
 }

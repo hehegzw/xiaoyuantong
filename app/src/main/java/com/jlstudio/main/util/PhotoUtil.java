@@ -36,7 +36,7 @@ public class PhotoUtil {
     }
     //调用本地图库
     public void openLocalAlbum(Activity activity,int requestCode){
-        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+        Intent intent = new Intent(Intent.ACTION_PICK);
         intent.setType("image/*");
         activity.startActivityForResult(intent,requestCode);
     }

@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.jlstudio.R;
+import com.jlstudio.main.application.Config;
 import com.jlstudio.main.util.CircleImageView;
 import com.jlstudio.market.bean.Chat;
 
@@ -35,10 +36,10 @@ public class ChatAdapter extends RecyclerView.Adapter {
 
     @Override
     public int getItemViewType(int position) {
-        if(chats.get(position).getUserid().equals("0"))
-            return LEFT;
-        else
+        if(chats.get(position).getUserfrom().equals(Config.loadUser(context).getUsername()))
             return RIGHT;
+        else
+            return LEFT;
     }
 
     @Override

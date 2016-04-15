@@ -44,26 +44,11 @@ import java.util.List;
  */
 public class ContactsActivity extends Activity implements AdapterView.OnItemClickListener, View.OnClickListener {
 
-    private HashMap<String, Integer> selector;// 存放含有索引字母的位置
-    private LinearLayout layoutIndex;
-    private LinearLayout layout_show_no_group;
     private ListView listView;
-    private TextView tv_show;
     private TextView grd_contacts_title;
     private TextView grd_contacts_back;
-    private DBOption db;
-    private CatchData catchData;
-
     private ContactsActivityAdapter adapter;
-    private String[] indexStr = {"#", "A", "B", "C", "D", "E", "F", "G", "H",
-            "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U",
-            "V", "W", "X", "Y", "Z"};
-    private List<Contacts> persons = null;
-    private List<Contacts> newPersons = new ArrayList<>();
-    private int height;// 字体高度
-    private boolean flag = false;
     private String titlename;
-    private String choose;
     private List<Contacts> sort_persons;
     private GetDataNet gn;
 
@@ -72,16 +57,14 @@ public class ContactsActivity extends Activity implements AdapterView.OnItemClic
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_grade_contacts);
         ProgressUtil.showProgressDialog(ContactsActivity.this, "正在加载...");
-        db = new DBOption(this);
         gn = GetDataNet.getInstence(this);
-        getData();
         initView();
+        getData();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        //getData();
     }
     /**
      * 从上一个Fragment中获取班级名称
@@ -89,8 +72,7 @@ public class ContactsActivity extends Activity implements AdapterView.OnItemClic
     public void getData() {
         Intent intent = getIntent();
         titlename =intent.getAction();
-        catchData = db.getCatch(Config.URL+"groupperson"+Config.loadUser(this).getUsername()+titlename);
-        persons = new ArrayList<>();
+        grd_contacts_title.setText(titlename);
         getPersonFromNet();
     }
 
@@ -98,127 +80,23 @@ public class ContactsActivity extends Activity implements AdapterView.OnItemClic
         listView.setOnItemClickListener(this);
         grd_contacts_back.setOnClickListener(this);
     }
-    private void initListView(){
-        if (persons != null) {
-            String[] allNames = SortListUtil.sortIndex(persons);
-            newPersons = SortListUtil.sortList(allNames, persons, newPersons);
-            selector = new HashMap<>();
-            for (int j = 0; j < indexStr.length; j++) {// 循环字母表，找出newPersons中对应字母的位置
-                for (int i = 0; i < newPersons.size(); i++) {
-                    Contacts c = newPersons.get(i);
-                    String name = c.getRealname();
-                    if (newPersons.get(i).getRealname().equals(indexStr[j])) {
-                        selector.put(indexStr[j], i);
-                    }
-                }
-            }
-            //监听焦点变化
-            ViewTreeObserver observer = layoutIndex.getViewTreeObserver();
-            observer.addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
-
-                public boolean onPreDraw() {
-                    if (!flag) {
-                        height = layoutIndex.getMeasuredHeight() / indexStr.length;
-                        getIndexView();
-                        flag = true;
-                    }
-                    return true;
-                }
-            });
-            layout_show_no_group.setVisibility(View.GONE);
-            adapter = new ContactsActivityAdapter(ContactsActivity.this, newPersons);
-            listView.setAdapter(adapter);
-        }
-        ProgressUtil.closeProgressDialog();
-    }
-
-
     private void initView() {
         grd_contacts_title = (TextView) findViewById(R.id.grd_contacts_title);
         grd_contacts_title.setText(titlename);
-        layoutIndex = (LinearLayout) findViewById(R.id.grd_contacts_layout);
-        layoutIndex.setBackgroundColor(Color.parseColor("#01000000"));
-        layout_show_no_group = (LinearLayout) findViewById(R.id.layout_show_no_group);
         listView = (ListView) findViewById(R.id.grd_contacts_listView);
-        tv_show = (TextView) findViewById(R.id.grd_contacts_tv);
+        sort_persons = new ArrayList<>();
+        adapter = new ContactsActivityAdapter(this,sort_persons);
+        listView.setAdapter(adapter);
         grd_contacts_back = (TextView) findViewById(R.id.grd_contacts_back);
         Typeface iconfont = Typeface.createFromAsset(getAssets(), "fonts/iconfont.ttf");
         grd_contacts_back.setTypeface(iconfont);
-        tv_show.setVisibility(View.GONE);
         initEvent();
     }
-
-
-
-    /**
-     * 绘制索引列表
-     */
-    public void getIndexView() {
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.WRAP_CONTENT, height);
-        for (int i = 0; i < indexStr.length; i++) {
-            final TextView tv = new TextView(ContactsActivity.this);
-            tv.setLayoutParams(params);
-            tv.setText(indexStr[i]);
-            tv.setPadding(10, 0, 10, 0);
-            layoutIndex.addView(tv);
-            layoutIndex.setOnTouchListener(new View.OnTouchListener() {
-                @Override
-                public boolean onTouch(View v, MotionEvent event) {
-                    float y = event.getY();
-                    int index = (int) (y / height);
-                    if (index > -1 && index < indexStr.length) {// 防止越界
-                        String key = indexStr[index];
-                        if (selector.containsKey(key)) {
-                            int pos = selector.get(key);
-                            if (listView.getHeaderViewsCount() > 0) {// 防止ListView有标题栏，本例中没有。
-                                listView.setSelectionFromTop(
-                                        pos + listView.getHeaderViewsCount(), 0);
-                            } else {
-                                listView.setSelectionFromTop(pos, 0);// 滑动到第一项
-                            }
-                            tv_show.setVisibility(View.VISIBLE);
-                            tv_show.setText(indexStr[index]);
-                        }
-                    }
-                    switch (event.getAction()) {
-                        case MotionEvent.ACTION_DOWN:
-                            layoutIndex.setBackgroundColor(Color
-                                    .parseColor("#bebaba"));
-                            break;
-
-                        case MotionEvent.ACTION_MOVE:
-
-                            break;
-                        case MotionEvent.ACTION_UP:
-                            layoutIndex.setBackgroundColor(Color
-                                    .parseColor("#01000000"));
-                            tv_show.setVisibility(View.GONE);
-                            break;
-                    }
-                    return true;
-                }
-            });
-        }
-    }
-
-
     @Override
     public void onClick(View v) {
         finish();
     }
 
-
-    private List<Contacts> sortPersons(List<Contacts> sort_persons) {
-        Contacts contacts;
-        for (int i = 0; i < sort_persons.size(); i++) {
-            contacts = new Contacts();
-            contacts.setRealname(sort_persons.get(i).getRealname() + "," + sort_persons.get(i).getUsername());
-            contacts.setSign(sort_persons.get(i).getSign());
-            persons.add(contacts);
-        }
-        return persons;
-    }
     private void getPersonFromNet(){
         JSONObject json = new JSONObject();
         try {
@@ -230,17 +108,15 @@ public class ContactsActivity extends Activity implements AdapterView.OnItemClic
         gn.getData(Config.URL,"groupperson",new Response.Listener<String>() {
             @Override
             public void onResponse(String s) {
-                db.updateCatch(Config.URL+"groupperson"+Config.loadUser(ContactsActivity.this).getUsername()+titlename, s, "00");
                 sort_persons = JsonToPubhlishData.getSingleContacts(s);
-                persons = sortPersons(sort_persons);
-                initListView();
+                adapter.onDataChanged(sort_persons);
                 ProgressUtil.closeProgressDialog();
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 Log.i("Test", "网络错误!");
-                Toast.makeText(ContactsActivity.this, "删除失败", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(ContactsActivity.this, "删除失败", Toast.LENGTH_SHORT).show();
                 ProgressUtil.closeProgressDialog();
             }
         }, json.toString());
@@ -248,8 +124,7 @@ public class ContactsActivity extends Activity implements AdapterView.OnItemClic
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Intent intent = new Intent(ContactsActivity.this, ContactsDataActivity.class);
-        String[] userid = newPersons.get(position).getRealname().split(",");
-        intent.setAction(userid[1]);
+        intent.setAction(sort_persons.get(position).getUsername());
         startActivity(intent);
     }
 }

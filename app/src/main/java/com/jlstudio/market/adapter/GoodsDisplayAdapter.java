@@ -1,6 +1,8 @@
 package com.jlstudio.market.adapter;
 
 import android.content.Context;
+import android.graphics.Typeface;
+import android.net.Uri;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -10,7 +12,10 @@ import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.jlstudio.R;
+import com.jlstudio.main.application.Config;
+import com.jlstudio.main.net.Downloadimgs;
 import com.jlstudio.main.util.CircleImageView;
 import com.jlstudio.market.bean.GoodsDetail;
 
@@ -27,6 +32,7 @@ public class GoodsDisplayAdapter extends RecyclerView.Adapter {
     private Context context;
     private LayoutInflater inflater;
     private ClickListener click;
+    private ImageClickListener imageClick;
     private int screenWidth;
     public GoodsDisplayAdapter(List<GoodsDetail> goods, Context context) {
         this.goods = goods;
@@ -44,9 +50,13 @@ public class GoodsDisplayAdapter extends RecyclerView.Adapter {
         this.click = click;
     }
 
+    public void setImageClick(ImageClickListener imageClick) {
+        this.imageClick = imageClick;
+    }
+
     @Override
     public int getItemViewType(int position) {
-        if(position == goods.size()-1)
+        if(position == goods.size()-1&&goods.size()>=20)
             return FOOTER;
         else
             return 0;
@@ -67,25 +77,29 @@ public class GoodsDisplayAdapter extends RecyclerView.Adapter {
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int i) {
-        if(i == goods.size()-1){
+        if(i == goods.size()-1&&goods.size()>=20){
 
         }else{
             GoodsViewHolder gViewHolder = (GoodsViewHolder) viewHolder;
             gViewHolder.position = i;
-            gViewHolder.username.setText(goods.get(i).getUserid());
+            gViewHolder.username.setText(goods.get(i).getUsername());
             gViewHolder.browse.setText(goods.get(i).getViews()+"");
             gViewHolder.price.setText(goods.get(i).getPrice() + "");
             gViewHolder.description.setText(goods.get(i).getDescription());
             Date date = new Date(goods.get(i).getDatetime());
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy年mm月dd日 HH:MM:SS");
+            SimpleDateFormat sdf = new SimpleDateFormat("yy/MM/dd HH:mm");
             String time = sdf.format(date);
             gViewHolder.time.setText(time);
+            String url = Config.URL+ "faces/"+goods.get(i).getUserid() +".jpg";
+            Uri uri = Uri.parse(url);
+            gViewHolder.face.setImageURI(uri);
+            //Downloadimgs.initImageLoader(context).displayImage(url,gViewHolder.face,Downloadimgs.getOption());
             initRecycleView(gViewHolder.picture, i);
         }
 
     }
 
-    private void initRecycleView(RecyclerView picture,int i) {
+    private void initRecycleView(RecyclerView picture,final int i) {
         List<String> images = goods.get(i).getImages();
         SubGoodsDisplayAdapter adapter = new SubGoodsDisplayAdapter(images,context,screenWidth);
         picture.setAdapter(adapter);
@@ -93,6 +107,14 @@ public class GoodsDisplayAdapter extends RecyclerView.Adapter {
         LinearLayoutManager layout = new LinearLayoutManager(context);
         layout.setOrientation(LinearLayout.HORIZONTAL);
         picture.setLayoutManager(layout);
+        adapter.setClick(new SubGoodsDisplayAdapter.ClickListener() {
+            @Override
+            public void click(View v, int position) {
+                if(click!=null){
+                    imageClick.click(v,i);
+                }
+            }
+        });
     }
 
     @Override
@@ -100,7 +122,7 @@ public class GoodsDisplayAdapter extends RecyclerView.Adapter {
         return goods.size();
     }
     private class GoodsViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        public CircleImageView face;
+        public SimpleDraweeView face;
         public RecyclerView picture;
         public TextView username;
         public TextView time;
@@ -108,10 +130,12 @@ public class GoodsDisplayAdapter extends RecyclerView.Adapter {
         public TextView description;
         public TextView from;
         public TextView browse;
+        private TextView moneyIcon;
+        private TextView eyeIcon;
         public int position;
         public GoodsViewHolder(View itemView) {
             super(itemView);
-            face = (CircleImageView) itemView.findViewById(R.id.face);
+            face = (SimpleDraweeView) itemView.findViewById(R.id.face);
             picture = (RecyclerView) itemView.findViewById(R.id.picture);
             username = (TextView) itemView.findViewById(R.id.username);
             time = (TextView) itemView.findViewById(R.id.time);
@@ -119,6 +143,11 @@ public class GoodsDisplayAdapter extends RecyclerView.Adapter {
             description = (TextView) itemView.findViewById(R.id.description);
             from = (TextView) itemView.findViewById(R.id.from);
             browse = (TextView) itemView.findViewById(R.id.browse);
+            moneyIcon = (TextView) itemView.findViewById(R.id.moneyicon);
+            eyeIcon = (TextView) itemView.findViewById(R.id.eyeicon);
+            Typeface icon = Typeface.createFromAsset(context.getAssets(),"fonts/moneyeye.ttf");
+            moneyIcon.setTypeface(icon);
+            eyeIcon.setTypeface(icon);
             itemView.setOnClickListener(this);
         }
 
@@ -159,5 +188,8 @@ public class GoodsDisplayAdapter extends RecyclerView.Adapter {
     }
     public interface ClickListener{
         void click(View v1,View v2,int position);
+    }
+    public interface ImageClickListener{
+        void click(View v1,int position);
     }
 }

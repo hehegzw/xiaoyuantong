@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:paddingTop="10dp"
+    android:paddingBottom="10dp">
+    <TextView
+        android:layout_weight="2"
+        android:id="@+id/goodName"
+        android:text="电吹风"
+        android:layout_width="0dp"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:layout_height="wrap_content"
+        android:gravity="center"/>
+    <TextView
+        android:layout_weight="1"
+        android:id="@+id/goodPrice"
+        android:text="20"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:gravity="center"/>
+    <TextView
+        android:layout_weight="2"
+        android:id="@+id/time"
+        android:hint="2016/03/26"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"/>
+
+</LinearLayout>

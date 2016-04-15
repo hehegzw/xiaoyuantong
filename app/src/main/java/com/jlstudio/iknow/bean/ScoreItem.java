@@ -7,6 +7,7 @@ public class ScoreItem implements Serializable {
 	private String cridit;
 	private String point;
 	private String score;
+	private boolean isSpread;
 	public ScoreItem(String name, String cridit, String point, String score) {
 		super();
 		this.name = name;
@@ -41,5 +42,12 @@ public class ScoreItem implements Serializable {
 	public String toString(){
 		return name+" "+cridit+" "+point+" "+score;
 	}
-	
+
+	public boolean isSpread() {
+		return isSpread;
+	}
+
+	public void setSpread(boolean spread) {
+		isSpread = spread;
+	}
 }

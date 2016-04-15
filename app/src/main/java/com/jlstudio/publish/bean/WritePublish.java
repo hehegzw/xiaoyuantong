@@ -7,6 +7,7 @@ public class WritePublish {
     private String title;
     private String content;
     private String filePath;
+    private String fileName;
     private String type;
 
     public WritePublish() {
@@ -53,5 +54,13 @@ public class WritePublish {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public String getFileName() {
+        return fileName;
+    }
+
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
     }
 }

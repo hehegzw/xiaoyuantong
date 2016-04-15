@@ -5,20 +5,21 @@
     <include layout="@layout/titlbar"/>
     <LinearLayout
         android:id="@+id/addgroup"
-        android:layout_marginTop="-10dp"
+        android:layout_margin="10dp"
         android:gravity="center_vertical"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-        <TextView
+        android:layout_height="40dp">
+        <ImageView
             android:id="@+id/addpic"
-            android:text="@string/addgroup"
-            android:textSize="50dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:src="@drawable/icon_addpic_focused"
+            android:layout_width="40dp"
+            android:layout_height="40dp" />
         <TextView
             android:text="添加分组"
+            android:gravity="center"
+            android:layout_marginLeft="10dp"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="match_parent" />
     </LinearLayout>
     <ListView
         android:id="@+id/grouplist"

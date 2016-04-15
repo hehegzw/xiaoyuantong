@@ -75,15 +75,14 @@ public class JsonToPubhlishData {
                 p.setContent(json.getString("noticetext"));
             else
                 p.setContent("");
-            if (json.has("fileName")) {
-                p.setFilename(json.getString("fileName"));
+            if (json.has("filePath")) {
                 p.setFilePath(json.getString("filePath"));
             } else {
-                p.setFilename("");
+                p.setFilePath("");
             }
             if (type.equals("receive")) {
                 p.setFlag(json.getString("noticereceiveflag"));
-                p.setUserFrom(json.getString("noticefrom"));
+                p.setUserFrom(json.getString("realname"));
             } else {
                 p.setReplyedCount(json.getInt("replyCount") + "");
                 p.setUnReplyCount(json.getInt("unReplyCount") + "");
@@ -145,17 +144,17 @@ public class JsonToPubhlishData {
      * @param string
      * @return
      */
-    public static List<Contacts> getPersonFromJson(String string) {
-        List<Contacts> list = new ArrayList<>();
+    public static List<MyContact> getPersonFromJson(String string) {
+        List<MyContact> list = new ArrayList<>();
         try {
             JSONObject json = new JSONObject(string);
             if(!json.has("datas"))return list;
             JSONArray array = json.getJSONArray("datas");
             for (int j = 0; j < array.length(); j++) {
                 JSONObject o = array.getJSONObject(j);
-                Contacts contact = new Contacts();
-                contact.setUsername(o.getString("userid"));
-                contact.setRealname(o.getString("userrealname"));
+                MyContact contact = new MyContact();
+                contact.setUid(o.getString("userid"));
+                contact.setName(o.getString("userrealname"));
                 if(o.getInt("isregister") == 1){
                     contact.setIsRegister(true);
                 }else{
@@ -222,18 +221,18 @@ public class JsonToPubhlishData {
      * @param group  联系人所属组
      * @return
      */
-    public static List<List<Contacts>> getContacts(String string, List<Groups> group) {
-        List<List<Contacts>> list = new ArrayList<>();
+    public static List<List<MyContact>> getContacts(String string, List<Groups> group) {
+        List<List<MyContact>> list = new ArrayList<>();
         try {
             JSONObject json = new JSONObject(string);
             for (int i = 0; i < group.size(); i++) {
-                List<Contacts> item = new ArrayList<>();
+                List<MyContact> item = new ArrayList<>();
                 JSONArray array = json.getJSONArray(group.get(i).getGroup_name());
                 for (int j = 0; j < array.length(); j++) {
                     JSONObject o = array.getJSONObject(j);
-                    Contacts contact = new Contacts();
-                    contact.setUsername(o.getString("username"));
-                    contact.setRealname(o.getString("realname"));
+                    MyContact contact = new MyContact();
+                    contact.setUid(o.getString("username"));
+                    contact.setName(o.getString("realname"));
                     contact.setSign(o.has("signature")?o.getString("signature"):"");
                     if(o.getInt("isRegister") == 1)
                         contact.setIsRegister(true);
@@ -273,8 +272,8 @@ public class JsonToPubhlishData {
                 for (int j = 0; j < array.length(); j++) {
                     Groups contact = new Groups();
                     contact.setGroup_name(array.getJSONObject(j).getString("groupName"));
-                    contact.setRegisterCount(array.getJSONObject(i).getInt("registerCount"));
-                    contact.setSubCounts(array.getJSONObject(i).getInt("totleCount"));
+                    contact.setRegisterCount(array.getJSONObject(j).getInt("registerCount"));
+                    contact.setSubCounts(array.getJSONObject(j).getInt("totleCount"));
                     item.add(contact);
                 }
                 list.add(item);

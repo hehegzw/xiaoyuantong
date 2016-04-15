@@ -15,14 +15,13 @@ import com.android.volley.VolleyError;
 import com.jlstudio.R;
 import com.jlstudio.group.activity.ContactsDataActivity;
 import com.jlstudio.group.adapter.FMyContactSubAdapter;
-import com.jlstudio.group.bean.Contacts;
 import com.jlstudio.group.bean.Groups;
-import com.jlstudio.main.activity.LoginAty;
 import com.jlstudio.main.application.Config;
 import com.jlstudio.main.bean.CatchData;
 import com.jlstudio.main.db.DBOption;
 import com.jlstudio.main.net.GetDataNet;
 import com.jlstudio.main.util.ProgressUtil;
+import com.jlstudio.publish.bean.MyContact;
 import com.jlstudio.publish.util.JsonToPubhlishData;
 
 import org.json.JSONException;
@@ -36,7 +35,7 @@ public class FContact extends Fragment implements ExpandableListView.OnChildClic
     private SwipeRefreshLayout refresh;
     private ExpandableListView listView;
     private List<Groups> listParent;
-    private List<List<Contacts>> listChild;
+    private List<List<MyContact>> listChild;
     private FMyContactSubAdapter adapter;
     private GetDataNet gn;//网络连接
     private String role;//角色
@@ -137,7 +136,7 @@ public class FContact extends Fragment implements ExpandableListView.OnChildClic
     @Override
     public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
         Intent intent = new Intent(getActivity(), ContactsDataActivity.class);
-        intent.setAction(listChild.get(groupPosition).get(childPosition).getUsername());
+        intent.setAction(listChild.get(groupPosition).get(childPosition).getUid());
         startActivity(intent);
         return true;
     }

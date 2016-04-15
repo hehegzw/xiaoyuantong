@@ -1,15 +1,19 @@
 package com.jlstudio.group.activity;
 
+import android.Manifest;
 import android.app.AlertDialog;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.telephony.SmsManager;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -27,6 +31,7 @@ import com.android.volley.VolleyError;
 import com.jlstudio.R;
 import com.jlstudio.group.bean.Contacts;
 import com.jlstudio.group.bean.Groups;
+import com.jlstudio.group.dialog.CallDialog;
 import com.jlstudio.group.dialog.SelectGroup;
 import com.jlstudio.group.net.GetDataAction;
 import com.jlstudio.main.activity.BaseActivity;
@@ -183,27 +188,9 @@ public class ContactsDataActivity extends BaseActivity implements View.OnClickLi
         }, 30, 30, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-                ShowToast.show(ContactsDataActivity.this, "还没有上传头像奥!");
+               // ShowToast.show(ContactsDataActivity.this, "还没有上传头像奥!");
             }
         });
-//        String fileName = "/sdcard/"+contacts_id+".jpg";
-//        File file = new File(fileName);
-//        if(file.exists()){
-//            Bitmap bitmap = BitmapFactory.decodeFile(fileName);
-//            iface.setImageBitmap(bitmap);
-//        }else{
-//            new DownFace(this).loadImage(Config.URL, "faces/" + contacts_id + ".jpg", new Response.Listener<Bitmap>() {
-//                @Override
-//                public void onResponse(Bitmap bitmap) {
-//                    iface.setImageBitmap(bitmap);
-//                }
-//            }, 30, 30, new Response.ErrorListener() {
-//                @Override
-//                public void onErrorResponse(VolleyError volleyError) {
-//                    ShowToast.show(ContactsDataActivity.this, "还没有上传头像奥!");
-//                }
-//            });
-//        }
     }
 
     private void prepareData(String s) {
@@ -212,16 +199,22 @@ public class ContactsDataActivity extends BaseActivity implements View.OnClickLi
             JSONObject jsonObject = new JSONObject(s);
             title_name.setText(jsonObject.getString("userrealname"));
             phoneNumber = jsonObject.getString("userphone");
-
-            contacts_signature.setText(jsonObject.getString("usersignature"));
+            if(jsonObject.has("usersignature"))
+                contacts_signature.setText(jsonObject.getString("usersignature"));
             contacts_name.setText(jsonObject.getString("userrealname"));
             contacts_nickname.setText(jsonObject.getString("usernickname"));
             contacts_sex.setText(jsonObject.getString("usergender"));
-            contacts_phone.setText(jsonObject.getString("userphone"));
-            contacts_grade_name.setText(jsonObject.getString("class"));
-            contacts_dept_name.setText(jsonObject.getString("department"));
-            contacts_qq.setText(jsonObject.getString("userqq"));
-            contacts_wechat.setText(jsonObject.getString("userweixin"));
+            if(jsonObject.has("userphone"))
+                contacts_phone.setText(jsonObject.getString("userphone"));
+            if(jsonObject.has("userqq"))
+                contacts_qq.setText(jsonObject.getString("userqq"));
+            if(jsonObject.has("userweixin"))
+                contacts_wechat.setText(jsonObject.getString("userweixin"));
+            if(jsonObject.has("classname"))
+                contacts_grade_name.setText(jsonObject.getString("classname"));
+            if(jsonObject.has("departmentname")){
+                contacts_dept_name.setText(jsonObject.getString("departmentname"));
+            }
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -232,24 +225,37 @@ public class ContactsDataActivity extends BaseActivity implements View.OnClickLi
      *
      */
     public void doPhoneCall() {
-        AlertDialog dialog = new AlertDialog.Builder(ContactsDataActivity.this).setTitle("确认").setMessage("确认拨打电话?").setPositiveButton("是", new DialogInterface.OnClickListener() {
+        new CallDialog(this, new CallDialog.CallListener() {
             @Override
-            public void onClick(DialogInterface dialog, int which) {
-                //获取编辑框内输入的目标电话号码
-                Intent intent = new Intent();
-                intent.setAction("android.intent.action.CALL");
-                intent.addCategory("android.intent.category.DEFAULT");
-                //指定要拨打的电话号码
-                intent.setData(Uri.parse("tel:" + phoneNumber));
-                doDataBase();
-                startActivity(intent);
-            }
-        }).setNegativeButton("取消", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
+            public void isCall(boolean tag) {
+                if(tag){
+                    //获取编辑框内输入的目标电话号码
+                    Intent intent = new Intent();
+                    intent.setAction("android.intent.action.CALL");
+                    //指定要拨打的电话号码
+                    intent.setData(Uri.parse("tel:" + phoneNumber));
+                    startActivity(intent);
+                }
             }
         }).show();
+//        AlertDialog dialog = new AlertDialog.Builder(ContactsDataActivity.this).setTitle("确认").setMessage("确认拨打电话?").setPositiveButton("是", new DialogInterface.OnClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialog, int which) {
+//                //android6.0运行时权限
+////                if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+////                        != PackageManager.PERMISSION_GRANTED) {
+////                    //申请WRITE_EXTERNAL_STORAGE权限
+////                    ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+////                            WRITE_EXTERNAL_STORAGE_REQUEST_CODE);
+////                }
+//
+//            }
+//        }).setNegativeButton("取消", new DialogInterface.OnClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialog, int which) {
+//                dialog.dismiss();
+//            }
+//        }).show();
 
     }
 
@@ -263,29 +269,6 @@ public class ContactsDataActivity extends BaseActivity implements View.OnClickLi
         startActivity(intent);
     }
 
-    private void doDataBase() {
-        DBOption db = new DBOption(ContactsDataActivity.this);
-        List<Contacts> getContacts_list = db.getRecentContacts(userid);
-        Contacts contacts = new Contacts();
-        contacts.setContacts_id(contacts_id);
-       // contacts.setContacts_name(contacts_name);
-        contacts.setUsername(Config.loadUser(ContactsDataActivity.this).getUsername());
-        if (getContacts_list != null && ifExist(getContacts_list)) {
-            Log.i("Test", "->>>>>>>>>>更新了...");
-            db.updateRecentContacts(contacts);
-        } else {
-            Log.i("Test", "->>>>>>>>>>插入了...");
-            db.insertRecentContacts(contacts);
-        }
-    }
-
-    public boolean ifExist(List<Contacts> list) {
-        for (int i = 0; i < list.size(); i++) {
-            if (list.get(i).getContacts_id().equals(contacts_id))
-                return true;
-        }
-        return false;
-    }
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -368,5 +351,10 @@ public class ContactsDataActivity extends BaseActivity implements View.OnClickLi
                 ShowToast.show(ContactsDataActivity.this, "删除失败");
             }
         }, json.toString());
+    }
+    //android6.0运行时权限回调
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 }

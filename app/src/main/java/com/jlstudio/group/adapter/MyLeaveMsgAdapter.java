@@ -165,7 +165,7 @@ public class MyLeaveMsgAdapter extends BaseAdapter {
                 holder1.fromusername.setText(tempList.get(position).getFromname());
                 holder1.text.setText(tempList.get(position).getContent());
                 Date date = new Date(Long.valueOf(tempList.get(position).getTime()));
-                SimpleDateFormat sdf = new SimpleDateFormat("yyyy年mm月dd日 hh:mm:ss");
+                SimpleDateFormat sdf = new SimpleDateFormat("yy/MM/dd HH:mm");
                 String string = sdf.format(date);
                 holder1.tiem.setText(string);
                 break;

@@ -20,10 +20,10 @@ import java.util.List;
  */
 public class FMyContactSubAdapter extends BaseExpandableListAdapter {
     private List<Groups> listParent;
-    private List<List<Contacts>> listChild;
+    private List<List<MyContact>> listChild;
     private Context context;
 
-    public FMyContactSubAdapter(Context context, List<Groups> listParent, List<List<Contacts>> listChild) {
+    public FMyContactSubAdapter(Context context, List<Groups> listParent, List<List<MyContact>> listChild) {
         this.listParent = listParent;
         this.listChild = listChild;
         this.context = context;
@@ -33,13 +33,13 @@ public class FMyContactSubAdapter extends BaseExpandableListAdapter {
         return listParent;
     }
 
-    public void setList(List<Groups> listParent,List<List<Contacts>> listChild) {
+    public void setList(List<Groups> listParent,List<List<MyContact>> listChild) {
         this.listParent = listParent;
         this.listChild = listChild;
         notifyDataSetChanged();
     }
 
-    public void setListChild(List<List<Contacts>> listChild) {
+    public void setListChild(List<List<MyContact>> listChild) {
         this.listChild = listChild;
         notifyDataSetChanged();
     }
@@ -121,8 +121,8 @@ public class FMyContactSubAdapter extends BaseExpandableListAdapter {
         } else {
             view = (ViewHolder) convertView.getTag();
         }
-        Contacts contact = listChild.get(groupPosition).get(childPosition);
-        view.itemTv.setText(contact.getRealname());
+        MyContact contact = listChild.get(groupPosition).get(childPosition);
+        view.itemTv.setText(contact.getName());
         //判断是否被选中，改变小圆点的颜色
         if (contact.isSelected()) {
             view.select.setTextColor(context.getResources().getColor(R.color.blue));

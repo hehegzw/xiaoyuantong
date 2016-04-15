@@ -159,7 +159,6 @@ public class QueryScoreDialog extends Dialog implements CompoundButton.OnChecked
                             intent = new Intent(context, ScheduleAty.class);
                         }
                         intent.putExtra("data", s);
-                        ProgressUtil.closeProgressDialog();
                         context.startActivity(intent);
                         dismiss();
                     } else {
@@ -167,6 +166,7 @@ public class QueryScoreDialog extends Dialog implements CompoundButton.OnChecked
                         username.setText("");
                         password.setText("");
                     }
+                    ProgressUtil.closeProgressDialog();
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

@@ -143,8 +143,8 @@ public class NewFriendData extends BaseActivity implements View.OnClickListener 
                 if(s.equals("0")){
                     ShowToast.show(NewFriendData.this, "好友请求发送成功");
                     finish();
-                }else{
-                    ShowToast.show(NewFriendData.this, "好友请求发送失败");
+                }else if(s.endsWith("4")){
+                    ShowToast.show(NewFriendData.this, "已经发过好友请求了");
                 }
 
             }

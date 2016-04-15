@@ -1,127 +1,86 @@
 package com.jlstudio.main.activity;
 
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.Typeface;
+import android.content.res.Resources;
 import android.os.Bundle;
-import android.support.v4.view.PagerAdapter;
-import android.support.v4.view.ViewPager;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.widget.Button;
+import android.os.Handler;
+import android.os.Message;
+import android.view.WindowManager;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.jlstudio.R;
-import com.jlstudio.main.adapter.PageAdapter;
-import com.jlstudio.main.application.ActivityContror;
+import com.jlstudio.group.activity.ShowContactsActivity;
 import com.jlstudio.main.application.Config;
+import com.jlstudio.main.bean.User;
+import com.jlstudio.publish.util.StringUtil;
 
-import java.util.ArrayList;
-import java.util.List;
-
-public class WelcomeAty extends BaseActivity implements  View.OnClickListener, ViewPager.OnPageChangeListener {
-    private ViewPager viewpager;
-    private List<View> views;
-    private PagerAdapter adapter;
-    private TextView[] textViews;//小圆点
-    private Button start;
+public class WelcomeAty extends BaseActivity {
+    private TextView time;
+    private Handler handler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+           time.setText(msg.what+"s");
+        }
+    };
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // 取消状态栏
+        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_welcome_aty);
-        initView();
-    }
-    private void initView() {
-        textViews = new TextView[4];
-        viewpager = (ViewPager) findViewById(R.id.viewpager);
-        views = new ArrayList<>();
-        ImageView imageView1 = (ImageView) LayoutInflater.from(this).inflate(R.layout.viewpager_item,null);
-        imageView1.setImageResource(R.drawable.lost);
-        views.add(imageView1);
-        ImageView imageView2 = (ImageView) LayoutInflater.from(this).inflate(R.layout.viewpager_item,null);
-        imageView2.setImageResource(R.drawable.score);
-        views.add(imageView2);
-        ImageView imageView3 = (ImageView) LayoutInflater.from(this).inflate(R.layout.viewpager_item,null);
-        imageView3.setImageResource(R.drawable.notifitation);
-        views.add(imageView3);
-        adapter = new PageAdapter(views);
-        viewpager.setAdapter(adapter);
-        viewpager.setOnPageChangeListener(this);
+        ImageView image = (ImageView) findViewById(R.id.image);
+        AlphaAnimation alphaAnimation = new AlphaAnimation(0.1f, 1.0f);
+        alphaAnimation.setDuration(3000);
+        image.setAnimation(alphaAnimation);
+        alphaAnimation.setAnimationListener(new Animation.AnimationListener() {
 
-        start = (Button) findViewById(R.id.start);
-        start.setOnClickListener(this);
-        start.setVisibility(View.INVISIBLE);
+            @Override
+            public void onAnimationStart(Animation animation) {
 
-        Typeface iconfont = Typeface.createFromAsset(getAssets(),"fonts/dot.ttf");
-        textViews[0] = (TextView) findViewById(R.id.dot1);
-        textViews[1] = (TextView) findViewById(R.id.dot2);
-        textViews[2] = (TextView) findViewById(R.id.dot3);
-        textViews[3] = (TextView) findViewById(R.id.dot4);
-        for (int i = 0;i < 4; i++){
-            textViews[i].setTypeface(iconfont);
-            textViews[i].setOnClickListener(this);
-        }
-        updateColor(0);
-
-    }
-
-
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()){
-            case R.id.dot1:
-                start.setVisibility(View.INVISIBLE);
-                viewpager.setCurrentItem(0);
-                updateColor(0);
-                break;
-            case R.id.dot2:
-                start.setVisibility(View.INVISIBLE);
-                viewpager.setCurrentItem(1);
-                updateColor(1);
-                break;
-            case R.id.dot3:
-                start.setVisibility(View.VISIBLE);
-                viewpager.setCurrentItem(2);
-                updateColor(2);
-                break;
-            case R.id.dot4:
-                viewpager.setCurrentItem(3);
-                updateColor(3);
-                break;
-            case R.id.start:
-                startActivity(new Intent(this, MainActivity.class));
-                ActivityContror.removeActivity(this);
-                break;
-        }
-    }
-    private void updateColor(int index){
-        for (int i=0; i< 4;i++){
-            if(i == index){
-                textViews[i].setTextColor(Color.BLUE);
-            }else{
-                textViews[i].setTextColor(Color.GRAY);
             }
-        }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                User user = Config.loadUser(WelcomeAty.this);
+                User baseUser = Config.loadBaseUser(WelcomeAty.this);
+                if (!StringUtil.isEmpty(user.getUsername()) || !StringUtil.isEmpty(baseUser.getUsername())) {
+                    startActivity(new Intent(WelcomeAty.this,ShowContactsActivity.class));
+                }else{
+                    startActivity(new Intent(WelcomeAty.this,LoginAty.class));
+                }
+                finish();
+            }
+        });
+        time = (TextView) findViewById(R.id.time);
+        new Thread(){
+            @Override
+            public void run() {
+                super.run();
+                int i = 3;
+                while(i>0){
+                    i--;
+                    try {
+                        Thread.sleep(1000);
+                        handler.sendEmptyMessage(i);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }.start();
     }
-
     @Override
-    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-    }
-
-    @Override
-    public void onPageSelected(int position) {
-        if(position == 2){
-            start.setVisibility(View.VISIBLE);
-        }else{
-            start.setVisibility(View.INVISIBLE);
-        }
-        updateColor(position);
-    }
-
-    @Override
-    public void onPageScrollStateChanged(int state) {
-
+    protected void onResume() {
+        super.onResume();
     }
 }

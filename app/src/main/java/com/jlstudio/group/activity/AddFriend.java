@@ -55,7 +55,7 @@ public class AddFriend extends Activity implements View.OnClickListener, Adapter
     private EditText search;
     private ListView listview;
     private ImageView delete;
-    private ImageView shake;
+    private TextView shake;
     private ImageView face;
     private LinearLayout textarea;
     private LinearLayout editarea;
@@ -111,7 +111,7 @@ public class AddFriend extends Activity implements View.OnClickListener, Adapter
         listview = (ListView) findViewById(R.id.listview);
         delete = (ImageView) findViewById(R.id.delete);
         delete.setVisibility(View.INVISIBLE);
-        shake = (ImageView) findViewById(R.id.shake);
+        shake = (TextView) findViewById(R.id.shake);
         textarea = (LinearLayout) findViewById(R.id.textarea);
         editarea = (LinearLayout) findViewById(R.id.editarea);
         personinfo = (LinearLayout) findViewById(R.id.personinfo);
@@ -124,6 +124,8 @@ public class AddFriend extends Activity implements View.OnClickListener, Adapter
         personinfo.setOnClickListener(this);
         Typeface iconfont = Typeface.createFromAsset(getAssets(), "fonts/iconfont.ttf");
         back.setTypeface(iconfont);
+        iconfont= Typeface.createFromAsset(getAssets(), "fonts/shake.ttf");
+        shake.setTypeface(iconfont);
         back.setOnClickListener(this);
         search.addTextChangedListener(new TextWatcher() {
             @Override
@@ -187,7 +189,7 @@ public class AddFriend extends Activity implements View.OnClickListener, Adapter
 
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-                Log.d("hehe", "获取数据失败");
+                ShowToast.show(AddFriend.this,"你的交际能力太强，已经找不到陌生人了");
                 sensorManager.registerListener(AddFriend.this, sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER), SensorManager.SENSOR_DELAY_NORMAL);
             }
         }, json.toString());

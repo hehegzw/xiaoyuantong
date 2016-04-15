@@ -1,14 +1,19 @@
 package com.jlstudio.publish.bean;
 
+import android.os.Parcelable;
+
+import java.io.Serializable;
+
 /**
  * Created by gzw on 2015/11/22.
  */
-public class MyContact {
+public class MyContact implements Serializable {
     private String name;
     private String uid;
     private boolean isSelected;
     private boolean isRegister;
     private String phone;
+    private String sign;
     private int registerCount;
     private int totleCount;
 
@@ -75,6 +80,14 @@ public class MyContact {
 
     public void setTotleCount(int totleCount) {
         this.totleCount = totleCount;
+    }
+
+    public String getSign() {
+        return sign;
+    }
+
+    public void setSign(String sign) {
+        this.sign = sign;
     }
 
     @Override

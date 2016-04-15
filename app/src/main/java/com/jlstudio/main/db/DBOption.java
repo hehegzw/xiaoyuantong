@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 
 import com.jlstudio.group.bean.Contacts;
 import com.jlstudio.main.bean.CatchData;
+import com.jlstudio.publish.bean.MyContact;
 import com.jlstudio.weather.model.City;
 import com.jlstudio.weather.model.County;
 import com.jlstudio.weather.model.Province;
@@ -138,15 +139,15 @@ public class DBOption {
      *
      * @return
      */
-    public List<Contacts> getRecentContacts(String userid) {
-        List<Contacts> contactsList = new ArrayList<>();
+    public List<MyContact> getRecentContacts(String userid) {
+        List<MyContact> contactsList = new ArrayList<>();
         Cursor cursor = db.query("recent_contacts", null, "userid=?", new String[]{userid}, null, null, "contacts_time desc");
         if (cursor.moveToFirst()) {
             do {
-                Contacts contacts = new Contacts();
-                contacts.setUsername(cursor.getString(cursor.getColumnIndex("contacts_id")));
-                contacts.setRealname(cursor.getString(cursor.getColumnIndex("contacts_name")));
-                contacts.setTime(cursor.getString(cursor.getColumnIndex("contacts_time")));
+                MyContact contacts = new MyContact();
+                contacts.setUid(cursor.getString(cursor.getColumnIndex("contacts_id")));
+                contacts.setName(cursor.getString(cursor.getColumnIndex("contacts_name")));
+                //contacts.setTime(cursor.getString(cursor.getColumnIndex("contacts_time")));
                 contactsList.add(contacts);
             } while (cursor.moveToNext());
             return contactsList;

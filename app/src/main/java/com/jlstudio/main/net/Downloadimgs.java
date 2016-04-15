@@ -26,7 +26,6 @@ import java.io.File;
 public class Downloadimgs {
     public static ImageLoader initImageLoader(Context context) {
         File cacheDir = StorageUtils.getOwnCacheDirectory(MyApplication.getContext(), "xiaoyuantong/image");
-        Log.d("path", cacheDir.getAbsolutePath());
         ImageLoaderConfiguration config = new ImageLoaderConfiguration
                 .Builder(context)
                 .threadPoolSize(3)//线程池内加载的数量
