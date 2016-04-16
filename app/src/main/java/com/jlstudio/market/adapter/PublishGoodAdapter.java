@@ -3,6 +3,7 @@ package com.jlstudio.market.adapter;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -12,6 +13,7 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 
 import com.jlstudio.R;
+import com.jlstudio.group.util.DpPxUtil;
 import com.jlstudio.main.application.Config;
 import com.jlstudio.main.net.Downloadimgs;
 
@@ -26,12 +28,14 @@ public class PublishGoodAdapter extends RecyclerView.Adapter {
     private int imageWidth;
     private ClickListener listener;
     private LongClickListener longListener;
+    private String suffix = null;
 
     public PublishGoodAdapter(List<String> goods, Context context) {
         this.goodPics = goods;
         this.context = context;
         WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
         imageWidth = wm.getDefaultDisplay().getWidth() / 3;
+        suffix = "?imageView2/0/w/"+imageWidth+"/h/200/format/jpg";
     }
 
     public void setListener(ClickListener listener) {
@@ -60,7 +64,7 @@ public class PublishGoodAdapter extends RecyclerView.Adapter {
         goodViewHolder.position = i;
         ViewGroup.LayoutParams params = goodViewHolder.image.getLayoutParams();
         params.width = imageWidth;
-        params.height = ViewGroup.LayoutParams.MATCH_PARENT;
+        params.height = DpPxUtil.getPx(context,150);
         goodViewHolder.image.setScaleType(ImageView.ScaleType.FIT_XY);
         goodViewHolder.image.setLayoutParams(params);
         if (i == 0) {
@@ -70,7 +74,10 @@ public class PublishGoodAdapter extends RecyclerView.Adapter {
                 Bitmap bitmap = BitmapFactory.decodeFile(goodPics.get(i));
                 goodViewHolder.image.setImageBitmap(bitmap);
             }else{
-                Downloadimgs.initImageLoader(context).displayImage(Config.URL+goodPics.get(i),goodViewHolder.image,Downloadimgs.getOption());
+                String url;
+                url = Config.QINIUURL + goodPics.get(i) + suffix;
+                Uri uri = Uri.parse(url);
+                goodViewHolder.image.setImageURI(uri);
             }
 
 //            Bitmap bitmap = BitmapFactory.decodeFile(goodPics.get(i));
