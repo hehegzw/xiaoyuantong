@@ -94,6 +94,8 @@ public class QueryScoreDialog extends Dialog implements CompoundButton.OnChecked
                 Intent intent = null;
                 if (type == 0) {
                     intent = new Intent(context, ScoreAty.class);
+                    intent.putExtra("username",user);
+                    intent.putExtra("password",pwd);
                 } else {
                     intent = new Intent(context, ScheduleAty.class);
                 }

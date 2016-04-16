@@ -17,6 +17,8 @@ import com.jlstudio.main.application.Config;
 import com.jlstudio.main.bean.User;
 import com.jlstudio.publish.util.StringUtil;
 
+import cn.jpush.android.api.JPushInterface;
+
 public class WelcomeAty extends BaseActivity {
     private TextView time;
     private Handler handler = new Handler(){
@@ -82,5 +84,12 @@ public class WelcomeAty extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        JPushInterface.onResume(this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        JPushInterface.onPause(this);
     }
 }

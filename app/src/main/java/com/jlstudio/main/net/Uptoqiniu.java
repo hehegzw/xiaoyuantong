@@ -4,7 +4,9 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Log;
 
+import com.jlstudio.main.application.Config;
 import com.jlstudio.main.application.MyApplication;
+import com.jlstudio.publish.util.StringUtil;
 import com.qiniu.android.http.ResponseInfo;
 import com.qiniu.android.storage.UpCompletionHandler;
 import com.qiniu.android.storage.UpProgressHandler;
@@ -49,13 +51,20 @@ public class Uptoqiniu {
                     }
                 }, null);
                 for (int i = 0; i < files.size(); i++) {
-                    uploadManager.put(files.get(i), null, tokan, new UpCompletionHandler() {
+                    uploadManager.put(files.get(i), null,tokan, new UpCompletionHandler() {
                         @Override
                         public void complete(String key, ResponseInfo info, JSONObject response) {
                             try {
-                                list.add(response.getString("key"));
-                                fileCount++;
-                                if (fileCount == files.size()) successListener.success(list);
+                                if(StringUtil.isEmpty(response.getString("key"))){
+                                    if(faulerListener!=null){
+                                        faulerListener.fauler();
+                                    }
+                                }else{
+                                    list.add(response.getString("key"));
+                                    fileCount++;
+                                    if (fileCount == files.size()) successListener.success(list);
+                                }
+
                             } catch (JSONException e) {
                                 e.printStackTrace();
                                 faulerListener.fauler();
@@ -65,14 +74,6 @@ public class Uptoqiniu {
                 }
             }
         }));
-//        for(int i=0;i<files.size();i++){
-//            if(files.get(i).length() > 1024*300){
-//                File file = files.remove(i);
-//                file = getFilePress(file.getAbsolutePath());
-//                files.add(i,file);
-//            }
-//        }
-
     }
 
     public interface SuccessListener {

@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
-    <include layout="@layout/titlbar"></include>
+    <include layout="@layout/titlbar2icon"></include>
     <!-- 总成绩，学分，绩点 -->
 
     <RelativeLayout
@@ -66,10 +66,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
     </RelativeLayout>
-
-    <ExpandableListView
-        android:id="@+id/list"
-        android:childDivider="#a8e6e1e1"
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/refresh"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent">
+        <ExpandableListView
+            android:id="@+id/list"
+            android:childDivider="#a8e6e1e1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+    </android.support.v4.widget.SwipeRefreshLayout>
+
 </LinearLayout>

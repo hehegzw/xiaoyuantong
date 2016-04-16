@@ -146,10 +146,18 @@ public class PublishGoodAty extends Activity implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.submit:
+                if(!Config.isNetworkAvailable(this)){
+                    ShowToast.show(this,"无网络，请检查网络连接");
+                    return;
+                }
                 ProgressUtil.showProgressDialog(this,"发布中...");
                 publishGood();
                 break;
             case R.id.modify:
+                if(!Config.isNetworkAvailable(this)){
+                    ShowToast.show(this,"无网络，请检查网络连接");
+                    return;
+                }
                 deleteGood();
                 break;
             case R.id.back:
@@ -236,9 +244,9 @@ public class PublishGoodAty extends Activity implements View.OnClickListener {
             @Override
             public void fauler() {
                 if(type == MODIFY){
-                    Toast.makeText(PublishGoodAty.this, "宝贝修改失败", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(PublishGoodAty.this, "宝贝修改失败,请检查网络连接", Toast.LENGTH_SHORT).show();
                 }
-                Toast.makeText(PublishGoodAty.this, "宝贝发布失败", Toast.LENGTH_SHORT).show();
+                Toast.makeText(PublishGoodAty.this, "宝贝发布失败,请检查网络连接", Toast.LENGTH_SHORT).show();
             }
         });
 

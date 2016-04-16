@@ -206,7 +206,6 @@ public class AddPublishAty extends BaseActivity implements View.OnClickListener 
         Config.WP.setFilePath(path);
         String[] filenames = path.split("/");
         String filename = filenames[filenames.length - 1];
-        //Config.WP.setFileName(filename);
         filePath.setText(filename);
         Log.d("hehe", path);
         super.onActivityResult(requestCode, resultCode, data);

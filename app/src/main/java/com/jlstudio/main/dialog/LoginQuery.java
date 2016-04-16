@@ -61,10 +61,12 @@ public class LoginQuery extends Dialog implements View.OnClickListener {
                 Config.saveBaseUser(context, JsonToBean.getUser(user));
                 Config.saveUser(context, JsonToBean.getUser(user));
                 context.startActivity(new Intent(context, ShowContactsActivity.class));
+                dismiss();
                 break;
             case R.id.cancle:
                 Config.saveUser(context, JsonToBean.getUser(user));
                 context.startActivity(new Intent(context, ShowContactsActivity.class));
+                dismiss();
                 break;
         }
         ((Activity)context).finish();

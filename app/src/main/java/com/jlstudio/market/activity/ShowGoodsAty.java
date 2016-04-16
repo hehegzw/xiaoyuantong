@@ -44,7 +44,6 @@ public class ShowGoodsAty extends Activity implements View.OnClickListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_goodsaty);
-        ProgressUtil.showProgressDialog(this,"数据加载中...");
         initView();
         initRecycleView();
         initEvent();
@@ -104,6 +103,11 @@ public class ShowGoodsAty extends Activity implements View.OnClickListener {
         });
     }
     private void initData(final boolean isRefresh) {
+        if(!Config.isNetworkAvailable(this)){
+            ShowToast.show(this,"无网络，请检查网络连接");
+            return;
+        }
+        ProgressUtil.showProgressDialog(this,"数据加载中...");
         if(isRefresh) currentPage = 0;
         JSONObject json = new JSONObject();
         try {

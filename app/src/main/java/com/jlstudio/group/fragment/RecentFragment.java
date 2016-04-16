@@ -58,8 +58,6 @@ public class RecentFragment extends Fragment implements  PublishDatasAdapter.OnR
     private AlphaInAnimationAdapter adapter2;
     private List<PublishListData> list;
     private GetDataNet gn;
-    private DBOption db;
-    private CatchData data;
     private PopuWindowManager popuWindowManager;
 
     @Nullable
@@ -79,21 +77,6 @@ public class RecentFragment extends Fragment implements  PublishDatasAdapter.OnR
 
     private void getDatas() {
         getDatasFromNet();
-//        db = new DBOption(getActivity());
-//        data = db.getCatch(Config.URL + Config.RECMSG + Config.loadUser(getActivity()).getUsername());
-//        if (data == null) {
-//            getDatasFromNet();
-//        } else {
-//            Long time = System.currentTimeMillis();
-//            long catchtime = Long.parseLong(data.getTime());
-//            if ((time - catchtime) > Config.CATCHTIME) {
-//                getDatasFromNet();
-//            } else {
-//                list = JsonToPubhlishData.getePublishListData(data.getContent(),"apply");
-//                adapter.setList(list);
-//                adapter2.notifyDataSetChanged();
-//            }
-//        }
     }
 
     private void initListView() {
@@ -143,11 +126,6 @@ public class RecentFragment extends Fragment implements  PublishDatasAdapter.OnR
             @Override
             public void onResponse(String s) {
                 if (s != null) {
-//                    if (data == null) {
-//                        db.insertCatch(Config.URL + Config.RECMSG + Config.loadUser(getActivity()).getUsername(), s, System.currentTimeMillis() + "");
-//                    } else {
-//                        db.updateCatch(Config.URL + Config.RECMSG + Config.loadUser(getActivity()).getUsername(), s, System.currentTimeMillis() + "");
-//                    }
                     list = JsonToPubhlishData.getePublishListData(s, "apply");
                     adapter.setList(list);
                     adapter2.notifyDataSetChanged();
@@ -162,7 +140,7 @@ public class RecentFragment extends Fragment implements  PublishDatasAdapter.OnR
 
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-                ShowToast.show(MyApplication.getContext(), "获取数据失败");
+                ShowToast.show(MyApplication.getContext(), "获取数据失败,请检查网络");
                 view.setRefreshing(false);
             }
         }, json.toString());

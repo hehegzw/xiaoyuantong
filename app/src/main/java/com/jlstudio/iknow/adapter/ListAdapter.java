@@ -1,6 +1,8 @@
 package com.jlstudio.iknow.adapter;
 
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -86,6 +88,12 @@ public class ListAdapter extends BaseExpandableListAdapter {
         holder.arrow.setTypeface(icon);
         ScoreItem item = list.get(groupPosition);
         holder.tName.setText(item.getName());
+        int score = Integer.valueOf(item.getScore());
+        if(score<60){
+            holder.tNumber.setTextColor(Color.RED);
+        }else{
+            holder.tNumber.setTextColor(Color.GREEN);
+        }
         holder.tNumber.setText(item.getScore());
         return convertView;
     }
