@@ -2,6 +2,7 @@ package com.jlstudio.main.activity;
 
 import android.content.Intent;
 import android.graphics.Typeface;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.jlstudio.R;
 import com.jlstudio.main.dialog.LoginQuery;
 import com.jlstudio.main.application.Config;
@@ -25,10 +27,12 @@ import com.jlstudio.publish.util.StringUtil;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.net.URL;
+
 public class LoginAty extends BaseActivity implements View.OnClickListener {
     private EditText username, password;//用户名，密码
     private Button login;
-    private CircleImageView face;
+    private SimpleDraweeView face;
     private GetDataNet gn;//网络连接
     private TextView unloginfun;
 
@@ -43,7 +47,7 @@ public class LoginAty extends BaseActivity implements View.OnClickListener {
     private void initView() {
         username = (EditText) findViewById(R.id.username);
         password = (EditText) findViewById(R.id.password);
-        face = (CircleImageView) findViewById(R.id.face);
+        face = (SimpleDraweeView) findViewById(R.id.face);
         unloginfun = (TextView) findViewById(R.id.unloginfun);
         TextView text_user = (TextView) findViewById(R.id.text_user);
         TextView text_password = (TextView) findViewById(R.id.text_password);
@@ -65,7 +69,8 @@ public class LoginAty extends BaseActivity implements View.OnClickListener {
                     String string = username.getText().toString();
                     if (!TextUtils.isEmpty(string)) {
                         String url = Config.URL + "faces/" + string + ".jpg";
-                        Downloadimgs.initImageLoader(LoginAty.this).displayImage(url, face, Downloadimgs.getOption());
+                        Uri uri = Uri.parse(url);
+                        face.setImageURI(uri);
                     }
                 }
             }

@@ -295,6 +295,5 @@ public class ShowContactsActivity extends Activity implements View.OnClickListen
         super.onDestroy();
         imageLoader.clearMemoryCache();
         imageLoader.clearDiskCache();
-        System.exit(0);
     }
 }

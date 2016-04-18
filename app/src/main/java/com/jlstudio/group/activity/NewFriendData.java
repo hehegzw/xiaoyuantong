@@ -98,11 +98,6 @@ public class NewFriendData extends BaseActivity implements View.OnClickListener 
             contacts_qq.setText(json.has("userqq") ? json.getString("userqq") : "");
             contacts_wechat.setText(json.has("userweixin") ? json.getString("userweixin") : "");
             contacts_dept_name.setText(json.has("departmentname") ? json.getString("departmentname") : "");
-            if (json.getString("isregister").equals("1")) {
-                addfriend.setClickable(true);
-            } else {
-                addfriend.setClickable(false);
-            }
         } catch (JSONException e) {
             e.printStackTrace();
         }
