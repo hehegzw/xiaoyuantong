@@ -31,8 +31,8 @@ import cn.jpush.android.api.TagAliasCallback;
 public class Config {
     //网络相关4
     //public static final String URL = "http://192.168.0.100:8080/xyt/";//台式
-    //public static final String URL = "http://192.168.0.120:8080/xyt/";//chengzi
-    public static final String URL = "http://121.42.12.12:8080/xyt/";//ali
+    public static final String URL = "http://192.168.0.120:8080/xyt/";//chengzi
+    //public static final String URL = "http://121.42.12.12:8080/xyt/";//ali
     public static final String QINIUURL = "http://7xslom.com2.z0.glb.clouddn.com/";
     public static final String QINIFILE = "http://7xslom.com2.z0.glb.clouddn.com/";
     public static final String RECMSG = "recmsgs";//我收到的通知列表

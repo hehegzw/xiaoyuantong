@@ -162,7 +162,13 @@ public class MyLeaveMsgAdapter extends BaseAdapter {
         }
         switch (type) {
             case TYPE_1:
-                holder1.fromusername.setText(tempList.get(position).getFromname());
+                String name;
+                if(tempList.get(position).getFrom().endsWith(Config.loadUser(context).getUsername())){
+                    name = "发给:"+tempList.get(position).getToname();
+                }else{
+                    name = "来自"+tempList.get(position).getFromname();
+                }
+                holder1.fromusername.setText(name);
                 holder1.text.setText(tempList.get(position).getContent());
                 Date date = new Date(Long.valueOf(tempList.get(position).getTime()));
                 SimpleDateFormat sdf = new SimpleDateFormat("yy/MM/dd HH:mm");

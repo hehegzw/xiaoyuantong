@@ -3,6 +3,7 @@ package com.jlstudio.main.net;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Log;
+import android.widget.ProgressBar;
 
 import com.jlstudio.main.application.Config;
 import com.jlstudio.main.application.MyApplication;
@@ -37,7 +38,7 @@ public class Uptoqiniu {
         uploadManager = MyApplication.getUploadManager();
     }
 
-    public void UploadImages(final List<File> files, final SuccessListener successListener, final FaulerListener faulerListener) {
+    public void UploadImages(final List<File> files, final SuccessListener successListener, final FaulerListener faulerListener, final ProgressListener progressListener) {
         ExecutorService exec = Executors.newSingleThreadExecutor();
         exec.execute(new CompressThread(files, new CompressListener() {
             @Override
@@ -48,6 +49,7 @@ public class Uptoqiniu {
                     @Override
                     public void progress(String key, double percent) {
                         Log.d("qiniuinfo", percent + "");
+                        if(progressListener!=null) progressListener.progress(percent);
                     }
                 }, null);
                 for (int i = 0; i < files.size(); i++) {
@@ -61,8 +63,8 @@ public class Uptoqiniu {
                                     }
                                 }else{
                                     list.add(response.getString("key"));
+                                    successListener.success(list,fileCount);
                                     fileCount++;
-                                    if (fileCount == files.size()) successListener.success(list);
                                 }
 
                             } catch (JSONException e) {
@@ -77,11 +79,14 @@ public class Uptoqiniu {
     }
 
     public interface SuccessListener {
-        void success(List<String> list);
+        void success(List<String> list,int count);
     }
 
     public interface FaulerListener {
         void fauler();
+    }
+    public interface  ProgressListener{
+        void progress(double percent);
     }
     public static File getCompressFile(File file) {
         String path = file.getAbsolutePath();

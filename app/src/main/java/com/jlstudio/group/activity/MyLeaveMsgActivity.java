@@ -161,7 +161,7 @@ public class MyLeaveMsgActivity extends Activity implements View.OnClickListener
         my_leave_msg_listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if (tempList.get(position).getType() == 4) {
+                if (tempList.get(position).getType() == 4) {//加载评论
                     if (tempList.get(position).getContent().equals("点击加载全部评论...")) {
                         tempList = getTempListOpen(tempList.get(position).getSquence());
                         adapter.setTempList(tempList);
@@ -171,8 +171,10 @@ public class MyLeaveMsgActivity extends Activity implements View.OnClickListener
                     }
                 } else if (tempList.get(position).getType() != 1) {
                     String fromuserid = null;
-                    if (tempList.get(position).getType() == 3) {
+                    if (tempList.get(position).getType() == 3) {//我来说一句...
                         fromuserid = tempList.get(position).getOriFrom();
+                        if (fromuserid.endsWith(Config.loadUser(MyLeaveMsgActivity.this).getUsername())) {
+                        }
                         fromusername = tempList.get(0).getOriFromname();
                     } else {
                         if (recyclerView.getVisibility() == View.VISIBLE) {
@@ -187,7 +189,7 @@ public class MyLeaveMsgActivity extends Activity implements View.OnClickListener
                     msg = new LeaveMsg();
                     msg.setTo(fromuserid);
                     msg.setToname(fromusername);
-                    msg.setFromname(tempList.get(0).getOriToname());
+                    msg.setFromname(tempList.get(0).getOriFromname());
                     msg.setFrom(Config.loadUser(getApplicationContext()).getUsername());
                     msg.setSquence(tempList.get(position).getSquence());
                     msg.setOriId(textid);

@@ -20,6 +20,7 @@ import com.jlstudio.main.util.ProgressUtil;
 import com.jlstudio.market.adapter.PublishGoodAdapter;
 import com.jlstudio.market.bean.GoodsDetail;
 import com.jlstudio.market.dialog.DeleteDialog;
+import com.jlstudio.market.dialog.ProgressDialog;
 import com.jlstudio.publish.util.ShowToast;
 import com.jlstudio.publish.util.StringUtil;
 
@@ -150,7 +151,6 @@ public class PublishGoodAty extends Activity implements View.OnClickListener {
                     ShowToast.show(this,"无网络，请检查网络连接");
                     return;
                 }
-                ProgressUtil.showProgressDialog(this,"发布中...");
                 publishGood();
                 break;
             case R.id.modify:
@@ -229,26 +229,27 @@ public class PublishGoodAty extends Activity implements View.OnClickListener {
         for(int i=0;i<localPics.size();i++){
             files.add(new File(localPics.get(i)));
         }
-        uptoqiniu.UploadImages(files, new Uptoqiniu.SuccessListener() {
-            @Override
-            public void success(List<String> list) {
-                JSONArray jsonArray = new JSONArray(list);
-                try {
-                    json.put("images",jsonArray);
-                    Uptoserver(action,json);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        }, new Uptoqiniu.FaulerListener() {
-            @Override
-            public void fauler() {
-                if(type == MODIFY){
-                    Toast.makeText(PublishGoodAty.this, "宝贝修改失败,请检查网络连接", Toast.LENGTH_SHORT).show();
-                }
-                Toast.makeText(PublishGoodAty.this, "宝贝发布失败,请检查网络连接", Toast.LENGTH_SHORT).show();
-            }
-        });
+        new ProgressDialog(this,files,json,action,type).show();
+//        uptoqiniu.UploadImages(files, new Uptoqiniu.SuccessListener() {
+//            @Override
+//            public void success(List<String> list) {
+//                JSONArray jsonArray = new JSONArray(list);
+//                try {
+//                    json.put("images",jsonArray);
+//                    Uptoserver(action,json);
+//                } catch (JSONException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//        }, new Uptoqiniu.FaulerListener() {
+//            @Override
+//            public void fauler() {
+//                if(type == MODIFY){
+//                    Toast.makeText(PublishGoodAty.this, "宝贝修改失败,请检查网络连接", Toast.LENGTH_SHORT).show();
+//                }
+//                Toast.makeText(PublishGoodAty.this, "宝贝发布失败,请检查网络连接", Toast.LENGTH_SHORT).show();
+//            }
+//        });
 
     }
 

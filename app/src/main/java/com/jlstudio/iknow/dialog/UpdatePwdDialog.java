@@ -76,13 +76,13 @@ public class UpdatePwdDialog extends Dialog {
         JSONObject json = new JSONObject();
         String servlet = null;
         try {
-            json.put("uid",Config.loadUser(context).getUsername());
+            json.put("username",Config.loadUser(context).getUsername());
             json.put("oldpwd", user);
             json.put("newpwd", pwd);
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        gn.getDepartment(Config.URL, Config.UPDATEPWD, new Response.Listener<String>() {
+        gn.getDepartment(Config.URL, Config.SENDUSERINFO, new Response.Listener<String>() {
 
             @Override
             public void onResponse(String s) {
