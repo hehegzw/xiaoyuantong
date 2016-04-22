@@ -28,9 +28,8 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-
 public class ScoreAty extends BaseActivity implements View.OnClickListener {
-    private TextView get_score,point;
+    private TextView get_score, point;
     private TextView back, title_name;
     private SwipeRefreshLayout refresh;
     private ExpandableListView list;
@@ -50,16 +49,15 @@ public class ScoreAty extends BaseActivity implements View.OnClickListener {
         initView();
         initData();
         initListView();
-
     }
 
     private void initData() {
         intent = getIntent();
         String username = intent.getStringExtra("username");
-        contentData = db.getCatch(Config.URL + Config.GETSCORE +username );
+        contentData = db.getCatch(Config.URL + Config.GETSCORE + username);
         String data = intent.getStringExtra("data");
         scoreItems = new ArrayList<>();
-        adapter = new ListAdapter(this,scoreItems);
+        adapter = new ListAdapter(this, scoreItems);
         try {
             JSONObject json = new JSONObject(data);
             title_name.setText(json.getString("name"));
@@ -70,7 +68,6 @@ public class ScoreAty extends BaseActivity implements View.OnClickListener {
         }
         scoreItems = JsonUtil.getScores(data);
         adapter.setList(scoreItems);
-
     }
 
     private void initListView() {
@@ -81,12 +78,12 @@ public class ScoreAty extends BaseActivity implements View.OnClickListener {
         list.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
             @Override
             public boolean onGroupClick(ExpandableListView parent, View view, int groupPosition, long id) {
-                Log.d("helf","setOnItemClickListener");
-                if(scoreItems.get(groupPosition).isSpread()){
-                    ((TextView)view.findViewById(R.id.arrow)).setText(R.string.arrright);
+                Log.d("helf", "setOnItemClickListener");
+                if (scoreItems.get(groupPosition).isSpread()) {
+                    ((TextView) view.findViewById(R.id.arrow)).setText(R.string.arrright);
                     scoreItems.get(groupPosition).setSpread(false);
-                }else{
-                    ((TextView)view.findViewById(R.id.arrow)).setText(R.string.arrbottom);
+                } else {
+                    ((TextView) view.findViewById(R.id.arrow)).setText(R.string.arrbottom);
                     scoreItems.get(groupPosition).setSpread(true);
                 }
                 return false;
@@ -102,7 +99,6 @@ public class ScoreAty extends BaseActivity implements View.OnClickListener {
         title_name = (TextView) findViewById(R.id.title_name);
         title_name.setText("个人成绩");
         refresh = (SwipeRefreshLayout) findViewById(R.id.refresh);
-
         get_score = (TextView) findViewById(R.id.get_score);
         point = (TextView) findViewById(R.id.point);
         refresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -113,10 +109,12 @@ public class ScoreAty extends BaseActivity implements View.OnClickListener {
             }
         });
     }
+
     @Override
     public void onClick(View v) {
         finish();
     }
+
     private void getDatasFromNet(final String user, final String pwd) {
         JSONObject json = new JSONObject();
         try {
@@ -125,7 +123,7 @@ public class ScoreAty extends BaseActivity implements View.OnClickListener {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        gn.getData(Config.URL,Config.GETSCORE, new Response.Listener<String>() {
+        gn.getData(Config.URL, Config.GETSCORE, new Response.Listener<String>() {
 
             @Override
             public void onResponse(String s) {
@@ -151,7 +149,7 @@ public class ScoreAty extends BaseActivity implements View.OnClickListener {
 
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-                Log.d("hehe","获取数据失败");
+                Log.d("hehe", "获取数据失败");
                 ShowToast.show(ScoreAty.this, "获取数据失败");
                 refresh.setRefreshing(false);
             }

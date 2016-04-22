@@ -37,7 +37,7 @@ public class WelcomeAty extends BaseActivity {
         setContentView(R.layout.activity_welcome_aty);
         ImageView image = (ImageView) findViewById(R.id.image);
         AlphaAnimation alphaAnimation = new AlphaAnimation(0.1f, 1.0f);
-        alphaAnimation.setDuration(3000);
+        alphaAnimation.setDuration(2000);
         image.setAnimation(alphaAnimation);
         alphaAnimation.setAnimationListener(new Animation.AnimationListener() {
 
@@ -68,7 +68,7 @@ public class WelcomeAty extends BaseActivity {
             @Override
             public void run() {
                 super.run();
-                int i = 3;
+                int i = 2;
                 while(i>0){
                     i--;
                     try {

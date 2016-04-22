@@ -40,7 +40,20 @@ public class JsonUtil {
             for (int i=0;i<array.length();i++){
                 try {
                     JSONObject o = array.getJSONObject(i);
-                    list.add(new ScoreItem(o.getString("课程名称"),o.getString("学分"),o.getString("绩点"),o.getString("成绩")));
+                    ScoreItem item = new ScoreItem();
+                    if(o.has("课程名称")){
+                        item.setName(o.getString("课程名称"));
+                    }
+                    if(o.has("学分")){
+                        item.setName(o.getString("学分"));
+                    }
+                    if(o.has("绩点")){
+                        item.setName(o.getString("绩点"));
+                    }
+                    if(o.has("成绩")){
+                        item.setName(o.getString("成绩"));
+                    }
+                    list.add(item);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

@@ -8,6 +8,10 @@ public class ScoreItem implements Serializable {
 	private String point;
 	private String score;
 	private boolean isSpread;
+
+	public ScoreItem() {
+	}
+
 	public ScoreItem(String name, String cridit, String point, String score) {
 		super();
 		this.name = name;

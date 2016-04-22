@@ -71,7 +71,7 @@ public class SendSMSService extends IntentService {
             SmsManager sms = SmsManager.getDefault();
             String content = Config.WP.getContent();
             for (String p : list){
-                //sms.sendTextMessage(p,null,content,null,null);
+                sms.sendTextMessage(p,null,content,null,null);
             }
             ShowToast.show(getApplicationContext(),"发送成功");
         }

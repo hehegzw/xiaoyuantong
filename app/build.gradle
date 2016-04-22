@@ -15,8 +15,17 @@ android {
         versionCode 1
         versionName "1.0"
     }
+    signingConfigs {
+        myConfig {
+            storeFile file("xiaoyuantongKey.jks")
+            storePassword "studio"
+            keyAlias "xiaoyuantong"
+            keyPassword "studio"//将这里的“**”替换成自己的信息
+        }
+    }
     buildTypes {
         release {
+            signingConfig  signingConfigs.myConfig
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }

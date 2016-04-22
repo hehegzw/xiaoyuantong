@@ -137,6 +137,7 @@ public class FContact extends Fragment implements ExpandableListView.OnChildClic
     public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
         Intent intent = new Intent(getActivity(), ContactsDataActivity.class);
         intent.setAction(listChild.get(groupPosition).get(childPosition).getUid());
+        intent.putExtra("name",listParent.get(groupPosition).getGroup_name());
         startActivity(intent);
         return true;
     }

@@ -297,15 +297,15 @@ public class FMyContact extends Fragment implements ExpandableListView.OnChildCl
             @Override
             public void onResponse(String s) {
                 if (isSendAllSelect) {
-//                    if(ru.unRegister.size()>0){
-//                        for(int i=0;i<ru.unRegister.size();i++){
-//                            s+=","+ru.unRegister.get(i).getPhone();
-//                        }
-//                    }
+                    if(ru.unRegister.size()>0){
+                        for(int i=0;i<ru.unRegister.size();i++){
+                            s+=","+ru.unRegister.get(i).getPhone();
+                        }
+                    }
                     //有短信，放在service里发送
-//                    Intent intent = new Intent(getActivity(), SendSMSService.class);
-//                    intent.setAction(s);
-//                    getActivity().startService(intent);
+                    Intent intent = new Intent(getActivity(), SendSMSService.class);
+                    intent.setAction(s);
+                    getActivity().startService(intent);
                 }
                 //一次发送结束，清楚全局变量
                 Config.clearWP();

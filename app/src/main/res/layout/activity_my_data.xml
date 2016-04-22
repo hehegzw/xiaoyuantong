@@ -195,15 +195,6 @@
                     android:text="院系" />
             </RelativeLayout>
 
-            <Button
-                android:id="@+id/updatapwd"
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_below="@+id/btn_phone_call"
-                android:layout_marginTop="8dp"
-                android:background="#00ff00"
-                android:text="修改密码"
-                android:textColor="@android:color/primary_text_dark" />
         </LinearLayout>
 
     </ScrollView>

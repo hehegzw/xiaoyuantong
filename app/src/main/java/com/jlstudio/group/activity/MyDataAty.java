@@ -39,7 +39,6 @@ import java.util.Calendar;
 
 public class MyDataAty extends BaseActivity implements View.OnClickListener {
     private TextView back,update_datas;//titlbar
-    private Button  updatapwd,exit;//修改密码
     //显示详细信息的横条
     private RelativeLayout face,sign, name, phone, qqNumber, weixin, sex, school, department;
     private SimpleDraweeView iface;//头像
@@ -145,7 +144,6 @@ public class MyDataAty extends BaseActivity implements View.OnClickListener {
         tdepartment = (TextView) findViewById(R.id.tdepartment);
 
 
-        updatapwd = (Button) findViewById(R.id.updatapwd);
         face.setOnClickListener(this);
         sign.setOnClickListener(this);
         name.setOnClickListener(this);
@@ -155,7 +153,6 @@ public class MyDataAty extends BaseActivity implements View.OnClickListener {
         sex.setOnClickListener(this);
         tclassName.setOnClickListener(this);
         department.setOnClickListener(this);
-        updatapwd.setOnClickListener(this);
     }
     private void initView(String s) {
         JSONObject jsonObject = null;
@@ -225,9 +222,6 @@ public class MyDataAty extends BaseActivity implements View.OnClickListener {
             case R.id.school:
                 break;
             case R.id.department:
-                break;
-            case R.id.updatapwd:
-                new UpdatePwdDialog(this).show();
                 break;
         }
     }

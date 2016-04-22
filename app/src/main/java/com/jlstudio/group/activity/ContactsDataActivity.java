@@ -91,6 +91,7 @@ public class ContactsDataActivity extends BaseActivity implements View.OnClickLi
     private LinearLayout layout_leavemsg;
     private Typeface iconfont;
     private GetDataNet gn;
+    private String group_name;
 
 
     @Override
@@ -147,12 +148,15 @@ public class ContactsDataActivity extends BaseActivity implements View.OnClickLi
         iconfont = Typeface.createFromAsset(getAssets(), "fonts/phonemessage.ttf");
         callphone.setTypeface(iconfont);
         sendmessage.setTypeface(iconfont);
+        if(group_name.endsWith("我的班级")){
+            deletefriend.setVisibility(View.INVISIBLE);
+        }
     }
 
     public void getData() {
         Intent intent = getIntent();
         contacts_id = intent.getAction();
-        Log.i("Test", "获取联系人de id = " + contacts_id);
+        group_name = intent.getStringExtra("name");
     }
 
 

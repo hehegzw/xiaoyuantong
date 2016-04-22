@@ -1,13 +1,15 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/frg_bg"
     android:layout_width="fill_parent"
     android:layout_height="match_parent"
     android:layout_marginTop="5dp"
+    android:orientation="vertical"
     android:background="#ffffff">
     <ExpandableListView
+        android:layout_weight="1"
         android:id="@+id/listview"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="0dp"/>
     <Button
         android:id="@+id/publish"
         android:layout_width="match_parent"
@@ -18,4 +20,4 @@
         android:text="确定"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
-</RelativeLayout>
+</LinearLayout>
