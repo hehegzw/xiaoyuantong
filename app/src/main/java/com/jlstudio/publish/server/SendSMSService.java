@@ -4,6 +4,7 @@ import android.app.IntentService;
 import android.content.Intent;
 import android.content.Context;
 import android.telephony.SmsManager;
+import android.util.Log;
 
 import com.jlstudio.main.application.Config;
 import com.jlstudio.publish.bean.MyContact;
@@ -65,16 +66,21 @@ public class SendSMSService extends IntentService {
 
     @Override
     protected void onHandleIntent(Intent intent) {
-
-        if (intent != null) {
-            String[] list = JsonToPubhlishData.getResultPeople(intent.getAction());
-            SmsManager sms = SmsManager.getDefault();
-            String content = Config.WP.getContent();
-            for (String p : list){
-                sms.sendTextMessage(p,null,content,null,null);
+        try{
+            if (intent != null) {
+                String[] list = JsonToPubhlishData.getResultPeople(intent.getAction());
+                SmsManager sms = SmsManager.getDefault();
+                String content = Config.WP.getContent();
+                for (String p : list){
+                    sms.sendTextMessage(p,null,content,null,null);
+                }
+                ShowToast.show(getApplicationContext(),"发送成功");
             }
-            ShowToast.show(getApplicationContext(),"发送成功");
+        }catch (Exception e){
+            System.out.print("手机号码有误");
+            e.printStackTrace();
         }
+
     }
 
 }

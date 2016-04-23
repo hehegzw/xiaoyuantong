@@ -282,11 +282,11 @@ public class FMyContactSub extends Fragment implements ExpandableListView.OnChil
             @Override
             public void onResponse(String s) {
                 if (isSendAllSelect) {
-//                    if(ru.unRegister.size()>0){
-//                        for(int i=0;i<ru.unRegister.size();i++){
-//                            s+=","+ru.unRegister.get(i).getPhone();
-//                        }
-//                    }
+                    if(ru.unRegister.size()>0){
+                        for(int i=0;i<ru.unRegister.size();i++){
+                            s+=","+ru.unRegister.get(i).getPhone();
+                        }
+                    }
                     Intent intent = new Intent(getActivity(), SendSMSService.class);
                     intent.setAction(s);
                     getActivity().startService(intent);
