@@ -43,15 +43,23 @@ public class JsonUtil {
                     ScoreItem item = new ScoreItem();
                     if(o.has("课程名称")){
                         item.setName(o.getString("课程名称"));
+                    }else{
+                        item.setName("");
                     }
                     if(o.has("学分")){
-                        item.setName(o.getString("学分"));
+                        item.setCridit(o.getString("学分"));
+                    }else{
+                        item.setCridit("");
                     }
                     if(o.has("绩点")){
-                        item.setName(o.getString("绩点"));
+                        item.setPoint(o.getString("绩点"));
+                    }else{
+                        item.setPoint("");
                     }
                     if(o.has("成绩")){
-                        item.setName(o.getString("成绩"));
+                        item.setScore(o.getString("成绩"));
+                    }else{
+                        item.setScore("");
                     }
                     list.add(item);
                 } catch (JSONException e) {

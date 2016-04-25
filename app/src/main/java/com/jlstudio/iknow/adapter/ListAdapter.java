@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.jlstudio.R;
 import com.jlstudio.iknow.bean.ScoreItem;
+import com.jlstudio.publish.util.StringUtil;
 
 import java.util.List;
 
@@ -88,7 +89,10 @@ public class ListAdapter extends BaseExpandableListAdapter {
         holder.arrow.setTypeface(icon);
         ScoreItem item = list.get(groupPosition);
         holder.tName.setText(item.getName());
-        int score = Integer.valueOf(item.getScore());
+        int score = 0;
+        if(!StringUtil.isEmpty(item.getScore())){
+            score = Integer.valueOf(item.getScore());
+        }
         if(score<60){
             holder.tNumber.setTextColor(Color.RED);
         }else{
